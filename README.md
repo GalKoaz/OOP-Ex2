@@ -1,5 +1,4 @@
-# Exercise 1 Object-Oriented Programming
-Offline Algorithm, designing a smart elevator system.
+# Exercise 2 Object-Oriented Programming
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
@@ -29,7 +28,6 @@ Interface of a weighted directed graph
 Interface of algorithms on graphs (weighted tuners).
 
 When the Exercise is checked through three public static functions, place fences in the Ex2.java class - note that you must complete the three steps below - through which your Exercise will be checked. Directed Graph Class - should support uploading json files, please note: We have attached some json files of graphs for you.
-
 
 "The origins of graph theory are humble, even frivolous :round_pushpin:"
 
@@ -104,6 +102,6 @@ that results give us a boost in motivation for develop and improve the code to m
 
  Gal - [here](https://github.com/GalKoaz/)
  
- Shauli - [here](https://github.com/ShauliTaragin/)
+ Amir - [here](https://github.com/amirg00/)
 
-Project Link: [here](https://github.com/ShauliTaragin/Ex1_OOP)
+Project Link: [here](https://github.com/GalKoaz/OOP-Ex2)
