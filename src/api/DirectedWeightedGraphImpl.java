@@ -1,8 +1,28 @@
 package api;
 
+import java.awt.*;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
+    /**
+     *
+     */
+    private HashMap<Integer, NodeData> Vertices;
+    private HashMap<String, EdgeData> Edges;
+
+    public DirectedWeightedGraphImpl(JSON_Operation json) {
+        json.init_Graph();
+        this.Vertices = new HashMap<>();
+        this.Edges = new HashMap<>();
+        for (NodeData vertex : json.getInitVertices()) {
+            this.Vertices.put(vertex.getKey(), vertex);
+        }
+        for (EdgeData edge : json.getInitEdges()) {
+            this.Edges.put("" + edge.getSrc() + edge.getDest(), edge);
+        }
+    }
+
     @Override
     public NodeData getNode(int key) {
         return Vertices.get(key);
@@ -10,27 +30,28 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
 
     @Override
     public EdgeData getEdge(int src, int dest) {
-        return null;
+        return Edges.get("" + src + dest);
     }
 
     @Override
     public void addNode(NodeData n) {
-
+        Vertices.put(n.getKey(), n);
     }
 
     @Override
     public void connect(int src, int dest, double w) {
-
+        EdgeData connectedEdge = new EdgeDataImpl(src, dest, Color.BLUE.getRGB(), w, "Test");
+        Edges.put("" + src + dest, connectedEdge);
     }
 
     @Override
-    public Iterator<NodeData> nodeIter() {
-        return null;
+    public Iterator<NodeData> nodeIter() { ///maybe don't work we need to check that. if no use this "Vertices.values().iterator()"
+        return Vertices.values().iterator();
     }
 
     @Override
     public Iterator<EdgeData> edgeIter() {
-        return null;
+        return Edges.values().iterator();
     }
 
     /**
@@ -42,32 +63,37 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
      */
     @Override
     public Iterator<EdgeData> edgeIter(int node_id) {
-        return null;
+        HashMap<String, EdgeData> Vertices_copy = new HashMap<>(Edges);
+        for (int i = 0; i < Vertices_copy.size(); i++) {
+            String currKey = "" + node_id + i;
+            Vertices_copy.remove(currKey);
+        }
+        return Vertices_copy.values().iterator();
     }
 
     @Override
     public NodeData removeNode(int key) {
-        return null;
+        return Vertices.remove(key);
     }
 
     @Override
     public EdgeData removeEdge(int src, int dest) {
-        return null;
+        return Edges.remove("" + src + dest);
     }
 
     @Override
     public int nodeSize() {
-        return 0;
+        return Vertices.size();
     }
 
     @Override
     public int edgeSize() {
-        return 0;
+        return Edges.size();
     }
 
     @Override
     public int getMC() {
-        return 0;
+        return Vertices.size();
     }
 
     public HashMap<Integer, NodeData> getVertices() {

@@ -1,7 +1,10 @@
 package api;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGraphAlgorithms {
+
     @Override
     public void init(DirectedWeightedGraph g) {
 
@@ -66,4 +69,5 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         DirectedWeightedGraphAlgorithmsImpl a = new DirectedWeightedGraphAlgorithmsImpl();
         a.load("G2.json");
     }
+
 }

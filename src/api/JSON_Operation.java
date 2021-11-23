@@ -1,5 +1,7 @@
 package api;
 
+import javax.swing.plaf.synth.SynthTextFieldUI;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,6 +22,17 @@ public class JSON_Operation {
         this.Edges = new ArrayList<>();
         this.Vertices = new ArrayList<>();
     }
+
+    public static void main(String[] args) {
+        String a = "\"src\":0,\"w\":1.3118716362419698,\"dest\":16";
+        a = a.replaceAll(":", " ").replaceAll(",", " ");
+        String[] values = a.split(" ");
+        String src = values[1];
+        String dest = values[3];
+        String w = values[5];
+        System.out.println(src + " " + dest + " " + w);
+    }
+
     /**
      * The function goes over each line. If the function encountered a line that contains "src",
      * then it knows that we reached a new edge, so the three lines included the current line
@@ -27,6 +40,7 @@ public class JSON_Operation {
      * represent a new edge. This string is sent to the edges' list as a new edge.
      * In addition, the same process is done over the vertices, but for this case we
      * want to look at two lines: one contains the position, and the other contains the vertex's id.
+     *
      * @throws IOException
      * @throws IOException
      */
@@ -37,13 +51,13 @@ public class JSON_Operation {
         while ((data = Reader.readLine()) != null) {
             String sec_word, third_word;
             if (data.contains("src")) {
-                sec_word = Reader.readLine().strip().replaceAll(" ",  "");
-                third_word = Reader.readLine().strip().replaceAll(" ",  "");
-                this.Edges.add(data.strip().replaceAll(" ",  "") + sec_word + third_word);
+                sec_word = Reader.readLine().strip().replaceAll(" ", "");
+                third_word = Reader.readLine().strip().replaceAll(" ", "");
+                this.Edges.add(data.strip().replaceAll(" ", "") + sec_word + third_word);
             }
             if (data.contains("pos")) {
-                sec_word = Reader.readLine().strip().replaceAll(" ",  "");
-                this.Nodes.add(data.strip().replaceAll(" ",  "") + sec_word);
+                sec_word = Reader.readLine().strip().replaceAll(" ", "");
+                this.Vertices.add(data.strip().replaceAll(" ", "") + sec_word);
             }
         }
         fileReader.close();
