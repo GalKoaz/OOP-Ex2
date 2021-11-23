@@ -10,6 +10,7 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
      */
     private HashMap<Integer, NodeData> Vertices;
     private HashMap<String, EdgeData> Edges;
+    private HashMap<String, EdgeData> Edges_copy;
 
     public DirectedWeightedGraphImpl(JSON_Operation json) {
         json.init_Graph();
@@ -20,6 +21,7 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
         }
         for (EdgeData edge : json.getInitEdges()) {
             this.Edges.put("" + edge.getSrc() + edge.getDest(), edge);
+            this.Edges_copy.put("" + edge.getSrc() + edge.getDest(), new EdgeDataImpl(edge));
         }
     }
 
@@ -63,12 +65,12 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
      */
     @Override
     public Iterator<EdgeData> edgeIter(int node_id) {
-        HashMap<String, EdgeData> Vertices_copy = new HashMap<>(Edges);
-        for (int i = 0; i < Vertices_copy.size(); i++) {
+
+        for (int i = 0; i < this.Edges_copy.size(); i++) {
             String currKey = "" + node_id + i;
-            Vertices_copy.remove(currKey);
+            this.Edges_copy.remove(currKey);
         }
-        return Vertices_copy.values().iterator();
+        return this.Edges_copy.values().iterator();
     }
 
     @Override
@@ -111,6 +113,7 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
     public void setEdges(HashMap<String, EdgeData> edges) {
         Edges = edges;
     }
+
     public static void main(String[] args) {
         System.out.println("" + 0 + 15);
         HashMap<Integer, NodeData> v = new HashMap<>();

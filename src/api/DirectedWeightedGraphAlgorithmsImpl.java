@@ -1,9 +1,10 @@
 package api;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
 
 public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGraphAlgorithms {
+    private DirectedWeightedGraph graph;
+
 
     @Override
     public void init(DirectedWeightedGraph g) {
@@ -12,7 +13,7 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
 
     @Override
     public DirectedWeightedGraph getGraph() {
-        return null;
+        return this.graph;
     }
 
     @Override
@@ -22,6 +23,18 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
 
     @Override
     public boolean isConnected() {
+        for (int i = 0; i < graph.nodeSize() ; i++) {
+            for (int j = 0; j < graph.nodeSize() && j!=i; j++) {
+                if (!isPath(i,j)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean isPath(int src, int dest){
+
         return false;
     }
 

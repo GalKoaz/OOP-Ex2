@@ -50,7 +50,7 @@ public interface DirectedWeightedGraphAlgorithms {
      */
     public double shortestPathDist(int src, int dest);
     /**
-     * Computes the the shortest path between src to dest - as an ordered List of nodes:
+     * Computes the shortest path between src to dest - as an ordered List of nodes:
      * src--> n1-->n2-->...dest
      * see: https://en.wikipedia.org/wiki/Shortest_path_problem
      * Note if no such path --> returns null;

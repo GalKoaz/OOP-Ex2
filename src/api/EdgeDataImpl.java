@@ -20,6 +20,14 @@ public class EdgeDataImpl implements EdgeData {
         this.info = info;
     }
 
+    public EdgeDataImpl(EdgeData other){
+        this.weight = other.getWeight();
+        this.src = other.getSrc();
+        this.dest = other.getDest();
+        this.tag = other.getTag();
+        this.info = other.getInfo();
+    }
+
     @Override
     public int getSrc() {
         return this.src;
@@ -54,4 +62,9 @@ public class EdgeDataImpl implements EdgeData {
     public void setTag(int t) {
         this.tag = t;
     }
+    public EdgeData deepCopy(EdgeDataImpl other){
+        return new EdgeDataImpl(other.src, other.dest, other.tag, other.weight, other.info);
+    }
+
+
 }
