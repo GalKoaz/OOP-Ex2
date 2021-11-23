@@ -8,7 +8,7 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
 
     @Override
     public void init(DirectedWeightedGraph g) {
-
+        this.graph = g;
     }
 
     @Override

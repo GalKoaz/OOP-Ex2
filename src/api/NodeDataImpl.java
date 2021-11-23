@@ -65,4 +65,10 @@ public class NodeDataImpl implements NodeData {
     public void setTag(int t) {
         this.tag = t;
     }
+
+    public NodeData deepCopy(NodeDataImpl other){
+        return new NodeDataImpl(other.key,other.tag,other.info, other.weight,
+                new GeoLocationImpl(other.Node.x(),other.Node.y(),other.Node.z()));
+    }
+
 }

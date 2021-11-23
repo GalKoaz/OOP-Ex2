@@ -16,6 +16,7 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
         json.init_Graph();
         this.Vertices = new HashMap<>();
         this.Edges = new HashMap<>();
+        this.Edges_copy = new HashMap<>();
         for (NodeData vertex : json.getInitVertices()) {
             this.Vertices.put(vertex.getKey(), vertex);
         }
