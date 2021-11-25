@@ -66,8 +66,8 @@ public class JSON_Operation {
             edge = edge.replaceAll(":", " ").replaceAll(",", " ");
             String[] values = edge.split(" ");
             int src = Integer.parseInt(values[1]);
-            int dest = Integer.parseInt(values[3]);
-            double w = Double.parseDouble(values[5]);
+            int dest = Integer.parseInt(values[5]);
+            double w = Double.parseDouble(values[3]);
             String info = "src:"+src + "\n" + "dest:" + "\n" + "weight:" + w;
             EdgeData Edge = new EdgeDataImpl(src,dest,Color.BLACK.getRGB(),w,info);
             Edges.add(Edge);

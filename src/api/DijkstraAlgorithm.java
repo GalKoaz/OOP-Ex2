@@ -30,7 +30,7 @@ public class DijkstraAlgorithm {
             this.dist[i] = Double.MAX_VALUE;
         }
         g.getNode(src).setWeight(0);
-        this.dists.add(g.getNode(src));
+        //this.dists.add(g.getNode(src));
     }
 
     public double findMinDist() {
