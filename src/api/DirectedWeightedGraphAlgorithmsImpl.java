@@ -4,7 +4,7 @@ import java.util.List;
 
 public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGraphAlgorithms {
     private DirectedWeightedGraph graph;
-
+    private JSON_Operation json;
 
     @Override
     public void init(DirectedWeightedGraph g) {
@@ -40,7 +40,8 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
 
     @Override
     public double shortestPathDist(int src, int dest) {
-        return 0;
+        DijkstraAlgorithm algo = new DijkstraAlgorithm(src,dest,this.graph);
+        return algo.findMinDist();
     }
 
     @Override
@@ -65,7 +66,7 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
 
     @Override
     public boolean load(String file) {
-        JSON_Operation json = new JSON_Operation(file);
+         this.json = new JSON_Operation(file);
         try {
             json.JSON_Reader();
             System.out.println(json.getEdges().get(0));
@@ -79,8 +80,12 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
     }
 
     public static void main(String[] args) {
+
         DirectedWeightedGraphAlgorithmsImpl a = new DirectedWeightedGraphAlgorithmsImpl();
         a.load("G2.json");
+        DirectedWeightedGraph temp = new DirectedWeightedGraphImpl(a.json);
+        a.init(temp);
+        System.out.println(a.shortestPathDist(0,25));
     }
 
 }

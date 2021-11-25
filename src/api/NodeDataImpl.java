@@ -1,6 +1,8 @@
 package api;
 
-public class NodeDataImpl implements NodeData {
+import java.util.Comparator;
+
+public class NodeDataImpl implements NodeData,Comparator<NodeDataImpl>{
 
     private GeoLocationImpl Node;
     private int key, tag;
@@ -71,4 +73,8 @@ public class NodeDataImpl implements NodeData {
                 new GeoLocationImpl(other.Node.x(),other.Node.y(),other.Node.z()));
     }
 
+    @Override
+    public int compare(NodeDataImpl o1, NodeDataImpl o2) {
+        return Double.compare(o1.getWeight(), o2.getWeight());
+    }
 }
