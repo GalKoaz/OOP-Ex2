@@ -9,8 +9,7 @@ public class NodeDataImpl implements NodeData,Comparator<NodeDataImpl>{
     private double weight;
     private String info;
 
-
-    public NodeDataImpl(int key, int tag, String info, double weight, GeoLocationImpl Node){
+    public NodeDataImpl(int key, int tag, String info, double weight, GeoLocationImpl Node) {
         this.info = info;
         this.Node = Node;
         this.tag = tag;
@@ -68,9 +67,9 @@ public class NodeDataImpl implements NodeData,Comparator<NodeDataImpl>{
         this.tag = t;
     }
 
-    public NodeData deepCopy(NodeDataImpl other){
-        return new NodeDataImpl(other.key,other.tag,other.info, other.weight,
-                new GeoLocationImpl(other.Node.x(),other.Node.y(),other.Node.z()));
+    public NodeData deepCopy(NodeDataImpl other) {
+        return new NodeDataImpl(other.key, other.tag, other.info, other.weight,
+                new GeoLocationImpl(other.Node.x(), other.Node.y(), other.Node.z()));
     }
 
     @Override

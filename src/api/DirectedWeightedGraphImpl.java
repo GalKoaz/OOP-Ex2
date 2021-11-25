@@ -115,12 +115,12 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
         Edges = edges;
     }
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         System.out.println("" + 0 + 15);
         HashMap<Integer, NodeData> v = new HashMap<>();
         v.put(0, new NodeDataImpl(0, 2, "", 1.54545, new GeoLocationImpl(3.0, 4.0, 5.0)));
         HashMap<Integer, NodeData> v_copy = new HashMap<>(v);
         v_copy.remove(0);
         System.out.println(v.get(0).getWeight());
-    }
+    }*/
 }

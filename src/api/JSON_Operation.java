@@ -23,16 +23,6 @@ public class JSON_Operation {
         this.Vertices = new ArrayList<>();
     }
 
-    public static void main(String[] args) {
-        String a = "\"src\":0,\"w\":1.3118716362419698,\"dest\":16";
-        a = a.replaceAll(":", " ").replaceAll(",", " ");
-        String[] values = a.split(" ");
-        String src = values[1];
-        String dest = values[3];
-        String w = values[5];
-        System.out.println(src + " " + dest + " " + w);
-    }
-
     /**
      * The function goes over each line. If the function encountered a line that contains "src",
      * then it knows that we reached a new edge, so the three lines included the current line
@@ -95,7 +85,7 @@ public class JSON_Operation {
             double pos_z = Double.parseDouble(id_temp[2].substring(0, id_temp[2].length() - 1));
             String info = "ID:"+id+"\n"+"X:"+pos_x+"\n"+"Y:"+pos_y+"\n"+"Z:"+pos_z;
             GeoLocationImpl geoPoint = new GeoLocationImpl(pos_x,pos_y,pos_z);
-            NodeData Node = new NodeDataImpl(id, Color.RED.getRGB(),info,1,geoPoint);
+            NodeData Node = new NodeDataImpl(id, Color.RED.getRGB(),info,Integer.MAX_VALUE,geoPoint);
             Vertices.add(Node);
         }
         return Vertices;
