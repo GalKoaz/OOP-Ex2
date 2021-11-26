@@ -85,7 +85,7 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         a.load("G2.json");
         DirectedWeightedGraph temp = new DirectedWeightedGraphImpl(a.json);
         a.init(temp);
-        System.out.println(a.shortestPathDist(0,25));
+        System.out.println(a.shortestPathDist(10,30));
     }
 
 }

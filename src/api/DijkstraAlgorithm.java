@@ -11,7 +11,8 @@ public class DijkstraAlgorithm {
     private double[] dist;
     private ArrayList<ArrayList<NodeData>> adjacentVerts;
     private ArrayList<Integer> optimalPath, settled;
-    private PriorityQueue<NodeData> dists;
+    private PriorityQueue<NodeCompare> dists;
+    private ArrayList<ArrayList> Paths;
 
     private int src, dest; //the ID of the source and destination vertex
 
@@ -30,13 +31,13 @@ public class DijkstraAlgorithm {
             this.dist[i] = Double.MAX_VALUE;
         }
         g.getNode(src).setWeight(0);
-        //this.dists.add(g.getNode(src));
+        this.dists.add(new NodeCompare(g.getNode(src)));
     }
 
     public double findMinDist() {
         while (settled.size() != g.nodeSize()) { // while we didn't finish going over all vertices.
             if (dists.isEmpty()) return -1;
-            int check = dists.remove().getKey();
+            int check = dists.remove().getVertex().getKey();
             if (settled.contains(check)) continue;
             settled.add(check);
             currentNeighbours(check);
@@ -46,21 +47,6 @@ public class DijkstraAlgorithm {
         return dist[dest];
     }
 
-
-    /**
-     * Creates a <em><a href="Spliterator.html#binding">late-binding</a></em>
-     * and <em>fail-fast</em> {@link Spliterator} over the elements in this
-     * queue. The spliterator does not traverse elements in any particular order
-     * (the {@link Spliterator#ORDERED ORDERED} characteristic is not reported).
-     *
-     * <p>The {@code Spliterator} reports {@link Spliterator#SIZED},
-     * {@link Spliterator#SUBSIZED}, and {@link Spliterator#NONNULL}.
-     * Overriding implementations should document the reporting of additional
-     * characteristic values.
-     *
-     * @return a {@code Spliterator} over the elements in this queue
-     * @since 1.8
-     */
     public void updateNeighbours() {
         for (int i = 0; i < g.nodeSize(); i++) {
             ArrayList<NodeData> adj = new ArrayList<>();
@@ -85,7 +71,7 @@ public class DijkstraAlgorithm {
                 if (newDistance < dist[v.getKey()])
                     dist[v.getKey()] = newDistance;
                 g.getNode(v.getKey()).setWeight(dist[v.getKey()]);
-                dists.add(g.getNode(v.getKey()));
+                dists.add(new NodeCompare(g.getNode(v.getKey())));
             }
         }
     }

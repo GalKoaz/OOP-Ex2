@@ -72,8 +72,4 @@ public class NodeDataImpl implements NodeData,Comparator<NodeDataImpl>{
                 new GeoLocationImpl(other.Node.x(), other.Node.y(), other.Node.z()));
     }
 
-    @Override
-    public int compare(NodeDataImpl o1, NodeDataImpl o2) {
-        return Double.compare(o1.getWeight(), o2.getWeight());
-    }
 }

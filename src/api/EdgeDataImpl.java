@@ -7,7 +7,7 @@ public class EdgeDataImpl implements EdgeData {
 
     public EdgeDataImpl(int src, int dest, int tag, double weight, String info){
         try {
-            if (weight < 0){
+            if (weight >= 0){
                 this.weight = weight;
             }
         }
