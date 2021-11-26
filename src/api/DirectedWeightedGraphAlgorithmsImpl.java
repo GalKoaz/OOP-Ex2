@@ -24,7 +24,8 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
     @Override
     public boolean isConnected() {
         for (int i = 0; i < graph.nodeSize() ; i++) {
-            for (int j = 0; j < graph.nodeSize() && j!=i; j++) {
+            for (int j = 0; j < graph.nodeSize(); j++) {
+                if(i==j)continue;
                 if (!isPath(i,j)){
                     return false;
                 }
@@ -34,8 +35,8 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
     }
 
     public boolean isPath(int src, int dest){
-
-        return false;
+        DijkstraAlgorithm algo = new DijkstraAlgorithm(src,dest,this.graph);
+        return algo.findMinDist() != 0;
     }
 
     @Override
@@ -81,10 +82,16 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
 
     public static void main(String[] args) {
         DirectedWeightedGraphAlgorithmsImpl a = new DirectedWeightedGraphAlgorithmsImpl();
-        a.load("G2.json");
+        a.load("G3.json");
         DirectedWeightedGraph temp = new DirectedWeightedGraphImpl(a.json);
         a.init(temp);
-        System.out.println(a.shortestPathDist(10,30));
+/*        for (int i = 0; i < temp.nodeSize(); i++) {
+            for (int j = 0; j < temp.nodeSize(); j++) {
+                if(i==j)continue;
+                System.out.println(a.shortestPathDist(i,j));
+            }
+        }*/
+        System.out.println(a.isConnected());
     }
 
 }
