@@ -80,7 +80,6 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
     }
 
     public static void main(String[] args) {
-
         DirectedWeightedGraphAlgorithmsImpl a = new DirectedWeightedGraphAlgorithmsImpl();
         a.load("G2.json");
         DirectedWeightedGraph temp = new DirectedWeightedGraphImpl(a.json);

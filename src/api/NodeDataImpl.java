@@ -2,7 +2,7 @@ package api;
 
 import java.util.Comparator;
 
-public class NodeDataImpl implements NodeData,Comparator<NodeDataImpl>{
+public class NodeDataImpl implements NodeData{
 
     private GeoLocationImpl Node;
     private int key, tag;

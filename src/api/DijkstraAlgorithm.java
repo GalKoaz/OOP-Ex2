@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Spliterator;
 
-
 public class DijkstraAlgorithm {
 
     private DirectedWeightedGraph g;
@@ -25,6 +24,7 @@ public class DijkstraAlgorithm {
         this.adjacentVerts = new ArrayList<>();
         this.settled = new ArrayList<>();
         this.dist = new double[g.nodeSize()];
+        this.Paths = new ArrayList<>();
         updateNeighbours();
         for (int i = 0; i < dist.length; i++) {
             if(i==src) continue;
