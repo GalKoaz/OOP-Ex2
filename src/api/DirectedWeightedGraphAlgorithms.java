@@ -62,14 +62,14 @@ public interface DirectedWeightedGraphAlgorithms {
 
     /**
      * Finds the NodeData which minimizes the max distance to all the other nodes.
-     * Assuming the graph isConnected, elese return null. See: https://en.wikipedia.org/wiki/Graph_center
+     * Assuming the graph isConnected, else return null. See: https://en.wikipedia.org/wiki/Graph_center
      * @return the Node data to which the max shortest path to all the other nodes is minimized.
      */
     public NodeData center();
    /**
     * Computes a list of consecutive nodes which go over all the nodes in cities.
     * the sum of the weights of all the consecutive (pairs) of nodes (directed) is the "cost" of the solution -
-    * the lower the better.
+    * the lower, the better.
     * See: https://en.wikipedia.org/wiki/Travelling_salesman_problem
     */
     List<NodeData> tsp(List<NodeData> cities);

@@ -1,14 +1,19 @@
 package api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGraphAlgorithms {
     private DirectedWeightedGraph graph;
     private JSON_Operation json;
+    private ArrayList<Double> eccentricity;
+
 
     @Override
     public void init(DirectedWeightedGraph g) {
         this.graph = g;
+        this.eccentricity = new ArrayList<>();
+
     }
 
     @Override
@@ -50,13 +55,26 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         return null;
     }
 
+
     @Override
     public NodeData center() {
         return null;
     }
-
+        //TODO: I solved it via dynamic programming in second exercise with (O(n * 2^n)) time complexity.
+        // Greedy algorithm is O(n^2 * log(n)) time complexity, however the optimal answer doesn't guaranteed.
+    /**
+     * DEFINITION. TSP problem is by given a complete graph with weighted edges,
+     * what is the Hamiltonian cycle (the path that visits all every node once) of minimum cost.
+     * @param cities
+     * @return
+     */
     @Override
     public List<NodeData> tsp(List<NodeData> cities) {
+        double cost = 0;
+        for (int i = 0; i < cities.size()-1; i++) {
+            EdgeData currPairEdge = graph.getEdge(i,i+1);
+            cost+=currPairEdge.getWeight();
+        }
         return null;
     }
 

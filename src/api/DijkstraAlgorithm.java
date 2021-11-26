@@ -68,8 +68,9 @@ public class DijkstraAlgorithm {
             if (!settled.contains(v.getKey())) {
                 edgeDistance = g.getEdge(check, v.getKey()).getWeight();
                 newDistance = dist[check] + edgeDistance;
-                if (newDistance < dist[v.getKey()])
+                if (newDistance < dist[v.getKey()]) {
                     dist[v.getKey()] = newDistance;
+                }
                 g.getNode(v.getKey()).setWeight(dist[v.getKey()]);
                 dists.add(new NodeCompare(g.getNode(v.getKey())));
             }
