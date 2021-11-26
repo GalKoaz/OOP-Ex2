@@ -70,8 +70,6 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
          this.json = new JSON_Operation(file);
         try {
             json.JSON_Reader();
-            System.out.println(json.getEdges().get(0));
-            System.out.println(json.getNodes().get(0));
         }
         catch (Exception e){
             e.printStackTrace();
@@ -82,16 +80,12 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
 
     public static void main(String[] args) {
         DirectedWeightedGraphAlgorithmsImpl a = new DirectedWeightedGraphAlgorithmsImpl();
-        a.load("G3.json");
+        a.load("G2.json");
         DirectedWeightedGraph temp = new DirectedWeightedGraphImpl(a.json);
         a.init(temp);
-/*        for (int i = 0; i < temp.nodeSize(); i++) {
-            for (int j = 0; j < temp.nodeSize(); j++) {
-                if(i==j)continue;
-                System.out.println(a.shortestPathDist(i,j));
-            }
-        }*/
+        System.out.println(a.shortestPathDist(10,30));
         System.out.println(a.isConnected());
+
     }
 
 }
