@@ -58,7 +58,33 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
 
     @Override
     public NodeData center() {
-        return null;
+        if (!isConnected()) return null; // As written in the interface, we suppose that the graph is connected in calculations.
+        double min = Double.MAX_VALUE;
+        int center = 0;
+        for (int v = 0; v < graph.nodeSize(); v++) {
+            eccentricity.add(e(v));
+            if (e(v) < min) {
+                min = e(v);
+                center = v;
+            }
+        }
+        return graph.getNode(center);
+    } // e(v)=max{d(u,v)/u\inV(G)}:v\inV(G)
+
+    /**
+     * computes the eccentricity of the vertex v. e(v)=max{d(v,u)/u\inV(G)}:v\inV(G)
+     * @param v
+     * @return
+     */
+    public double e(int v){
+        double max = 0;
+        for (int u = 0; u < graph.nodeSize(); u++) {
+            if (u==v) continue;
+            double d = shortestPathDist(v,u);
+            if (d > max)
+                max = d;
+        }
+        return max;
     }
         //TODO: I solved it via dynamic programming in second exercise with (O(n * 2^n)) time complexity.
         // Greedy algorithm is O(n^2 * log(n)) time complexity, however the optimal answer doesn't guaranteed.
