@@ -50,11 +50,9 @@ class DirectedWeightedGraphImplTest {
     }
 
     public EdgeData random_edge_generator() {
-        int src = (int) (Math.random() * this.Vertices.size());
-        int dest = (int) (Math.random() * this.Vertices.size());
-        while (src == dest) {
-            dest = (int) (Math.random() * this.Vertices.size());
-        }
+        int[] srcDest = two_random_distinct_numbers(0, Vertices.size() - 1);
+        int src = srcDest[0];
+        int dest = srcDest[1];
         int tag = 1 + (int) (Math.random() * 10);
         double weight = Math.random() * 10;
         String info = "Src:" + src + "\n" + "Dest:" + dest + "\n" + "Tag" + tag + "\n" + "Weight:" + weight;
@@ -152,7 +150,6 @@ class DirectedWeightedGraphImplTest {
 
     @Test
     void deepCopy() {
-        init();
         DirectedWeightedGraphImpl copy = new DirectedWeightedGraphImpl(new HashMap<>(),new HashMap<>());
         DirectedWeightedGraph g = copy.deepCopy(randGraph);
         assertNotEquals(g,randGraph);
