@@ -1,4 +1,4 @@
-package tests;
+package tests.JSON_Operation;
 
 import org.junit.jupiter.api.Test;
 

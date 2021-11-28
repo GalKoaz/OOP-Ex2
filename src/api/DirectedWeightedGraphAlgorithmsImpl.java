@@ -6,14 +6,9 @@ import java.util.List;
 public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGraphAlgorithms {
     private DirectedWeightedGraph graph;
     private JSON_Operation json;
-    private ArrayList<Double> eccentricity;
-
 
     @Override
-    public void init(DirectedWeightedGraph g) {
-        this.graph = g;
-        this.eccentricity = new ArrayList<>();
-    }
+    public void init(DirectedWeightedGraph g) {this.graph = g;}
 
     @Override
     public DirectedWeightedGraph getGraph() {
@@ -22,7 +17,7 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
 
     @Override
     public DirectedWeightedGraph copy() {
-        return ((DirectedWeightedGraphImpl) graph).deepCopy((DirectedWeightedGraphImpl) graph);
+        return ((DirectedWeightedGraphImpl) graph).deepCopy(graph);
     }
 
     /**
@@ -34,6 +29,13 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         return graph.edgeSize() == graph.nodeSize()*(graph.nodeSize()-1);
     }
 
+
+    /**
+     *
+     * @param src - start node
+     * @param dest - end (target) node
+     * @return
+     */
     @Override
     public double shortestPathDist(int src, int dest) {
         DijkstraAlgorithm algo = new DijkstraAlgorithm(src,dest,this.graph);
@@ -44,27 +46,42 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
     public List<NodeData> shortestPath(int src, int dest) {
         return null;
     }
-
-
+    /**
+     * This method finds the center of the graph.
+     *
+     * Graph Center DEFINITION. the graph center is the vertex to have the minimum eccentricity.
+     *
+     * In a defined formula: C = min{e(v) | for each v in G(V)}
+     *
+     * @return the center node of the graph.
+     */
     @Override
     public NodeData center() {
         if (!isConnected()) {return null;} // As written in the interface, we suppose that the graph is connected in calculations.
         double min = Double.MAX_VALUE;
         int center = 0;
         for (int v = 0; v < graph.nodeSize(); v++) {
-            eccentricity.add(e(v));
             if (e(v) < min) {
                 min = e(v);
                 center = v;
             }
         }
         return graph.getNode(center);
-    } // e(v)=max{d(u,v)/u\inV(G)}:v\inV(G)
-
+    }
     /**
-     * computes the eccentricity of the vertex v. e(v)=max{d(v,u)/u\inV(G)}:v\inV(G)
-     * @param v
-     * @return
+     *
+     * This method computes the eccentricity of a vertex v.
+     *
+     * Eccentricity DEFINITION. the eccentricity of a vertex v is the maximum distance between v towards
+     * each one of the other vertices.
+     *
+     * Distance DEFINITION. the distance d(v,u) is the shortest path between v and u.
+     *
+     *
+     * As being said the eccentricity defined as the following: e(v)=max{d(v,u) such that u in V(G) for each v in V(G)}.
+     *
+     * @param v - the if of a vertex v.
+     * @return the eccentricity of v.
      */
     public double e(int v){
         double max = 0;
@@ -111,7 +128,6 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         }
         return optPath;
     }
-
     /**
      *
      * @param cities
@@ -155,7 +171,11 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         return totalPathCost;
     }
 
-
+    /**
+     *
+     * @param file - the file name (may include a relative path).
+     * @return
+     */
     @Override
     public boolean save(String file) {
         JSON_Operation Writer = new JSON_Operation(file);
@@ -169,6 +189,11 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         return true;
     }
 
+    /**
+     *
+     * @param file - file name of JSON file
+     * @return
+     */
     @Override
     public boolean load(String file) {
          this.json = new JSON_Operation(file);
@@ -181,7 +206,6 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         }
         return true;
     }
-
     public static void main(String[] args) {
         DirectedWeightedGraphAlgorithmsImpl a = new DirectedWeightedGraphAlgorithmsImpl();
         a.load("G2.json");
