@@ -117,6 +117,7 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
             removeEdge(key,i);
             removeEdge(i,key);
         }
+        MC++;
         return Vertices.remove(key);
     }
 
