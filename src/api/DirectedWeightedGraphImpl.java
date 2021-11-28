@@ -56,7 +56,8 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
 
     @Override
     public void connect(int src, int dest, double w) {
-        EdgeData connectedEdge = new EdgeDataImpl(src, dest, Color.BLUE.getRGB(), w, "Test");
+        String info = "Src: "+src+", "+"Dest: "+dest+", "+"Weight: "+w;
+        EdgeData connectedEdge = new EdgeDataImpl(src, dest, Color.BLUE.getRGB(), w, info);
         Edges.put("" + src + "-" + dest, connectedEdge);
         MC++;
     }

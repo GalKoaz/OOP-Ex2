@@ -9,7 +9,7 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
     private JSON_Operation json;
 
     @Override
-    public void init(DirectedWeightedGraph g) {this.graph = g;}
+    public void init(DirectedWeightedGraph g) { this.graph = g; }
 
     @Override
     public DirectedWeightedGraph getGraph() {
@@ -30,7 +30,6 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         return graph.edgeSize() == graph.nodeSize()*(graph.nodeSize()-1);
     }
 
-
     /**
      *
      * @param src - start node
@@ -45,6 +44,7 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
 
     @Override
     public List<NodeData> shortestPath(int src, int dest) {
+
         return null;
     }
     /**
@@ -209,12 +209,11 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
     }
     public static void main(String[] args) {
         DirectedWeightedGraphAlgorithmsImpl a = new DirectedWeightedGraphAlgorithmsImpl();
-        a.load("G2.json");
+        a.load("G1.json");
         DirectedWeightedGraph temp = new DirectedWeightedGraphImpl(a.json);
         a.init(temp);
-        System.out.println(a.shortestPathDist(10,30));
+        //System.out.println(a.shortestPathDist(10,30));
         System.out.println(a.isConnected());
         a.save("G4");
     }
-
 }
