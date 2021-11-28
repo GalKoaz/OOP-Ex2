@@ -46,4 +46,7 @@ public class GeoLocationImpl implements GeoLocation {
     public void setZ(double z) {
         this.z = z;
     }
+
+    @Override
+    public String toString(){ return x + "," + y + "," + z;}
 }
