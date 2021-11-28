@@ -13,7 +13,6 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
     public void init(DirectedWeightedGraph g) {
         this.graph = g;
         this.eccentricity = new ArrayList<>();
-
     }
 
     @Override
@@ -159,7 +158,15 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
 
     @Override
     public boolean save(String file) {
-        return false;
+        JSON_Operation Writer = new JSON_Operation(file);
+        try {
+            Writer.JSON_Writer(this.graph);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -182,7 +189,7 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         a.init(temp);
         System.out.println(a.shortestPathDist(10,30));
         System.out.println(a.isConnected());
-
+        a.save("JsonTester");
     }
 
 }
