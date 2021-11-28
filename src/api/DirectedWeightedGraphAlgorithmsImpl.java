@@ -1,5 +1,6 @@
 package api;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -213,7 +214,7 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         a.init(temp);
         System.out.println(a.shortestPathDist(10,30));
         System.out.println(a.isConnected());
-        a.save("JsonTester");
+        a.save("G4");
     }
 
 }

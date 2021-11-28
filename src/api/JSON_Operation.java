@@ -1,12 +1,20 @@
 package api;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonWriter;
+import javax.json.JsonWriterFactory;
 import java.awt.*;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -60,142 +68,52 @@ public class JSON_Operation {
     }
 
     /**
+     * DirectedWeightedGraph graph
+     *
      * @param graph
      * @throws IOException
      */
     public void JSON_Writer(DirectedWeightedGraph graph) {
-/*        try {
-            // create Gson instance
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Iterator<NodeData> vertices = graph.nodeIter();
+        JsonArrayBuilder nodes = Json.createArrayBuilder();
 
-            // create a writer
-            Writer writer = Files.newBufferedWriter(Paths.get("book.json"));
-            HashMap<String, Object> map = new HashMap<>();
-            Iterator<EdgeData> l = graph.edgeIter();
-            map.put("Edges", "[]");
-            while(l.hasNext()){
-                EdgeData curr = l.next();
-                map.put("src", curr.getSrc());
-                map.put("weight", curr.getWeight());
-                map.put("dest", curr.getDest());
-                // convert book object to JSON file
-                gson.toJson(map, writer);
-                l.remove();
-            }
+        while (vertices.hasNext()) {
+            NodeData curr = vertices.next();
+            nodes.add(Json.createObjectBuilder()
+                    .add("pos", curr.getLocation().toString())
+                    .add("id", curr.getKey()).build());
+        }
+        Iterator<EdgeData> Edges = graph.edgeIter();
+        JsonArrayBuilder edges = Json.createArrayBuilder();
+        while (Edges.hasNext()) {
+            EdgeData curr = Edges.next();
+            edges.add(Json.createObjectBuilder()
+                    .add("src", curr.getSrc())
+                    .add("w", curr.getWeight())
+                    .add("dest", curr.getDest())
+                    .build());
+        }
+        javax.json.JsonObject jsonObject = Json.createObjectBuilder()
+                .add("Edges", edges)
+                .add("Nodes", nodes).build();
 
-            // close writer
-            writer.close();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }*/
         try {
-            Writer writer = Files.newBufferedWriter(Paths.get("books.json"));
-            ArrayList<EdgeData> jsonEdges = new ArrayList<>();
-            ArrayList<NodeData> jsonNodes = new ArrayList<>();
-
-            for (int i = 0; i < graph.nodeSize(); i++) {
-                for (int j = 0; j < graph.nodeSize(); j++) {
-                    if(i == j) {continue;}
-                    if(graph.getEdge(i,j) != null) {
-                        jsonEdges.add(graph.getEdge(i,j));
-                    }
-                }
-            }
-
-            for (int k = 0; k < graph.nodeSize(); k++) {
-                jsonNodes.add(graph.getNode(k));
-            }
-            // create Gson instance
+            FileWriter file = new FileWriter(path+".json");
+            StringWriter sw = new StringWriter();
+            HashMap<String, Boolean> config = new HashMap<>();
+            JsonWriterFactory jwf = Json.createWriterFactory(config);
+            JsonWriter jsonWriter = jwf.createWriter(sw);
+            jsonWriter.writeObject(jsonObject);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-
-            // convert books object to JSON file
-            gson.toJson(jsonEdges, writer);
-
-            // close writer
-            writer.close();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-/*        try {*/
-            // create book object
-            //String[] jsonEdges = new String[graph.edgeSize()];
-            //String[] jsonNodes = new String[graph.nodeSize()];
-/*            Writer writer = Files.newBufferedWriter(Paths.get("jsonEdges.json"));
-            Gson gson = new Gson();
-            for (int i = 0; i < graph.nodeSize(); i++) {
-                for (int j = 0; j < graph.nodeSize(); j++) {
-                    if(i == j) {continue;}
-                    if(graph.getEdge(i,j) != null) {
-                        EdgeData temp = graph.getEdge(i, j);
-                        String json =  gson.toJson(temp);
-                        gson.toJson(json, writer);
-                        //jsonEdges[i] = graph.getEdge(i, j).getInfo();
-                        //bw.append(graph.getEdge(i, j).getInfo());
-                    }
-                }
-            }*/
-
-            // convert book object to JSON
-            //      Gson gson = new Gson().toJson(book);
-
-            // print JSON string
-
-            // convert book object to JSON file
-
-            // close writer
-/*            writer.close();
-
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }*/
-/*        try {
-            FileOutputStream os = new FileOutputStream(path + ".json", true);
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String[] jsonEdges = new String[graph.edgeSize()];
-            String[] jsonNodes = new String[graph.nodeSize()];
-            int m = 0;
-            for (int i = 0; i < graph.nodeSize(); i++) {
-                for (int j = 0; j < graph.nodeSize(); j++) {
-                    if(i == j) {continue;}
-                    if(graph.getEdge(i,j) != null) {
-                        jsonEdges[m++] = graph.getEdge(i, j).getInfo();
-                        bw.append(graph.getEdge(i, j).getInfo());
-                    }
-                }
-            }
-            for (int k = 0; k < jsonNodes.length; k++) {
-                jsonNodes[k] = graph.getNode(k).getInfo();
-            }
-            String temp = gson.toJson("Tempss");
-            bw.append(temp);
-            bw.close();
-        } catch (FileNotFoundException e) {
+            JsonElement g = new JsonParser().parse(sw.toString());
+            String prettyJsonString = gson.toJson(g);
+            file.write(prettyJsonString);
+            jsonWriter.close();
+            file.close();
+        } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
     }
-
-/*        FileWriter FileWriter = new FileWriter(path+".json");
-        Gson gson = new GsonBuilder().create();
-        String[] jsonEdges = new String[graph.edgeSize()];
-        String[] jsonNodes = new String[graph.nodeSize()];
-        for (int i = 0; i < graph.nodeSize(); i++) {
-            for (int j = 0; j < graph.nodeSize(); j++) {
-                if(i == j) {continue;}
-                if(graph.getEdge(i,j) != null) {
-                    jsonEdges[i] = graph.getEdge(i, j).getInfo();
-                }
-            }
-        }
-        for (int k = 0; k < jsonNodes.length; k++) {
-            jsonNodes[k] = graph.getNode(k).getInfo();
-        }
-        gson.toJson(jsonEdges, FileWriter);
-        gson.toJson(jsonNodes, FileWriter);*/
 
         /**
          *
@@ -256,8 +174,11 @@ public class JSON_Operation {
             return initEdges;
         }
 
-        public ArrayList<NodeData> getInitVertices () {
-            return initVertices;
-        }
+    public ArrayList<NodeData> getInitVertices() {
+        return initVertices;
     }
+
+}
+
+
 
