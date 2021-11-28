@@ -1,21 +1,22 @@
 package api;
 
-import java.util.Comparator;
-
 public class NodeDataImpl implements NodeData{
 
-    private GeoLocationImpl Node;
-    private int key, tag;
+    private GeoLocation Node;
+    private final int key;
+    private int tag;
     private double weight;
     private String info;
 
-    public NodeDataImpl(int key, int tag, String info, double weight, GeoLocationImpl Node) {
-        this.info = info;
-        this.Node = Node;
-        this.tag = tag;
-        this.weight = weight;
+    public NodeDataImpl(int key, int tag, String info, double weight, GeoLocation Node) {
         this.key = key;
+        this.tag = tag;
+        this.info = info;
+        this.weight = weight;
+        this.Node = Node;
     }
+    // A copy constructor
+    public NodeDataImpl(NodeData other){ this(other.getKey(), other.getTag(), other.getInfo(), other.getWeight(), other.getLocation());}
 
     @Override
     public int getKey() {
@@ -28,14 +29,7 @@ public class NodeDataImpl implements NodeData{
     }
 
     @Override
-    public void setLocation(GeoLocation p) {
-        double newX = p.x();
-        double newY = p.y();
-        double newZ = p.z();
-        this.Node.setX(newX);
-        this.Node.setY(newY);
-        this.Node.setZ(newZ);
-    }
+    public void setLocation(GeoLocation p) {this.Node = new GeoLocationImpl(p);}
 
     @Override
     public double getWeight() {
@@ -53,9 +47,7 @@ public class NodeDataImpl implements NodeData{
     }
 
     @Override
-    public void setInfo(String s) {
-        this.info = s;
-    }
+    public void setInfo(String s) {this.info = s;}
 
     @Override
     public int getTag() {
@@ -66,10 +58,4 @@ public class NodeDataImpl implements NodeData{
     public void setTag(int t) {
         this.tag = t;
     }
-
-    public NodeData deepCopy(NodeDataImpl other) {
-        return new NodeDataImpl(other.key, other.tag, other.info, other.weight,
-                new GeoLocationImpl(other.Node.x(), other.Node.y(), other.Node.z()));
-    }
-
 }

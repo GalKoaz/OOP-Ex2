@@ -1,22 +1,28 @@
 package api;
 
-import javax.swing.plaf.synth.SynthTextFieldUI;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Iterator;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonWriter;
 
 public class JSON_Operation {
 
     public String path;
-    private ArrayList<String> Edges;
-    private ArrayList<String> Vertices;
+    private ArrayList<String> Edges, Vertices;
     private ArrayList<EdgeData> initEdges;
     private ArrayList<NodeData> initVertices;
 
+
+    /**
+     * @param path
+     */
     public JSON_Operation(String path) {
         this.path = path;
         this.Edges = new ArrayList<>();
@@ -60,48 +66,54 @@ public class JSON_Operation {
         this.initVertices = vertices;
     }
 
-    public ArrayList<EdgeData> updateEdges() {
-        ArrayList<EdgeData> Edges = new ArrayList<>();
-        for (String edge : this.Edges) {
-            edge = edge.replaceAll(":", " ").replaceAll(",", " ");
-            String[] values = edge.split(" ");
-            int src = Integer.parseInt(values[1]);
-            int dest = Integer.parseInt(values[5]);
-            double w = Double.parseDouble(values[3]);
-            String info = "src:"+src + "\n" + "dest:" + "\n" + "weight:" + w;
-            EdgeData Edge = new EdgeDataImpl(src,dest,Color.BLACK.getRGB(),w,info);
-            Edges.add(Edge);
+        /**
+         * @return
+         */
+        public ArrayList<EdgeData> updateEdges () {
+            ArrayList<EdgeData> Edges = new ArrayList<>();
+            for (String edge : this.Edges) {
+                edge = edge.replaceAll(":", " ").replaceAll(",", " ");
+                String[] values = edge.split(" ");
+                int src = Integer.parseInt(values[1]);
+                int dest = Integer.parseInt(values[5]);
+                double w = Double.parseDouble(values[3]);
+                String info = "src:" + src + "\n"  + "weight:" + w + "\n" + "dest:" + dest;
+                EdgeData Edge = new EdgeDataImpl(src, dest, Color.BLACK.getRGB(), w, info);
+                Edges.add(Edge);
+            }
+            return Edges;
         }
-        return Edges;
-    }
 
-    public ArrayList<NodeData> updateVertices() {
-        ArrayList<NodeData> Vertices = new ArrayList<>();
-        for (String vertex : this.Vertices) {
-            String[] id_temp = vertex.split(",");
-            int id = Integer.parseInt(id_temp[id_temp.length - 1].substring(5));
-            double pos_x = Double.parseDouble(id_temp[0].substring(7));
-            double pos_y = Double.parseDouble(id_temp[1]);
-            double pos_z = Double.parseDouble(id_temp[2].substring(0, id_temp[2].length() - 1));
-            String info = "ID:"+id+"\n"+"X:"+pos_x+"\n"+"Y:"+pos_y+"\n"+"Z:"+pos_z;
-            GeoLocationImpl geoPoint = new GeoLocationImpl(pos_x,pos_y,pos_z);
-            NodeData Node = new NodeDataImpl(id, Color.RED.getRGB(),info,Integer.MAX_VALUE,geoPoint);
-            Vertices.add(Node);
+        /**
+         * @return
+         */
+        public ArrayList<NodeData> updateVertices () {
+            ArrayList<NodeData> Vertices = new ArrayList<>();
+            for (String vertex : this.Vertices) {
+                String[] id_temp = vertex.split(",");
+                int id = Integer.parseInt(id_temp[id_temp.length - 1].substring(5));
+                double pos_x = Double.parseDouble(id_temp[0].substring(7));
+                double pos_y = Double.parseDouble(id_temp[1]);
+                double pos_z = Double.parseDouble(id_temp[2].substring(0, id_temp[2].length() - 1));
+                String info = "ID:" + id + "\n" + "POS:" + pos_x + "," + pos_y + "," + pos_z;
+                GeoLocationImpl geoPoint = new GeoLocationImpl(pos_x, pos_y, pos_z);
+                NodeData Node = new NodeDataImpl(id, Color.RED.getRGB(), info, Integer.MAX_VALUE, geoPoint);
+                Vertices.add(Node);
+            }
+            return Vertices;
         }
-        return Vertices;
-    }
 
-    public ArrayList<String> getEdges() {
-        return Edges;
-    }
+        public ArrayList<String> getEdges () {
+            return Edges;
+        }
 
-    public ArrayList<String> getNodes() {
-        return Vertices;
-    }
+        public ArrayList<String> getNodes () {
+            return Vertices;
+        }
 
-    public ArrayList<EdgeData> getInitEdges() {
-        return initEdges;
-    }
+        public ArrayList<EdgeData> getInitEdges () {
+            return initEdges;
+        }
 
     public ArrayList<NodeData> getInitVertices() {
         return initVertices;

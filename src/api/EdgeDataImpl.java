@@ -19,13 +19,9 @@ public class EdgeDataImpl implements EdgeData {
         this.tag = tag;
         this.info = info;
     }
-
+    // A copy constructor
     public EdgeDataImpl(EdgeData other){
-        this.weight = other.getWeight();
-        this.src = other.getSrc();
-        this.dest = other.getDest();
-        this.tag = other.getTag();
-        this.info = other.getInfo();
+        this(other.getSrc(), other.getDest(), other.getTag(), other.getWeight(), other.getInfo());
     }
 
     @Override
@@ -62,9 +58,4 @@ public class EdgeDataImpl implements EdgeData {
     public void setTag(int t) {
         this.tag = t;
     }
-    public EdgeData deepCopy(EdgeDataImpl other){
-        return new EdgeDataImpl(other.src, other.dest, other.tag, other.weight, other.info);
-    }
-
-
 }

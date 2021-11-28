@@ -8,6 +8,9 @@ public class GeoLocationImpl implements GeoLocation {
         this.y = y;
         this.z = z;
     }
+    // A copy constructor
+    public GeoLocationImpl(GeoLocation other){this(other.x(), other.y(), other.z());}
+
     @Override
     public double x() {
         return x;
@@ -31,7 +34,6 @@ public class GeoLocationImpl implements GeoLocation {
     public double distance(GeoLocation g) {
         return Math.sqrt(Math.pow(g.x()-x,2)+Math.pow(g.y()-y,2)+Math.pow(g.z()-z,2));
     }
-
 
     public void setX(double x) {
         this.x = x;

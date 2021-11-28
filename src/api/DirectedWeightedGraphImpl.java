@@ -25,7 +25,12 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
             this.Edges_copy.put("" + edge.getSrc() + edge.getDest(), new EdgeDataImpl(edge));
         }
     }
-
+    public DirectedWeightedGraphImpl(HashMap<Integer, NodeData> Vertices,HashMap<String,
+            EdgeData> Edges, HashMap<String, EdgeData> Edges_copy) {
+       this.Edges_copy = Edges_copy;
+       this.Edges = Edges;
+       this.Vertices = Vertices;
+    }
     @Override
     public NodeData getNode(int key) {
         return Vertices.get(key);
@@ -67,15 +72,26 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
     @Override
     public Iterator<EdgeData> edgeIter(int node_id) {
 
-        for (int i = 0; i < this.Edges_copy.size(); i++) {
+        for (int i = 0; i < Vertices.size(); i++) {
+            if (node_id == i) {continue;}
             String currKey = "" + node_id + i;
-            this.Edges_copy.remove(currKey);
+            String currKey2 = "" + i + node_id;
+            Edges.remove(currKey);
+            Edges.remove(currKey2);
+
         }
-        return this.Edges_copy.values().iterator();
+        return Edges.values().iterator();
     }
 
     @Override
     public NodeData removeNode(int key) {
+        for (int i = 0; i < Vertices.size(); i++) {
+            if (key == i) {continue;}
+            String currKey = "" + key + i;
+            String currKey2 = "" + i + key;
+            Edges_copy.remove(currKey);
+            Edges_copy.remove(currKey2);
+        }
         return Vertices.remove(key);
     }
 
@@ -114,6 +130,31 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
     public void setEdges(HashMap<String, EdgeData> edges) {
         Edges = edges;
     }
+    /**
+     * performs a deep copy of a graph g
+     * @param g
+     * @return
+     */
+    public DirectedWeightedGraph deepCopy(DirectedWeightedGraphImpl g) {
+        HashMap<Integer, NodeData> Vertices = new HashMap<>();
+        HashMap<String, EdgeData> Edges = new HashMap<>();
+        HashMap<String, EdgeData> Edges_copy = new HashMap<>();
+
+        for (int k = 0; k < g.Vertices.size(); k++) {
+            Vertices.put(k, new NodeDataImpl(g.getNode(k)));
+        }
+        for (int src = 0; src < g.nodeSize(); src++) {
+            for (int dest = 0; dest < g.nodeSize(); dest++) {
+                if (g.getEdge(src, dest) != null) {
+                    Edges.put("" + src + dest, new EdgeDataImpl(g.getEdge(src, dest)));
+                    Edges_copy.put("" + src + dest, new EdgeDataImpl(g.getEdge(src, dest)));
+                }
+            }
+        }
+        return new DirectedWeightedGraphImpl(Vertices, Edges, Edges_copy);
+    }
+
+
 
 /*    public static void main(String[] args) {
         System.out.println("" + 0 + 15);
