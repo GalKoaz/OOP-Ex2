@@ -4,44 +4,40 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Iterator;
 
+
+/**
+ * Brief explanation of our implementation: we have taken a hashmap to support as the collection to have the graph's properties,
+ * because it is considered the best time complexity for collection's operations with keys (O(1) for the standard operations).
+ * In order to know where exactly a certain edge from src to dest located in the hashmap,
+ * we generate the key = "src + dest".
+ * E.g: given an edge from 0 to 1, then the key for this edge would be the following string "01".
+ * Additionally, the vertices are ordered with keys by their id.
+ */
+
 public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
 
     private HashMap<Integer, NodeData> Vertices;
     private HashMap<String, EdgeData> Edges;
-    private HashMap<String, EdgeData> Edges_copy;
 
     /**
      *  This constructor gets a JSON_Operation object, to initialize the graph's properties (edges and vertices),
      *  from the json file which constructed in DirectedWeightedGraphAlgorithmsImpl class.
      *  The method also initializes a deep copy of the edges for the class' methods.
-     *
-     *
-     *  Brief explanation of our implementation: we have taken a hashmap to support as the collection to have the graph's properties,
-     *  because it is considered the best time complexity for collection's operations with keys (O(1) for the standard operations).
-     *  In order to know where exactly a certain edge from src to dest located in the hashmap,
-     *  we generate the key = "src + dest".
-     *  E.g: given an edge from 0 to 1, then the key for this edge would be the following string "01".
-     *  Additionally, the vertices are ordered with keys by their id.
-     *
      * @param json - a JSON_Operation object.
      */
     public DirectedWeightedGraphImpl(JSON_Operation json) {
         json.init_Graph();
         this.Vertices = new HashMap<>();
         this.Edges = new HashMap<>();
-        this.Edges_copy = new HashMap<>();
         for (NodeData vertex : json.getInitVertices()) {
             this.Vertices.put(vertex.getKey(), vertex);
         }
         for (EdgeData edge : json.getInitEdges()) {
             this.Edges.put("" + edge.getSrc() + edge.getDest(), edge);
-            this.Edges_copy.put("" + edge.getSrc() + edge.getDest(), new EdgeDataImpl(edge));
         }
     }
 
-    public DirectedWeightedGraphImpl(HashMap<Integer, NodeData> Vertices,HashMap<String,
-            EdgeData> Edges, HashMap<String, EdgeData> Edges_copy) {
-       this.Edges_copy = Edges_copy;
+    public DirectedWeightedGraphImpl(HashMap<Integer, NodeData> Vertices,HashMap<String, EdgeData> Edges) {
        this.Edges = Edges;
        this.Vertices = Vertices;
     }
@@ -93,11 +89,11 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
             if (node_id == i) {continue;}
             String currKey = "" + node_id + i;
             String currKey2 = "" + i + node_id;
-            Edges_copy.remove(currKey);
-            Edges_copy.remove(currKey2);
+            Edges.remove(currKey);
+            Edges.remove(currKey2);
 
         }
-        return Edges_copy.values().iterator();
+        return Edges.values().iterator();
     }
     /**
      *
@@ -109,6 +105,7 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
      * The reason for that is that our implementation works the way in which an edge from src to dest,
      * could be found in the hash map of the edges under the key = "src + dest".
      * E.g: given an edge from 0 to 1, then the key for this edge would be the following string "01".
+     *
      * Therefore, we have to go through all strings which starts with the given key, or ends there,
      * and that's the reason why we need to go over all vertices.
      * The different between O(V) and O(k) is a bit of a pain, but with a further look
@@ -173,7 +170,6 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
     public DirectedWeightedGraph deepCopy(DirectedWeightedGraphImpl g) {
         HashMap<Integer, NodeData> Vertices = new HashMap<>();
         HashMap<String, EdgeData> Edges = new HashMap<>();
-        HashMap<String, EdgeData> Edges_copy = new HashMap<>();
 
         for (int k = 0; k < g.Vertices.size(); k++) {
             Vertices.put(k, new NodeDataImpl(g.getNode(k)));
@@ -182,21 +178,9 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
             for (int dest = 0; dest < g.nodeSize(); dest++) {
                 if (g.getEdge(src, dest) != null) {
                     Edges.put("" + src + dest, new EdgeDataImpl(g.getEdge(src, dest)));
-                    Edges_copy.put("" + src + dest, new EdgeDataImpl(g.getEdge(src, dest)));
                 }
             }
         }
-        return new DirectedWeightedGraphImpl(Vertices, Edges, Edges_copy);
+        return new DirectedWeightedGraphImpl(Vertices, Edges);
     }
-
-
-
-/*    public static void main(String[] args) {
-        System.out.println("" + 0 + 15);
-        HashMap<Integer, NodeData> v = new HashMap<>();
-        v.put(0, new NodeDataImpl(0, 2, "", 1.54545, new GeoLocationImpl(3.0, 4.0, 5.0)));
-        HashMap<Integer, NodeData> v_copy = new HashMap<>(v);
-        v_copy.remove(0);
-        System.out.println(v.get(0).getWeight());
-    }*/
 }
