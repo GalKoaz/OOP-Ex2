@@ -1,10 +1,10 @@
 package api;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGraphAlgorithms {
+
     private DirectedWeightedGraph graph;
     private JSON_Operation json;
 
@@ -15,12 +15,15 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
     public DirectedWeightedGraph getGraph() {
         return this.graph;
     }
-
+    /**
+     * The method returns a deep copy of the initialized graph.
+     * The documentations for this are located in DirectedWeightedGraphImpl class.
+     * @return a deep of the initialized graph.
+     */
     @Override
     public DirectedWeightedGraph copy() {
         return ((DirectedWeightedGraphImpl) graph).deepCopy(graph);
     }
-
     /**
      * Graph Theory. A directed graph is connected iff it has n*(n-1) edges, when n symbolizes the number of vertices.
      * @return if connected by that definition.
@@ -29,23 +32,32 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
     public boolean isConnected() {
         return graph.edgeSize() == graph.nodeSize()*(graph.nodeSize()-1);
     }
-
     /**
+     * The method uses Dijkstra's algorithm for finding the optimal path from src to destination.
      *
-     * @param src - start node
-     * @param dest - end (target) node
-     * @return
+     * In terms of time complexity: the way we implemented the algorithm gives us time complexity
+     * of O(|V|+|E|*log(|V|)), because the structure we have applied is priority queue, which arranges
+     * the nodes by their current accumulated distance. This time complexity
+     *
+     * @param src - start node.
+     * @param dest - end (target) node.
+     * @return the optimal path's cost.
      */
     @Override
-    public double shortestPathDist(int src, int dest) {
-        DijkstraAlgorithm algo = new DijkstraAlgorithm(src,dest,this.graph);
-        return algo.findMinDist();
-    }
-
+    public double shortestPathDist(int src, int dest) { return new DijkstraAlgorithm(src,dest,this.graph).getOptPath();}
+    /**
+     * This returns the shortestPath as a consecutive nodes: node(src),..., node(dest).
+     * The OptimalPath property is set on DijkstraAlgorithm class' constructor, so
+     * the documentations for that are located in this class.
+     * @param src - start node.
+     * @param dest - end (target) node.
+     * @return the list of shortestPath as a consecutive nodes: {node(src),..., node(dest)}.
+     */
     @Override
     public List<NodeData> shortestPath(int src, int dest) {
-
-        return null;
+        DijkstraAlgorithm algo = new DijkstraAlgorithm(src,dest,this.graph);
+        algo.printDijkstraOptimalPath(algo.getParent(),src, dest);
+        return algo.getOptimalPath();
     }
     /**
      * This method finds the center of the graph.
@@ -171,9 +183,9 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         }
         return totalPathCost;
     }
-
     /**
-     *
+     * The method saves the graph as a json file in the given path.
+     * Note: Documentations of the json writer are located within JSON_Operation class.
      * @param file - the file name (may include a relative path).
      * @return
      */
@@ -189,9 +201,9 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         }
         return true;
     }
-
     /**
-     *
+     * The method loads the given file with the JSON_Operation class.
+     * Note: Documentations of the json reader are located within JSON_Operation class.
      * @param file - file name of JSON file
      * @return
      */
@@ -209,10 +221,11 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
     }
     public static void main(String[] args) {
         DirectedWeightedGraphAlgorithmsImpl a = new DirectedWeightedGraphAlgorithmsImpl();
-        a.load("G1.json");
+        a.load("G2.json");
         DirectedWeightedGraph temp = new DirectedWeightedGraphImpl(a.json);
         a.init(temp);
-        //System.out.println(a.shortestPathDist(10,30));
+        System.out.println(a.shortestPathDist(1,30));
+        System.out.println(a.shortestPath(1,30));
         System.out.println(a.isConnected());
         a.save("G4.json");
     }

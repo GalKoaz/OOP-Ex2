@@ -4,8 +4,12 @@ package api;
 class NodeCompare implements Comparable<NodeCompare> {
 
     private NodeData vertex;
+    private NodeCompare parent;
 
-    public NodeCompare(NodeData v) {this.vertex = v;}
+    public NodeCompare(NodeData v) {
+        this.vertex = v;
+        this.parent = null;
+    }
 
     public NodeData getVertex() {
         return vertex;
@@ -20,5 +24,13 @@ class NodeCompare implements Comparable<NodeCompare> {
     @Override
     public int compareTo(NodeCompare o) {
         return Double.compare(this.vertex.getWeight(), o.getVertex().getWeight());
+    }
+
+    public NodeCompare getParent() {
+        return parent;
+    }
+
+    public void setParent(NodeCompare parent) {
+        this.parent = parent;
     }
 }

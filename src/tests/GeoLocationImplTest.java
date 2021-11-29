@@ -96,7 +96,6 @@ class GeoLocationImplTest {
         assertNotEquals(p.z(),34.01);
 
     }
-
     /**
      * This tester following the distance formula for 3D points: sqrt((x2 - x1)^2 + (y2 - y1)^2 + (z2 - z1)^2).
      */
