@@ -214,6 +214,6 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         a.init(temp);
         //System.out.println(a.shortestPathDist(10,30));
         System.out.println(a.isConnected());
-        a.save("G4");
+        a.save("G4.json");
     }
 }

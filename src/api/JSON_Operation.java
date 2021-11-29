@@ -94,7 +94,7 @@ public class JSON_Operation {
                 .add("Nodes", nodes).build();
 
         try {
-            FileWriter file = new FileWriter(path+".json");
+            FileWriter file = new FileWriter(path);
             StringWriter sw = new StringWriter();
             HashMap<String, Boolean> config = new HashMap<>();
             JsonWriterFactory jwf = Json.createWriterFactory(config);
