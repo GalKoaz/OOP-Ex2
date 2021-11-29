@@ -25,13 +25,12 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         return ((DirectedWeightedGraphImpl) graph).deepCopy(graph);
     }
     /**
-     * Graph Theory. A directed graph is connected iff it has n*(n-1) edges, when n symbolizes the number of vertices.
+     * Graph Theory. A directed graph is connected iff we can reach from any node to any other node that has chosen.
+     * @apiNote all documentations of the using of DFS is located whithin the DFS class.
      * @return if connected by that definition.
      */
     @Override
-    public boolean isConnected() {
-        return graph.edgeSize() == graph.nodeSize()*(graph.nodeSize()-1);
-    }
+    public boolean isConnected() { return new DFS((DirectedWeightedGraphImpl) graph).isConnected();}
     /**
      * The method uses Dijkstra's algorithm for finding the optimal path from src to destination.
      *
@@ -39,8 +38,8 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      * of O(|V|+|E|*log(|V|)), because the structure we have applied is priority queue, which arranges
      * the nodes by their current accumulated distance. This time complexity
      *
-     * @param src - start node.
-     * @param dest - end (target) node.
+     * @param src start node.
+     * @param dest end (target) node.
      * @return the optimal path's cost.
      */
     @Override
@@ -49,16 +48,12 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      * This returns the shortestPath as a consecutive nodes: node(src),..., node(dest).
      * The OptimalPath property is set on DijkstraAlgorithm class' constructor, so
      * the documentations for that are located in this class.
-     * @param src - start node.
-     * @param dest - end (target) node.
+     * @param src start node.
+     * @param dest end (target) node.
      * @return the list of shortestPath as a consecutive nodes: {node(src),..., node(dest)}.
      */
     @Override
-    public List<NodeData> shortestPath(int src, int dest) {
-        DijkstraAlgorithm algo = new DijkstraAlgorithm(src,dest,this.graph);
-        algo.printDijkstraOptimalPath(algo.getParent(),src, dest);
-        return algo.getOptimalPath();
-    }
+    public List<NodeData> shortestPath(int src, int dest) {return new DijkstraAlgorithm(src,dest,this.graph).getOptimalPath();}
     /**
      * This method finds the center of the graph.
      *
@@ -91,9 +86,9 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      * Distance DEFINITION. the distance d(v,u) is the shortest path between v and u.
      *
      *
-     * As being said the eccentricity defined as the following: e(v)=max{d(v,u) such that u in V(G) for each v in V(G)}.
+     * As being said the eccentricity defined as the following: e(v)=max{d(v,u) such that u in V(G) for each u in V(G)}.
      *
-     * @param v - the if of a vertex v.
+     * @param v the if of a vertex v.
      * @return the eccentricity of v.
      */
     public double e(int v){
@@ -123,7 +118,7 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      * we prefer the greedy approach.
      *
      *
-     * @param cities - the cities to go over.
+     * @param cities the cities to go over.
      * @return the optimal path.
      */
     @Override
@@ -185,9 +180,9 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
     }
     /**
      * The method saves the graph as a json file in the given path.
-     * Note: Documentations of the json writer are located within JSON_Operation class.
-     * @param file - the file name (may include a relative path).
-     * @return
+     * @apiNote Documentations of the json writer are located within JSON_Operation class.
+     * @param file the file name (may include a relative path).
+     * @return true if the method have successfully written the json file.
      */
     @Override
     public boolean save(String file) {
@@ -203,15 +198,17 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
     }
     /**
      * The method loads the given file with the JSON_Operation class.
-     * Note: Documentations of the json reader are located within JSON_Operation class.
-     * @param file - file name of JSON file
-     * @return
+     * Afterwards, the method initialize the graph with the json.
+     * @apiNote  Documentations of the json reader are located within JSON_Operation class.
+     * @param file file name of JSON file
+     * @return true if the method successfully read the json file.
      */
     @Override
     public boolean load(String file) {
          this.json = new JSON_Operation(file);
         try {
             json.JSON_Reader();
+            init(new DirectedWeightedGraphImpl(json));
         }
         catch (Exception e){
             e.printStackTrace();
@@ -219,14 +216,7 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         }
         return true;
     }
-    public static void main(String[] args) {
-        DirectedWeightedGraphAlgorithmsImpl a = new DirectedWeightedGraphAlgorithmsImpl();
-        a.load("G2.json");
-        DirectedWeightedGraph temp = new DirectedWeightedGraphImpl(a.json);
-        a.init(temp);
-        System.out.println(a.shortestPathDist(1,30));
-        System.out.println(a.shortestPath(1,30));
-        System.out.println(a.isConnected());
-        a.save("G4.json");
+    public JSON_Operation getJson() {
+        return json;
     }
 }
