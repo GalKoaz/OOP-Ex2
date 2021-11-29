@@ -55,7 +55,7 @@ public class DFS {
         for (int v = 0; v < adjacentVerts.get(u).size(); v++) {
             NodeData curr = adjacentVerts.get(u).get(v);
             if (!visited[curr.getKey()]){
-                DFS_Visit(v);
+                DFS_Visit(curr.getKey());
             }
         }
     }
