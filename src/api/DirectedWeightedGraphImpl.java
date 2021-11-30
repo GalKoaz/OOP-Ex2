@@ -63,14 +63,10 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
     }
 
     @Override
-    public Iterator<NodeData> nodeIter() { ///maybe don't work we need to check that. if no use this "Vertices.values().iterator()"
-        return Vertices.values().iterator();
-    }
+    public Iterator<NodeData> nodeIter() {return Vertices.values().iterator();}
 
     @Override
-    public Iterator<EdgeData> edgeIter() {
-        return Edges.values().iterator();
-    }
+    public Iterator<EdgeData> edgeIter() {return Edges.values().iterator();}
 
     /**
      * As the method "removeNode", this method removes, allegedly, the vertex.

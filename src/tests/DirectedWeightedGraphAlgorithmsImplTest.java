@@ -124,25 +124,20 @@ class DirectedWeightedGraphAlgorithmsImplTest {
 
     @Test
     void tsp() { // need to fix
-/*        ArrayList<NodeData> tsp = new ArrayList<>();
+         ArrayList<NodeData> tsp = new ArrayList<>();
         tsp.add(graph.getNode(3));
         tsp.add(graph.getNode(8));
         tsp.add(graph.getNode(10));
         tsp.add(graph.getNode(11));
         ArrayList<NodeData> tsp1 = (ArrayList<NodeData>) a.tsp(tsp);
-        assertTrue(tsp1.size()>0);*/
+        assertTrue(tsp1.size() == 0);
     }
 
     @Test
     void minCycleFromCity() { // need to fix the test
-        ArrayList<NodeData> City = new ArrayList<>();
-//        City.add(graph.getNode(3));
-//        City.add(graph.getNode(28));
-//        City.add(graph.getNode(4));
-//        City.add(graph.getNode(29));
-          ArrayList<NodeData> minCity = (ArrayList<NodeData>) a.tsp(City);
-//        assertTrue(minCity.size()==0);
-        // new test:
+        ArrayList<NodeData> City;
+        ArrayList<NodeData> minCity;
+
         City = new ArrayList<>();
         City.add(graph2.getNode(2));
         City.add(graph2.getNode(3));
