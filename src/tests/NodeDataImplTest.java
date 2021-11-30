@@ -65,7 +65,7 @@ class NodeDataImplTest {
     }
 
     /**
-     * checking if this is a deep copy.
+     * Checking if this is a deep copy.
      */
     @Test
     void setLocation() {

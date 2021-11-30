@@ -26,7 +26,7 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
      *  This constructor gets a JSON_Operation object, to initialize the graph's properties (edges and vertices),
      *  from the json file which constructed in DirectedWeightedGraphAlgorithmsImpl class.
      *  The method also initializes a deep copy of the edges for the class' methods.
-     * @param json - a JSON_Operation object.
+     * @param json a JSON_Operation object.
      */
     public DirectedWeightedGraphImpl(JSON_Operation json) {
         json.init_Graph();
@@ -79,7 +79,7 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
      * it removes it from a copy already constructed in the constructor.
      * Then, returns the iterator for this copy edges collection.
      *
-     * @param node_id - a given node's id.
+     * @param node_id a given node's id.
      * @return an iterator of the edges after removing all edges start or end in this given vertex.
      */
     @Override
@@ -108,7 +108,7 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
      * it makes no different if the graph is complete, or if it's a standard graph with
      * high amount of edges.
      *
-     * @param key - a given id of a node.
+     * @param key a given id of a node.
      * @return the removed node.
      */
     @Override
@@ -139,25 +139,9 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
     public int getMC() {
         return MC;
     }
-
-    public HashMap<Integer, NodeData> getVertices() {
-        return Vertices;
-    }
-
-    public void setVertices(HashMap<Integer, NodeData> vertices) {
-        Vertices = vertices;
-    }
-
-    public HashMap<String, EdgeData> getEdges() {
-        return Edges;
-    }
-
-    public void setEdges(HashMap<String, EdgeData> edges) {
-        Edges = edges;
-    }
     /**
      * This method gets a graph - g and performs a deep copy.
-     * @param g - a given directed weighted graph to (deep) copy.
+     * @param g a given directed weighted graph to (deep) copy.
      * @return the (deep) copy of the graph - g.
      */
     public DirectedWeightedGraph deepCopy(DirectedWeightedGraph g) {
@@ -172,5 +156,21 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
             deepCopyGraph.connect(edge.getSrc(),edge.getDest(),edge.getWeight());
         }
         return deepCopyGraph;
+    }
+    // getters and setters //
+    public HashMap<Integer, NodeData> getVertices() {
+        return Vertices;
+    }
+
+    public void setVertices(HashMap<Integer, NodeData> vertices) {
+        Vertices = vertices;
+    }
+
+    public HashMap<String, EdgeData> getEdges() {
+        return Edges;
+    }
+
+    public void setEdges(HashMap<String, EdgeData> edges) {
+        Edges = edges;
     }
 }

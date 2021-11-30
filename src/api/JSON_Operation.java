@@ -15,7 +15,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-
+/**
+ * This class supports writing and reading from json files.
+ * @apiNote we have used 3 different libraries for writing: complete...
+ */
 public class JSON_Operation {
 
     public String path;
@@ -42,7 +45,6 @@ public class JSON_Operation {
      * want to look at two lines: one contains the position, and the other contains the vertex's id.
      *
      * @throws IOException
-     * @throws IOException
      */
     public void JSON_Reader() throws IOException {
         String data;
@@ -62,11 +64,9 @@ public class JSON_Operation {
         }
         fileReader.close();
     }
-
     /**
-     * DirectedWeightedGraph graph
-     *
-     * @param graph
+     * This method writes a pretty json file with 3 different libraries' methods.
+     * @param graph a given graph
      * @throws IOException
      */
     public void JSON_Writer(DirectedWeightedGraph graph) {
@@ -110,9 +110,14 @@ public class JSON_Operation {
             e.printStackTrace();
         }
     }
-
     /**
+     * The method initialize the graph's edges and vertices lists, after that read
+     * by updateEdges and updateVertices methods.
      *
+     * Then the method updates the edges and vertices lists properties.
+     *
+     * @apiNote these properties we update - "initEdges and initVertices" will be used
+     * by DirectedWeightedGraphImpl class to update the vertices and edges of the graph.
      */
     public void init_Graph() {
         ArrayList<EdgeData> edges = updateEdges();
@@ -120,9 +125,11 @@ public class JSON_Operation {
         this.initEdges = edges;
         this.initVertices = vertices;
     }
-
     /**
-     * @return
+     * This utility for reading, goes over the edges strings, and get the src, dest, weight values.
+     * The method also create the edges' info and color.
+     * Finally, the method returns the edges list property with those edges.
+     * @return the list with the read edges EdgeData objects list.
      */
     public ArrayList<EdgeData> updateEdges() {
         ArrayList<EdgeData> Edges = new ArrayList<>();
@@ -138,9 +145,12 @@ public class JSON_Operation {
         }
         return Edges;
     }
-
     /**
-     * @return
+     * This utility for reading, goes over the vertices strings, and get the id, Location object' values.
+     * The method also create the vertices' info and color, with the GeoLocationImpl object of the position
+     * that were read.
+     * Finally, the method returns the vertices list property with those edges.
+     * @return the list with the read vertices NodeData objects list.
      */
     public ArrayList<NodeData> updateVertices() {
         ArrayList<NodeData> Vertices = new ArrayList<>();
@@ -157,7 +167,7 @@ public class JSON_Operation {
         }
         return Vertices;
     }
-
+    // getters and setters //
     public ArrayList<String> getEdges() {
         return Edges;
     }

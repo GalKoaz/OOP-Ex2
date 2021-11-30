@@ -124,9 +124,10 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
     @Override
     public List<NodeData> tsp(List<NodeData> cities) {
         ArrayList<NodeData> optPath = new ArrayList<>();
-        ArrayList<NodeData> currPath = new ArrayList<>();
+        ArrayList<NodeData> currPath;
         double min = Double.MAX_VALUE;
         for (int city = 0; city < cities.size(); city++) {
+            currPath = new ArrayList<>();
             double optPathLength = pathCost(minCycleFromCity(cities,city, currPath,0));
             if (optPathLength < min){
                 min = optPathLength;
@@ -136,6 +137,8 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         }
         return optPath;
     }
+    //Todo: the issue is that the function greedily select the lowest edge, so he can miss
+    // a whole path. when he misses it can sometimes tell us that there isn't exist such cycle.
     /**
      *
      * @param cities
@@ -145,7 +148,8 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      * @return
      */
     public ArrayList<NodeData> minCycleFromCity(List<NodeData> cities, int city, ArrayList<NodeData> optPath, int cnt){
-        optPath.add(graph.getNode(city));
+        int node_id = cities.get(city).getKey();
+        optPath.add(graph.getNode(node_id));
         if (cnt == cities.size()) {
             return optPath;
         }
@@ -153,8 +157,10 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         int minCity = 0, cityToCheck = 0;
 
         while(cityToCheck < cities.size()) {
-            if (city == cityToCheck) {continue;}
-            double currWeight = graph.getEdge(city,cityToCheck).getWeight();
+            int check_id = cities.get(cityToCheck).getKey();
+            if (city == cityToCheck || graph.getEdge(node_id,check_id) == null
+                     || containsID(optPath,check_id)) {cityToCheck++;continue;}
+            double currWeight = graph.getEdge(node_id,check_id).getWeight();
             if (currWeight < minWeight) {
                 minWeight = currWeight;
                 minCity = cityToCheck;
@@ -169,14 +175,29 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      * @param path a given path - list of vertices.
      * @return the path cost - total weight.
      */
+    // 2 -> 3 -> 4 [{2,3},{3,4}]
     public double pathCost(ArrayList<NodeData> path){
         double totalPathCost = 0;
         for (int i = 0; i < path.size()-1; i++) {
             int currSrc = path.get(i).getKey();
             int currDest = path.get(i+1).getKey();
+            if (graph.getEdge(currSrc,currDest) == null) {totalPathCost = Double.MAX_VALUE;break;}
             totalPathCost += graph.getEdge(currSrc,currDest).getWeight();
         }
         return totalPathCost;
+    }
+
+    /**
+     *
+     * @param l
+     * @param node_id
+     * @return
+     */
+    public boolean containsID(ArrayList<NodeData> l, int node_id){
+        for(NodeData n: l){
+            if (n.getKey() == node_id){return true;}
+        }
+        return false;
     }
     /**
      * The method saves the graph as a json file in the given path.

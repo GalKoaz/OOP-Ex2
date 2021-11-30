@@ -20,9 +20,7 @@ public class EdgeDataImpl implements EdgeData {
         this.info = info;
     }
     // A copy constructor
-    public EdgeDataImpl(EdgeData other){
-        this(other.getSrc(), other.getDest(), other.getTag(), other.getWeight(), other.getInfo());
-    }
+    public EdgeDataImpl(EdgeData other){this(other.getSrc(), other.getDest(), other.getTag(), other.getWeight(), other.getInfo());}
 
     @Override
     public int getSrc() {
