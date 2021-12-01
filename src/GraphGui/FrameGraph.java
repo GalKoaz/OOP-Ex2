@@ -173,14 +173,11 @@ public class FrameGraph extends JFrame implements ActionListener {
             openWebPage("https://github.com/GalKoaz/OOP-Ex2/");
         }
 
-        if (e.getSource() == G1){ }
+        if (e.getSource() == G1){jsonFileSelected = new File("OOP-Ex2\\data\\G1.json");}
 
-        if (e.getSource() == G2){}
+        if (e.getSource() == G2){jsonFileSelected = new File("OOP-Ex2\\data\\G2.json");}
 
-        if (e.getSource() == G3) {
-
-
-        }
+        if (e.getSource() == G3) {jsonFileSelected = new File("OOP-Ex2\\data\\G3.json");}
 
         if (e.getSource() == loadFile){
             JFileChooser fileChooser = new JFileChooser();
@@ -199,7 +196,6 @@ public class FrameGraph extends JFrame implements ActionListener {
         if (e.getSource() == vertexItem){
             System.out.println("sdsddsds");
             Vertex_UI vertex = new Vertex_UI();
-
         }
         /**
          * Edge -> add a vertex, remove vertex
@@ -207,12 +203,14 @@ public class FrameGraph extends JFrame implements ActionListener {
         if (e.getSource() == edgeItem){
             System.out.println("SDsdsdsds");
             Edge_UI edge = new Edge_UI();
-
         }
-
 
     }
 
+    /**
+     * Opening a web page with the given url
+     * @param url the url of the page
+     */
     public void openWebPage(String url){
         try{
             java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));

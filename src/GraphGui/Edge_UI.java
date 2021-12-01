@@ -21,14 +21,23 @@ public class Edge_UI extends JFrame implements ActionListener {
         this.setResizable(false); // prevent this to resize
         this.setVisible(true);
         Cancel.addActionListener(this);
+        Add.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == Cancel){dispose();}
 
+      if (e.getSource() == Add){
+
+      }
     }
     public static void main(String[] args) {
         Edge_UI frame = new Edge_UI();
     }
+
+    public void addEgde(){
+
+    }
+
 }

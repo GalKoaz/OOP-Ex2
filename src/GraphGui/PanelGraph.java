@@ -26,60 +26,9 @@ public class PanelGraph extends JPanel {
         this.setPreferredSize(new Dimension(1000, 1000));
         this.points = new ArrayList<>();
         this.graph = graph;
-
-        /*
-         * the for loop is init all the points in the graph.
-         * By given a name of the vertex and the positions x,y.
-         * */
-
-        for (int i = 0; i < graph.nodeSize(); i++) {
-            points.add(new GraphPoint(String.valueOf(graph.getNode(i).getKey()), new Point2D.Double(graph.getNode(i).getLocation().x(), graph.getNode(i).getLocation().y())));
-        }
-
-        /*
-         * the for loop is init all the edges existed in the graph and take each point already exists,
-         * make a new arraylist of points and know to the correct edges between them.
-         * TODO: need to make a arrow direction to the line, take it from the last edit in my project
-         * */
-
-        edges = new ArrayList<>();
-        for (int i = 0; i < graph.nodeSize(); i++) {
-            for (int j = 0; j < graph.nodeSize(); j++) {
-                if (i == j) continue;
-                if (graph.getEdge(i, j) != null) {
-                    ArrayList<GraphPoint> temp = new ArrayList<>();
-                    for (GraphPoint gp : points) {
-                        if(Objects.equals(gp.getId(), "" + i)){
-                            temp.add(gp);
-                        }
-                        if(Objects.equals(gp.getId(), "" + j)){
-                            temp.add(gp);
-                        }
-                    }
-                    edges.add(new GraphEdge(String.valueOf(graph.getEdge(i, j).getWeight()),temp));
-                }
-            }
-        }
-
-        /*
-         * search if the point is equal to the string id  and get the point from the points objects.
-         * draw each line have edges.
-         * */
-
-        double minX = Double.MAX_VALUE;
-        double maxX = Double.MIN_VALUE;
-        double minY = Double.MAX_VALUE;
-        double maxY = Double.MIN_VALUE;
-
-        for (GraphPoint gp : points) {
-            minX = Math.min(minX, gp.getPoint().getX());
-            maxX = Math.max(maxX, gp.getPoint().getX());
-            minY = Math.min(minY, gp.getPoint().getY());
-            maxY = Math.max(maxY, gp.getPoint().getY());
-        }
-
-        minRange = new Point2D.Double(minX, minY);
-        maxRange = new Point2D.Double(maxX, maxY);
+        pointInit();
+        EdgeInit();
+        setMinMaxRange();
     }
 
     @Override
@@ -172,6 +121,65 @@ public class PanelGraph extends JPanel {
         System.out.println(gp.getId() + " " + x + " x " + y);
 
         return new Point2D.Double(x, y);
+    }
+    /*
+     * the for loop is init all the edges existed in the graph and take each point already exists,
+     * make a new arraylist of points and know to the correct edges between them.
+     * TODO: need to make a arrow direction to the line, take it from the last edit in my project
+     * */
+    public void EdgeInit(){
+        edges = new ArrayList<>();
+        for (int i = 0; i < graph.nodeSize(); i++) {
+            for (int j = 0; j < graph.nodeSize(); j++) {
+                if (i == j) continue;
+                if (graph.getEdge(i, j) != null) {
+                    ArrayList<GraphPoint> temp = new ArrayList<>();
+                    for (GraphPoint gp : points) {
+                        if(Objects.equals(gp.getId(), "" + i)){
+                            temp.add(gp);
+                        }
+                        if(Objects.equals(gp.getId(), "" + j)){
+                            temp.add(gp);
+                        }
+                    }
+                    edges.add(new GraphEdge(String.valueOf(graph.getEdge(i, j).getWeight()),temp));
+                }
+            }
+        }
+
+    }
+    /*
+     * the for loop is init all the points in the graph.
+     * By given a name of the vertex and the positions x,y.
+     * */
+    public void pointInit(){
+        for (int i = 0; i < graph.nodeSize(); i++) {
+            String currKey = String.valueOf(graph.getNode(i).getKey());
+            double currPosX = graph.getNode(i).getLocation().x();
+            double currPosY = graph.getNode(i).getLocation().y();
+            points.add(new GraphPoint(currKey, new Point2D.Double(currPosX, currPosY)));
+        }
+    }
+    /*
+     * search if the point is equal to the string id  and get the point from the points objects.
+     * draw each line have edges.
+     */
+    public void setMinMaxRange(){
+
+        double minX = Double.MAX_VALUE;
+        double maxX = Double.MIN_VALUE;
+        double minY = Double.MAX_VALUE;
+        double maxY = Double.MIN_VALUE;
+
+        for (GraphPoint gp : points) {
+            minX = Math.min(minX, gp.getPoint().getX());
+            maxX = Math.max(maxX, gp.getPoint().getX());
+            minY = Math.min(minY, gp.getPoint().getY());
+            maxY = Math.max(maxY, gp.getPoint().getY());
+        }
+
+        minRange = new Point2D.Double(minX, minY);
+        maxRange = new Point2D.Double(maxX, maxY);
     }
 }
 
