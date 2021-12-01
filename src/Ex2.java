@@ -38,7 +38,7 @@ public class Ex2 {
         DirectedWeightedGraphAlgorithms alg = getGrapgAlgo(json_file);
 
         //FrameGraph gg = new FrameGraph(alg.copy());
-        new Test2(alg.copy());
+        new FrameGraph(alg.copy());
 
 
     }
