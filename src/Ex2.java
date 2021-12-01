@@ -1,11 +1,8 @@
 import GraphGui.FrameGraph;
-import GraphGui.Test2;
+import GraphGui.Test3;
 import api.DirectedWeightedGraph;
 import api.DirectedWeightedGraphAlgorithms;
 import api.DirectedWeightedGraphAlgorithmsImpl;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * This class is the main class for Ex2 - your implementation will be tested using this class.
