@@ -13,7 +13,7 @@ public class PanelGraph extends JPanel {
 
 
     public void paint(Graphics g) {
-        Graphics g2D = (Graphics2D) g;
-        g2D.drawRect(0,0,100,100);
+/*        Graphics g2D = (Graphics2D) g;
+        g2D.drawRect(0,0,100,100);*/
     }
 }

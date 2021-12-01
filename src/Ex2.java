@@ -1,4 +1,5 @@
 import GraphGui.FrameGraph;
+import GraphGui.Test2;
 import api.DirectedWeightedGraph;
 import api.DirectedWeightedGraphAlgorithms;
 import api.DirectedWeightedGraphAlgorithmsImpl;
@@ -40,7 +41,8 @@ public class Ex2 {
     public static void runGUI(String json_file) {
         DirectedWeightedGraphAlgorithms alg = getGrapgAlgo(json_file);
 
-        FrameGraph gg = new FrameGraph(alg.copy());
+        //FrameGraph gg = new FrameGraph(alg.copy());
+        new Test2(alg.copy());
 
 
     }
