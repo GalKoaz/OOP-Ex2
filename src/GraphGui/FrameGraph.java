@@ -4,36 +4,119 @@ import api.DirectedWeightedGraph;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Line2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
 
-public class FrameGraph extends JFrame {
-    private int Radius;
-    private double Phi;
+/*
+   Note: add a logo.icon!!!!!!
+*/
+public class FrameGraph extends JFrame implements ActionListener {
+
     private DirectedWeightedGraph graph;
     private PanelGraph panel;
+    private JMenuBar menuBar;
+    private JMenuItem loadItem, saveItem,exitItem, shortestPathMenu, isConnectedMenu, tspMenu, aboutMenu;
+    private JMenu fileMenu, runMenu, editMenu,  helpMenu;
+    private ImageIcon loadIcon, saveIcon, exitIcon, gitIcon;
+    private Image main_menuBar;
 
-
-    /*
-     * add here a Graph From json loader.
-     * */
-
-    public FrameGraph(DirectedWeightedGraph graph) { // get here a graph.
+    public FrameGraph() { // get here a graph.
         this.panel = new PanelGraph();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit the app
         this.add(panel);
         this.pack();
         this.setTitle("Directed Weighted Graph by Gal & Amir"); // title
         this.setResizable(false); // prevent this to resize
-        this.setVisible(true);
-        this.Radius = 4;
-        this.Phi = Math.toRadians(40);
-        this.graph = graph;
+
+
+        menuBar = new JMenuBar();
+        fileMenu = new JMenu("File");
+        editMenu = new JMenu("Edit");
+        runMenu = new JMenu("Run");
+        helpMenu = new JMenu("Help");
+
+
+        loadItem = new JMenuItem("Load");
+        saveItem = new JMenuItem("Save");
+        exitItem = new JMenuItem("Exit");
+
+
+        fileMenu.add(loadItem);
+        fileMenu.add(saveItem);
+        fileMenu.add(exitItem);
+
         /*
-         * This Constructor get a graph, we take all the nodes and write the ID in each point in the graphics,
-         * and we take all the Edges and make arrows with direction and weight.
-         *
-         *  */
+            Algorithms belongs to the run menu
+         */
+        shortestPathMenu = new JMenuItem("ShortestPath");
+        isConnectedMenu = new JMenuItem("IsConnected");
+        tspMenu = new JMenuItem("TSP");
+
+
+
+
+        runMenu.add(shortestPathMenu);
+        runMenu.add(isConnectedMenu);
+        runMenu.add(tspMenu);
+
+        aboutMenu = new JMenuItem("About");
+        helpMenu.add(aboutMenu);
+
+        loadIcon = new ImageIcon("OOP-Ex2\\src\\GraphGui\\Icons\\file_upload_icon.png");
+        saveIcon = new ImageIcon("OOP-Ex2\\src\\GraphGui\\Icons\\file_save_icon.png");
+        exitIcon = new ImageIcon("OOP-Ex2\\src\\GraphGui\\Icons\\file_exit_icon.png");
+        gitIcon = new ImageIcon("OOP-Ex2\\src\\GraphGui\\Icons\\git.png");
+        main_menuBar = Toolkit.getDefaultToolkit().getImage("OOP-Ex2\\src\\GraphGui\\Icons\\logo.png");
+
+        this.setIconImage(main_menuBar);
+        loadItem.setIcon(loadIcon);
+        saveItem.setIcon(saveIcon);
+        exitItem.setIcon(exitIcon);
+        aboutMenu.setIcon(gitIcon);
+
+        /**
+         *  Actions when pressed:
+         */
+        loadItem.addActionListener(this);
+        saveItem.addActionListener(this);
+        exitItem.addActionListener(this);
+        helpMenu.addActionListener(this);
+        aboutMenu.addActionListener(this);
+
+        /**
+         * Keyboard shortcuts:
+         */
+        fileMenu.setMnemonic(KeyEvent.VK_F);
+        loadItem.setMnemonic(KeyEvent.VK_F1);
+        saveItem.setMnemonic(KeyEvent.VK_S);
+        exitItem.setMnemonic(KeyEvent.VK_DELETE); //pressing delete will close the program.
+        helpMenu.setMnemonic(KeyEvent.VK_H);
+
+
+        /**
+         * add each menu to the menu bar.
+         */
+        menuBar.add(fileMenu);
+        menuBar.add(editMenu);
+        menuBar.add(runMenu);
+        menuBar.add(helpMenu);
+
+
+
+
+
+
+
+
+
+
+        this.setJMenuBar(menuBar);
+
+        this.setVisible(true);
+
+
     }
 
     /*
@@ -58,6 +141,14 @@ public class FrameGraph extends JFrame {
 
 /*        line(g2,"11.23",250,100,100,170);
         line(g2,"44.2",250,100,300,350);*/
+    }
+
+    public void openWebPage(String url){
+        try{
+            java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void drawArrowHead(Graphics2D g2, Point tip, Point tail, Color color) {

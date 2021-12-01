@@ -7,7 +7,7 @@ class DijkstraAlgorithmTest {
     void findMinDist() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void updateNeighbours() {
     }
 }
