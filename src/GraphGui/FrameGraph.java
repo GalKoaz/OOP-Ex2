@@ -203,6 +203,7 @@ public class FrameGraph extends JFrame implements ActionListener {
             jsonFileSelected = new File("OOP-Ex2\\data\\G1.json");
             DirectedWeightedGraphAlgorithms g = new DirectedWeightedGraphAlgorithmsImpl();
             g.load(jsonFileSelected.getPath());
+            this.dispose();
             this.setVisible(false);
             new FrameGraph(g.getGraph());
         }
@@ -211,6 +212,7 @@ public class FrameGraph extends JFrame implements ActionListener {
             jsonFileSelected = new File("OOP-Ex2\\data\\G2.json");
             DirectedWeightedGraphAlgorithms g = new DirectedWeightedGraphAlgorithmsImpl();
             g.load(jsonFileSelected.getPath());
+            this.dispose();
             this.setVisible(false);
             new FrameGraph(g.getGraph());
         }
@@ -219,6 +221,7 @@ public class FrameGraph extends JFrame implements ActionListener {
             jsonFileSelected = new File("OOP-Ex2\\data\\G3.json");
             DirectedWeightedGraphAlgorithms g = new DirectedWeightedGraphAlgorithmsImpl();
             g.load(jsonFileSelected.getPath());
+            this.dispose();
             this.setVisible(false);
             new FrameGraph(g.getGraph());
         }
@@ -233,7 +236,7 @@ public class FrameGraph extends JFrame implements ActionListener {
                 jsonFileSelected = new File(fileChooser.getSelectedFile().getAbsolutePath());
                 DirectedWeightedGraphAlgorithms g = new DirectedWeightedGraphAlgorithmsImpl();
                 g.load(jsonFileSelected.getAbsolutePath());
-                dispose();
+                this.dispose();
                 new FrameGraph(g.getGraph());
             }
         }
