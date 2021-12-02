@@ -45,23 +45,42 @@ public class PanelGraph extends JPanel {
         FontMetrics fm = g2d.getFontMetrics();
         double insets = fm.getHeight() + radius;
 
-
-        for (GraphEdge ed: edges) {
-            ArrayList<GraphPoint> p = ed.getPoints();
-            paintLine(g2d,p.get(0),p.get(1),insets);
-        }
-
         for (GraphPoint gp : points) {
             paintPoint(g2d, gp, insets);
         }
+
+        for (GraphEdge ed : edges) {
+            ArrayList<GraphPoint> p = ed.getPoints();
+            paintLine(g2d,p.get(0),p.get(1),insets,ed.getWeight());
+        }
+
         g2d.dispose();
     }
 
-    private void paintLine(Graphics2D g2d, GraphPoint from, GraphPoint to, double insets) {
+    private void paintLine(Graphics2D g2d, GraphPoint from, GraphPoint to, double insets, String weight) {
         Point2D fromPoint = translate(from, insets);
         Point2D toPoint = translate(to, insets);
         g2d.setColor(Color.RED);
         g2d.draw(new Line2D.Double(fromPoint, toPoint));
+        drawArrowHead(g2d, toPoint, fromPoint, Color.WHITE);
+        StringWeight(g2d, weight, to, from, insets);
+    }
+
+    private void StringWeight(Graphics2D g2d, String weight, GraphPoint to, GraphPoint from, double insets) {
+        Point2D translated = translate(from, insets);
+        Point2D translated2 = translate(to, insets);
+
+        double xPos = translated.getX();
+        double yPos = translated.getY();
+
+        double xPos2 = translated2.getX();
+        double yPos2 = translated2.getY();
+
+        double x_center = (xPos + xPos2) / 2;
+        double y_center = (yPos + (yPos2)) / 2;
+        g2d.setPaint(Color.black);
+        if (weight.length() > 13) weight = weight.substring(0, weight.length() - 12);
+        //g2d.drawString(weight, (float) x_center, (float) y_center);
     }
 
     private void paintPoint(Graphics2D g2d, GraphPoint gp, double insets) {
@@ -87,17 +106,17 @@ public class PanelGraph extends JPanel {
 
         g2.dispose();
     }
-    private void drawArrowHead(Graphics2D g2, Point tip, Point tail, Color color) {
+    private void drawArrowHead(Graphics2D g2, Point2D tip, Point2D tail, Color color) {
         int ArrowSize = 10;
         g2.setPaint(color);
-        double dy = tip.y - tail.y;
-        double dx = tip.x - tail.x;
+        double dy = tip.getY() - tail.getY();
+        double dx = tip.getX() - tail.getX();
         double theta = Math.atan2(dy, dx);
         double x, y, rho = theta + Phi;
         for (int j = 0; j < 2; j++) {
-            x = tip.x - ArrowSize * Math.cos(rho);
-            y = tip.y - ArrowSize * Math.sin(rho);
-            g2.draw(new Line2D.Double(tip.x, tip.y, x, y));
+            x = (tip.getX() - ArrowSize * Math.cos(rho));
+            y = (tip.getY() - ArrowSize * Math.sin(rho));
+            g2.draw(new Line2D.Double(tip.getX(), tip.getY(), x, y));
             rho = theta - Phi;
         }
     }
@@ -127,26 +146,19 @@ public class PanelGraph extends JPanel {
      * make a new arraylist of points and know to the correct edges between them.
      * TODO: need to make a arrow direction to the line, take it from the last edit in my project
      * */
-    public void EdgeInit(){
+    public void EdgeInit() {
         edges = new ArrayList<>();
         for (int i = 0; i < graph.nodeSize(); i++) {
             for (int j = 0; j < graph.nodeSize(); j++) {
                 if (i == j) continue;
+                ArrayList<GraphPoint> temp = new ArrayList<>();
                 if (graph.getEdge(i, j) != null) {
-                    ArrayList<GraphPoint> temp = new ArrayList<>();
-                    for (GraphPoint gp : points) {
-                        if(Objects.equals(gp.getId(), "" + i)){
-                            temp.add(gp);
-                        }
-                        if(Objects.equals(gp.getId(), "" + j)){
-                            temp.add(gp);
-                        }
-                    }
-                    edges.add(new GraphEdge(String.valueOf(graph.getEdge(i, j).getWeight()),temp));
+                    temp.add(new GraphPoint(String.valueOf(graph.getNode(graph.getEdge(i,j).getSrc()).getKey()),new Point2D.Double(graph.getNode(graph.getEdge(i, j).getSrc()).getLocation().x(), graph.getNode(graph.getEdge(i, j).getSrc()).getLocation().y())));
+                    temp.add(new GraphPoint(String.valueOf(graph.getNode(graph.getEdge(i,j).getDest()).getKey()),new Point2D.Double(graph.getNode(graph.getEdge(i, j).getDest()).getLocation().x(), graph.getNode(graph.getEdge(i, j).getDest()).getLocation().y())));
+                    edges.add(new GraphEdge(String.valueOf(graph.getEdge(i, j).getWeight()), temp));
                 }
             }
         }
-
     }
     /*
      * the for loop is init all the points in the graph.

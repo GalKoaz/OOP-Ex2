@@ -1,5 +1,6 @@
 package GraphGui;
 
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class GraphEdge {
@@ -19,4 +20,5 @@ public class GraphEdge {
     public ArrayList<GraphPoint> getPoints() {
         return Points;
     }
+
 }
