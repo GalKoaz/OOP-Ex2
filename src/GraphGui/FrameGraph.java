@@ -18,7 +18,8 @@ import java.io.IOException;
 */
 public class FrameGraph extends JFrame implements ActionListener {
 
-    private DirectedWeightedGraph graph;
+    private DirectedWeightedGraph graph, copyGraph;
+    private DirectedWeightedGraphAlgorithms copyGraphAtBeginning;
     private PanelGraph panel;
     private JMenuBar menuBar;
     private JMenuItem saveItem,exitItem, shortestPathMenu, isConnectedMenu, tspMenu, aboutMenu;
@@ -39,6 +40,9 @@ public class FrameGraph extends JFrame implements ActionListener {
         this.pack();
         this.setTitle("Directed Weighted Graph by Gal & Amir"); // title
         this.setResizable(true); // prevent this to resize
+        this.copyGraphAtBeginning = new DirectedWeightedGraphAlgorithmsImpl();
+        this.copyGraphAtBeginning.init(graph);
+        this.copyGraph = copyGraphAtBeginning.copy();
 
 
         menuBar = new JMenuBar();
@@ -241,12 +245,18 @@ public class FrameGraph extends JFrame implements ActionListener {
         /**
          * Edge -> add a vertex, remove vertex
          */
+        if (e.getSource() == removeVertexItem){ new Vertex_UI_remove(graph,this);}
+
         if (e.getSource() == addEdgeItem){ new Edge_UI_add(graph,this);}
 
+        if (e.getSource() == removeEdgeItem) {new Edge_UI_remove(graph,this);}
         /**
          * complete..........
          */
-        if (e.getSource() == clearItem) {   }
+        if (e.getSource() == clearItem) {
+            this.dispose();
+            new FrameGraph(copyGraph);
+        }
     }
 
     /**

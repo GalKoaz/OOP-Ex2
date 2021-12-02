@@ -52,12 +52,12 @@ public class Vertex_UI_add extends JFrame implements ActionListener {
 
     public void addVertex(){
 
-        int id = Integer.parseInt(node_id.getText());
+        int key = Integer.parseInt(node_id.getText());
         double posX = Double.parseDouble(positionX.getText());
         double posy = Double.parseDouble(positionY.getText());
-        System.out.println("id: "+id + "\n" + "pos x: "+posX+","+"\npos y: "+posy);
-        String info = "id:"+id + "\n" + "pos:"+posX+","+posy+",0.0";
-        graph.addNode(new NodeDataImpl(id, 0,info,0,new GeoLocationImpl(posX,posy,0.0)));
+        System.out.println("id: "+key + "\n" + "pos x: "+posX+","+"\npos y: "+posy);
+        String info = "id:"+key + "\n" + "pos:"+posX+","+posy+",0.0";
+        graph.addNode(new NodeDataImpl(key, 0,info,0,new GeoLocationImpl(posX,posy,0.0)));
         this.dispose();
         frame.dispose();
         new FrameGraph(graph);

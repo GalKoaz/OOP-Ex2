@@ -3,21 +3,23 @@ package GraphGui;
 import api.DirectedWeightedGraph;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Edge_UI_add extends JFrame implements ActionListener {
     private JButton Add;
     private JButton Cancel;
-    private JPanel EdgeUI;
+    private JPanel Edge_UI_add;
     private JTextField src_vertex_id;
     private JTextField dest_vertex_id;
     private JTextField edge_weight;
+    private JLabel Edge_Insertion;
     private DirectedWeightedGraph graph;
     private FrameGraph frame;
-    private PanelGraph panel;
+
     public Edge_UI_add(){
-        this.setContentPane(EdgeUI);
+        this.setContentPane(Edge_UI_add);
         //this.setPreferredSize(new Dimension(500,500));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit the app
         this.pack();
@@ -30,15 +32,17 @@ public class Edge_UI_add extends JFrame implements ActionListener {
 
     public Edge_UI_add(DirectedWeightedGraph graph, FrameGraph frame){
         this.frame = frame;
-        this.setContentPane(EdgeUI);
+        this.setContentPane(Edge_UI_add);
         this.graph = graph;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit the app
         this.pack();
         this.setTitle("Edge Editor"); // title
+        Edge_Insertion.setBounds(0,0,400,1400);
         this.setResizable(false); // resize allowed
         this.setVisible(true);
         Cancel.addActionListener(this);
         Add.addActionListener(this);
+
     }
 
     @Override

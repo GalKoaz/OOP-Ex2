@@ -1,6 +1,7 @@
 package GraphGui;
 
 import api.DirectedWeightedGraph;
+import api.NodeData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +9,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -166,10 +168,13 @@ public class PanelGraph extends JPanel {
      * */
     public void pointInit(){
         for (int i = 0; i < graph.nodeSize(); i++) {
-            String currKey = String.valueOf(graph.getNode(i).getKey());
-            double currPosX = graph.getNode(i).getLocation().x();
-            double currPosY = graph.getNode(i).getLocation().y();
-            points.add(new GraphPoint(currKey, new Point2D.Double(currPosX, currPosY)));
+            NodeData curr = graph.getNode(i);
+            if (curr != null) {
+                String currKey = String.valueOf(graph.getNode(i).getKey());
+                double currPosX = graph.getNode(i).getLocation().x();
+                double currPosY = graph.getNode(i).getLocation().y();
+                points.add(new GraphPoint(currKey, new Point2D.Double(currPosX, currPosY)));
+            }
         }
     }
     /*
