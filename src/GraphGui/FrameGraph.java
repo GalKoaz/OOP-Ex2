@@ -1,6 +1,8 @@
 package GraphGui;
 
 import api.DirectedWeightedGraph;
+import api.DirectedWeightedGraphAlgorithms;
+import api.DirectedWeightedGraphAlgorithmsImpl;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -24,12 +26,13 @@ public class FrameGraph extends JFrame implements ActionListener {
     private ImageIcon loadIcon, saveIcon, exitIcon, gitIcon;
     private Image main_menuBar;
     private JMenuItem loadFile, G1, G2, G3;
-    private JMenuItem edgeItem, vertexItem;
+    private JMenu edgeItem, vertexItem;
+    private JMenuItem clearItem, addEdgeItem, removeEdgeItem, addVertexItem, removeVertexItem;
     private File jsonFileSelected;
 
 
     public FrameGraph(DirectedWeightedGraph graph) { // get here a graph.
-
+        this.graph = graph;
         this.panel = new PanelGraph(graph);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit the app
         this.add(panel);
@@ -92,12 +95,28 @@ public class FrameGraph extends JFrame implements ActionListener {
         aboutMenu = new JMenuItem("About");
         helpMenu.add(aboutMenu);
 
-
-        edgeItem = new JMenuItem("Edge");
-        vertexItem = new JMenuItem("Vertex");
+        /**
+         * Belongs to the edit menu of the menu bar.
+         */
+        edgeItem = new JMenu("Edge");
+        vertexItem = new JMenu("Vertex");
+        clearItem = new JMenuItem("clear");
         editMenu.add(edgeItem);
         editMenu.add(vertexItem);
-
+        editMenu.add(clearItem);
+        addEdgeItem = new JMenuItem("add");
+        removeEdgeItem = new JMenuItem("remove");
+        addVertexItem = new JMenuItem("add");
+        removeVertexItem = new JMenuItem("remove");
+        edgeItem.add(addEdgeItem);
+        edgeItem.add(removeEdgeItem);
+        vertexItem.add(addVertexItem);
+        vertexItem.add(removeVertexItem);
+        clearItem.addActionListener(this);
+        removeVertexItem.addActionListener(this);
+        addVertexItem.addActionListener(this);
+        addEdgeItem.addActionListener(this);
+        removeEdgeItem.addActionListener(this);
 
         /**
          * Adding icons:
@@ -134,6 +153,10 @@ public class FrameGraph extends JFrame implements ActionListener {
         helpMenu.setMnemonic(KeyEvent.VK_H);
 
 
+
+        G1.addActionListener(this);
+        G2.addActionListener(this);
+        G3.addActionListener(this);
         /**
          * add each menu to the menu bar.
          */
@@ -141,7 +164,6 @@ public class FrameGraph extends JFrame implements ActionListener {
         menuBar.add(editMenu);
         menuBar.add(runMenu);
         menuBar.add(helpMenu);
-
 
 
 
@@ -173,11 +195,29 @@ public class FrameGraph extends JFrame implements ActionListener {
             openWebPage("https://github.com/GalKoaz/OOP-Ex2/");
         }
 
-        if (e.getSource() == G1){jsonFileSelected = new File("OOP-Ex2\\data\\G1.json");}
+        if (e.getSource() == G1){
+            jsonFileSelected = new File("OOP-Ex2\\data\\G1.json");
+            DirectedWeightedGraphAlgorithms g = new DirectedWeightedGraphAlgorithmsImpl();
+            g.load(jsonFileSelected.getPath());
+            this.setVisible(false);
+            new FrameGraph(g.getGraph());
+        }
 
-        if (e.getSource() == G2){jsonFileSelected = new File("OOP-Ex2\\data\\G2.json");}
+        if (e.getSource() == G2){
+            jsonFileSelected = new File("OOP-Ex2\\data\\G2.json");
+            DirectedWeightedGraphAlgorithms g = new DirectedWeightedGraphAlgorithmsImpl();
+            g.load(jsonFileSelected.getPath());
+            this.setVisible(false);
+            new FrameGraph(g.getGraph());
+        }
 
-        if (e.getSource() == G3) {jsonFileSelected = new File("OOP-Ex2\\data\\G3.json");}
+        if (e.getSource() == G3) {
+            jsonFileSelected = new File("OOP-Ex2\\data\\G3.json");
+            DirectedWeightedGraphAlgorithms g = new DirectedWeightedGraphAlgorithmsImpl();
+            g.load(jsonFileSelected.getPath());
+            this.setVisible(false);
+            new FrameGraph(g.getGraph());
+        }
 
         if (e.getSource() == loadFile){
             JFileChooser fileChooser = new JFileChooser();
@@ -187,24 +227,26 @@ public class FrameGraph extends JFrame implements ActionListener {
 
             if (response == JFileChooser.APPROVE_OPTION){
                 jsonFileSelected = new File(fileChooser.getSelectedFile().getAbsolutePath());
+                DirectedWeightedGraphAlgorithms g = new DirectedWeightedGraphAlgorithmsImpl();
+                g.load(jsonFileSelected.getAbsolutePath());
+                dispose();
+                new FrameGraph(g.getGraph());
             }
         }
 
         /**
          * Vertex -> add a vertex, remove vertex
          */
-        if (e.getSource() == vertexItem){
-            System.out.println("sdsddsds");
-            Vertex_UI vertex = new Vertex_UI();
-        }
+        if (e.getSource() == addVertexItem){new Vertex_UI_add(graph, this);}
         /**
          * Edge -> add a vertex, remove vertex
          */
-        if (e.getSource() == edgeItem){
-            System.out.println("SDsdsdsds");
-            Edge_UI edge = new Edge_UI();
-        }
+        if (e.getSource() == addEdgeItem){ new Edge_UI_add(graph,this);}
 
+        /**
+         * complete..........
+         */
+        if (e.getSource() == clearItem) {   }
     }
 
     /**

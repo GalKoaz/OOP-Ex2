@@ -54,10 +54,19 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
     @Override
     public void addNode(NodeData n) {Vertices.put(n.getKey(), n); MC++;}
 
+    /**
+     * The method connects an edge between the two vertices as written in the interface.
+     * @implNote note that if there is already an edge between them, then the method overrides
+     * the old one, and connects a new edge, for GUI purposes.
+     * @param src the source of the edge.
+     * @param dest the destination of the edge.
+     * @param w positive weight representing the cost (aka time, price, etc) between src-->dest.
+     */
     @Override
     public void connect(int src, int dest, double w) {
         String info = "Src: "+src+", "+"Dest: "+dest+", "+"Weight: "+w;
         EdgeData connectedEdge = new EdgeDataImpl(src, dest, Color.BLUE.getRGB(), w, info);
+        if (getEdge(src,dest) != null){removeEdge(src,dest);}
         Edges.put("" + src + "-" + dest, connectedEdge);
         MC++;
     }
