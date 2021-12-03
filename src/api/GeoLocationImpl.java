@@ -8,7 +8,7 @@ public class GeoLocationImpl implements GeoLocation {
         this.y = y;
         this.z = z;
     }
-    // A copy constructor
+    // A copy constructor.
     public GeoLocationImpl(GeoLocation other){this(other.x(), other.y(), other.z());}
 
     @Override
