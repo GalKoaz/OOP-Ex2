@@ -37,6 +37,12 @@ public class PanelGraph extends JPanel {
     public Dimension getPreferredSize() {
         return new Dimension(500, 500);
     }
+    
+    /********************************************************************************************************
+    * <paintComponent>
+    * paintComponent method draw the all edges and points in the graph.
+    *</paintComponent>
+    *********************************************************************************************************/
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -159,6 +165,13 @@ public class PanelGraph extends JPanel {
 
         g2.dispose();
     }
+    
+    /********************************************************************************************************
+    * <drawArrowHead>
+    * this function for each line we are add a arrow head to the tip of the point just to "touch" the point,
+    * so we can see the direaction for each point.
+    *</drawArrowHead>
+    *********************************************************************************************************/
 
     private void drawArrowHead(Graphics2D g2, Point2D tip, Point2D tail, Color color) {
         int ArrowSize = 10;
