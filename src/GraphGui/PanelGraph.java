@@ -115,6 +115,11 @@ public class PanelGraph extends JPanel {
         StringWeight(g2d, weight, to, from, insets, flag);
     }
 
+    /*
+    * StringWeight Method is :
+    *
+    *
+    * */
     private void StringWeight(Graphics2D g2d, String weight, GraphPoint to, GraphPoint from, double insets,boolean check) {
 
         Point2D translated = translate(from, insets);
