@@ -92,7 +92,7 @@ public class PanelGraph extends JPanel {
      *********************************************************************************************************/
 
     private void paintLine(Graphics2D g2d, GraphPoint from, GraphPoint to, double insets, String weight) {
-        boolean flag = CheckEdge(to,from);
+        boolean flag_1 = CheckEdge(to,from);
         Point2D fromPoint = translate(from, insets);
         Point2D toPoint = translate(to, insets);
         g2d.setColor(Color.RED);
@@ -103,7 +103,7 @@ public class PanelGraph extends JPanel {
         Line2D line = new Line2D.Double(pointFrom, pointTo);
         drawArrowHead(g2d, pointTo, pointFrom, Color.RED);
         g2d.draw(line);
-        StringWeight(g2d, weight, to, from, insets, flag);
+        StringWeight(g2d, weight, to, from, insets, flag_1);
     }
 
     private void StringWeight(Graphics2D g2d, String weight, GraphPoint to, GraphPoint from, double insets,boolean check) {
@@ -117,12 +117,12 @@ public class PanelGraph extends JPanel {
         double m_Segment = (yPos2-yPos)/(xPos2-xPos);
         double x_center = (xPos + xPos2) / 2;
         double y_center = (yPos + (yPos2)) / 2;
-        double[][] points_ver = Verticle(x_center,y_center,m_Segment,0);
+        double[][] points_ver = Verticle(x_center,y_center,m_Segment,10);
         g2d.setPaint(Color.black);
         if (weight.length() > 13) weight = weight.substring(0, weight.length() - 12);
         g2d.setPaint(Color.black);
         g2d.setFont(new Font("Cabin", Font.PLAIN, 13));
-        if(check) {
+        if (check){
             g2d.drawString(weight, (float) points_ver[0][0], (float) points_ver[0][1]);
         }
         else{
@@ -130,14 +130,14 @@ public class PanelGraph extends JPanel {
         }
     }
 
-    private double[][] Verticle(double x1, double y1, double m_Segment, int length){
+    private static double[][] Verticle(double x1, double y1, double m_Segment, int length){
         double m = -1/m_Segment;
         // y = mx - mx1 + y1
-        double k = (1/Math.pow(m,2)) + 1;
-        double c = -2*y1*(((x1/m) + y1)) + Math.pow(y1,2) + Math.pow(x1,2) - Math.pow(length,2);
-
-        double x1_ans = x1 + ((Math.sqrt((x1*x1*k*k)-(k*c)))/k);
-        double x2_ans = -x1_ans;
+        System.out.println(1/Math.pow(m_Segment,2));
+        double k = 1 + (1/Math.pow(m_Segment,2));
+        System.out.println(k);
+        double x1_ans = x1 + (length/Math.sqrt(k));
+        double x2_ans = x1 - (length/Math.sqrt(k));
 
         // finds the y for the resulted points.
         double y1_ans = m*x1_ans - m*x1 + y1;
@@ -270,6 +270,13 @@ public class PanelGraph extends JPanel {
 
         minRange = new Point2D.Double(minX, minY);
         maxRange = new Point2D.Double(maxX, maxY);
+    }
+
+    public static void main(String[] args) {
+        double[][]verticle = Verticle(2,6,3,2);
+
+        System.out.println(verticle[0][0] + ", "+verticle[0][1]);
+        System.out.println(verticle[1][0] + ", "+verticle[1][1]);
     }
 }
 
