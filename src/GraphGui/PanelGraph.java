@@ -5,11 +5,13 @@ import api.NodeData;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PanelGraph extends JPanel {
     private DirectedWeightedGraph graph;
@@ -50,10 +52,11 @@ public class PanelGraph extends JPanel {
         Graphics2D g2d = (Graphics2D) g.create();
         FontMetrics fm = g2d.getFontMetrics();
         double insets = fm.getHeight() + radius;
-
+        ArrayList<String> LineSave = new ArrayList<>();
         for (GraphEdge ed : edges) {
             ArrayList<GraphPoint> p = ed.getPoints();
-            paintLine(g2d, p.get(0), p.get(1), insets, ed.getWeight());
+            LineSave.add(""+p.get(0).getId()+"-"+p.get(1).getId());
+            paintLine(g2d, p.get(0), p.get(1), insets, ed.getWeight(),LineSave);
         }
 
         for (GraphPoint gp : points) {
@@ -62,8 +65,13 @@ public class PanelGraph extends JPanel {
         g2d.dispose();
     }
 
-    private boolean CheckEdge(GraphPoint from, GraphPoint to){
-        return graph.getEdge(Integer.parseInt(from.getId()), Integer.parseInt(to.getId())) != null;
+
+
+    private boolean CheckerEdgeDraw(ArrayList<String> check,String name){
+        for (int i = 0; i < check.size()-1; i++) {
+            if(Objects.equals(check.get(i), name))return true;
+        }
+        return false;
     }
 
     protected double angleBetween(Point2D from, Point2D to) {
@@ -91,8 +99,9 @@ public class PanelGraph extends JPanel {
      * we calculate the angel between two point in the graph and draw line to the tip of the point.
      *********************************************************************************************************/
 
-    private void paintLine(Graphics2D g2d, GraphPoint from, GraphPoint to, double insets, String weight) {
-        boolean flag_1 = CheckEdge(to,from);
+    private void paintLine(Graphics2D g2d, GraphPoint from, GraphPoint to, double insets, String weight,ArrayList<String> list) {
+        //boolean flag = CheckEdge(to,from);
+        boolean flag = CheckerEdgeDraw(list,to.getId()+"-"+from.getId());
         Point2D fromPoint = translate(from, insets);
         Point2D toPoint = translate(to, insets);
         g2d.setColor(Color.RED);
@@ -103,10 +112,11 @@ public class PanelGraph extends JPanel {
         Line2D line = new Line2D.Double(pointFrom, pointTo);
         drawArrowHead(g2d, pointTo, pointFrom, Color.RED);
         g2d.draw(line);
-        StringWeight(g2d, weight, to, from, insets, flag_1);
+        StringWeight(g2d, weight, to, from, insets, flag);
     }
 
     private void StringWeight(Graphics2D g2d, String weight, GraphPoint to, GraphPoint from, double insets,boolean check) {
+
         Point2D translated = translate(from, insets);
         Point2D translated2 = translate(to, insets);
 
@@ -117,17 +127,28 @@ public class PanelGraph extends JPanel {
         double m_Segment = (yPos2-yPos)/(xPos2-xPos);
         double x_center = (xPos + xPos2) / 2;
         double y_center = (yPos + (yPos2)) / 2;
-        double[][] points_ver = Verticle(x_center,y_center,m_Segment,10);
+        double[][] points_ver = Verticle(x_center,y_center,m_Segment,14);
         g2d.setPaint(Color.black);
-        if (weight.length() > 13) weight = weight.substring(0, weight.length() - 12);
+        if (weight.length() > 14) weight = weight.substring(0, weight.length() - 13)+"["+from.getId()+"-->"+to.getId()+"]";
         g2d.setPaint(Color.black);
+        Font font = new Font("Cabin", Font.PLAIN, 13);
         g2d.setFont(new Font("Cabin", Font.PLAIN, 13));
+        double angle = Math.atan(m_Segment);
         if (check){
-            g2d.drawString(weight, (float) points_ver[0][0], (float) points_ver[0][1]);
-        }
-        else{
+            AffineTransform affineTransform = new AffineTransform();
+            affineTransform.rotate(Math.toRadians(angle), 0, 0);
+            Font rotatedFont = font.deriveFont(affineTransform);
+            g2d.setFont(rotatedFont);
             g2d.drawString(weight, (float) points_ver[1][0], (float) points_ver[1][1]);
         }
+        else{
+            AffineTransform affineTransform = new AffineTransform();
+            affineTransform.rotate(Math.toRadians(angle), 0, 0);
+            Font rotatedFont = font.deriveFont(affineTransform);
+            g2d.setFont(rotatedFont);
+            g2d.drawString(weight, (float) points_ver[0][0], (float) points_ver[0][1]);
+        }
+
     }
 
     private static double[][] Verticle(double x1, double y1, double m_Segment, int length){
