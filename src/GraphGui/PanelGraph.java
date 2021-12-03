@@ -9,9 +9,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 public class PanelGraph extends JPanel {
     private DirectedWeightedGraph graph;
@@ -113,22 +111,25 @@ public class PanelGraph extends JPanel {
 
         double xPos = translated.getX();
         double yPos = translated.getY();
-
         double xPos2 = translated2.getX();
         double yPos2 = translated2.getY();
-
         double m_Segment = (yPos2-yPos)/(xPos2-xPos);
-
         double x_center = (xPos + xPos2) / 2;
         double y_center = (yPos + (yPos2)) / 2;
+        double[][] points_ver = Verticle(x_center,y_center,m_Segment,0);
         g2d.setPaint(Color.black);
         if (weight.length() > 13) weight = weight.substring(0, weight.length() - 12);
         g2d.setPaint(Color.black);
         g2d.setFont(new Font("Cabin", Font.PLAIN, 13));
-        g2d.drawString(weight, (float) x_center, (float) y_center);
+        if(check) {
+            g2d.drawString(weight, (float) points_ver[0][0], (float) points_ver[0][1]);
+        }
+        else{
+            g2d.drawString(weight, (float) points_ver[1][0], (float) points_ver[1][1]);
+        }
     }
 
-    private void Verticle(double x1, double y1, double m_Segment, int length){
+    private double[][] Verticle(double x1, double y1, double m_Segment, int length){
         double m = -1/m_Segment;
         // y = mx - mx1 + y1
         double k = (1/Math.pow(m,2)) + 1;
@@ -140,6 +141,8 @@ public class PanelGraph extends JPanel {
         // finds the y for the resulted points.
         double y1_ans = m*x1_ans - m*x1 + y1;
         double y2_ans = m*x2_ans - m*x1 + y1;
+
+        return new double[][]{{x1_ans,y1_ans},{x2_ans,y2_ans}};
     }
 
     private void paintPoint(Graphics2D g2d, GraphPoint gp, double insets) {
