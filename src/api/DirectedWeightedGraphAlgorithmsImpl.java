@@ -140,12 +140,14 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
     //Todo: the issue is that the function greedily select the lowest edge, so he can miss
     // a whole path. when he misses it can sometimes tell us that there isn't exist such cycle.
     /**
-     *
-     * @param cities
-     * @param city
-     * @param optPath
-     * @param cnt
-     * @return
+     * This method following by recursion the optimal Hamiltonian cycle start in a certain
+     * city and of course ends there. The recursion checks which choice is optimal,
+     * considering the lightest weighted edge between the city and all other cities.
+     * @param cities the list of cities.
+     * @param city the current best city.
+     * @param optPath the current optimal path.
+     * @param cnt a counter used for recursion purposes.
+     * @return the list of the optimal path starts in a city and ends there.
      */
     public ArrayList<NodeData> minCycleFromCity(List<NodeData> cities, int city, ArrayList<NodeData> optPath, int cnt){
         int node_id = cities.get(city).getKey();
@@ -186,12 +188,10 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         }
         return totalPathCost;
     }
-
     /**
-     *
-     * @param l
-     * @param node_id
-     * @return
+     * @param l a list contains the nodes.
+     * @param node_id the node id to be found.
+     * @return true if the node contained in the list.
      */
     public boolean containsID(ArrayList<NodeData> l, int node_id){
         for(NodeData n: l){

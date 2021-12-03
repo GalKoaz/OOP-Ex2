@@ -78,6 +78,9 @@ public class PanelGraph extends JPanel {
         double xPos2 = translated2.getX();
         double yPos2 = translated2.getY();
 
+        double m_Segment = (yPos2-yPos)/(xPos2-xPos);
+
+
         double x_center = (xPos + xPos2) / 2;
         double y_center = (yPos + (yPos2)) / 2;
         g2d.setPaint(Color.black);

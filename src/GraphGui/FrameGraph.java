@@ -240,7 +240,21 @@ public class FrameGraph extends JFrame implements ActionListener {
                 new FrameGraph(g.getGraph());
             }
         }
+        if (e.getSource() == saveItem) {
+            JFileChooser fileChooser = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("json","json");
+            fileChooser.setFileFilter(filter);
+            int response = fileChooser.showOpenDialog(null); //select json file to open.
 
+            if (response == JFileChooser.APPROVE_OPTION){
+                jsonFileSelected = new File(fileChooser.getSelectedFile().getAbsolutePath());
+                DirectedWeightedGraphAlgorithms g = new DirectedWeightedGraphAlgorithmsImpl();
+                g.init(graph);
+                g.save(jsonFileSelected.getAbsolutePath());
+
+            }
+
+        }
         /**
          * Vertex -> add a vertex, remove vertex
          */
