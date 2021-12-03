@@ -86,15 +86,17 @@ public class PanelGraph extends JPanel {
         return new Point2D.Double(xPosy, yPosy);
     }
 
+    /********************************************************************************************************
+     * @name: paintLine Method take the graphics2D, 2 points and weight.
+     * we calculate the scale of the points in the graph because we want the graph accuracy.
+     * we calculate the angel between two point in the graph and draw line to the tip of the point.
+     *********************************************************************************************************/
+
     private void paintLine(Graphics2D g2d, GraphPoint from, GraphPoint to, double insets, String weight) {
         boolean flag = CheckEdge(to,from);
         Point2D fromPoint = translate(from, insets);
         Point2D toPoint = translate(to, insets);
         g2d.setColor(Color.RED);
-        //g2d.draw(new Line2D.Double(fromPoint, toPoint));
-        // drawArrowHead(g2d, toPoint, fromPoint, Color.WHITE);
-        //StringWeight(g2d, weight, to, from, insets);
-        //================================================
         double fromp = angleBetween(fromPoint, toPoint);
         double top = angleBetween(toPoint, fromPoint);
         Point2D pointFrom = getPointOnCircle(fromPoint, fromp);
@@ -116,7 +118,6 @@ public class PanelGraph extends JPanel {
         double yPos2 = translated2.getY();
 
         double m_Segment = (yPos2-yPos)/(xPos2-xPos);
-
 
         double x_center = (xPos + xPos2) / 2;
         double y_center = (yPos + (yPos2)) / 2;
@@ -169,7 +170,7 @@ public class PanelGraph extends JPanel {
     /********************************************************************************************************
     * <drawArrowHead>
     * this function for each line we are add a arrow head to the tip of the point just to "touch" the point,
-    * so we can see the direaction for each point.
+    * so we can see the direction for each point.
     *</drawArrowHead>
     *********************************************************************************************************/
 

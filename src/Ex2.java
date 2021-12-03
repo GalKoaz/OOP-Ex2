@@ -40,7 +40,6 @@ public class Ex2 {
         //FrameGraph gg = new FrameGraph(alg.copy());
         new FrameGraph(alg.copy());
 
-
     }
 
     public static void main(String[] args) {
