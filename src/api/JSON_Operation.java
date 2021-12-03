@@ -27,9 +27,6 @@ public class JSON_Operation {
     private ArrayList<NodeData> initVertices;
 
 
-    /**
-     * @param path
-     */
     public JSON_Operation(String path) {
         this.path = path;
         this.Edges = new ArrayList<>();

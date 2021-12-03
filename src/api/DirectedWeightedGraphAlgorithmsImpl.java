@@ -105,13 +105,14 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      * what is the Hamiltonian cycle (the path that visits all every node once) of minimum cost.
      *
      * For this problem we apply the greedy approach:
-     * Greedy approach explanation. this approach always goes to the nearest (the lowest cost edge) vertex from the current vertex,
-     * until it goes over all vertices.
+     * Greedy approach explanation - the nearest neighbor approach. this approach always goes
+     * to the nearest (the lowest cost edge) vertex neighbor available from the current vertex,
+     * until it goes over all vertices, without visiting a vertex which have already visited.
      * Then, the approach doing the same procedure for each vertex, and finally takes the minimal cost cycle,
      * which of course goes over all cities.
      *
      *
-     * Time complexity: this approach gives a significant low time complexity of O(n^2 * log(n)),
+     * Time complexity: this approach gives a significant low time complexity of O(n^2),
      * however, the greedy approach doesn't always provide the optimal solution. In contrast,
      * the dynamic approach always gives the optimal solution, but has a way higher cost,
      * in terms of time complexity which is O(n * 2^n). Therefore, for this project
@@ -123,19 +124,8 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      */
     @Override
     public List<NodeData> tsp(List<NodeData> cities) {
-        ArrayList<NodeData> optPath = new ArrayList<>();
-        ArrayList<NodeData> currPath;
-        double min = Double.MAX_VALUE;
-        for (int city = 0; city < cities.size(); city++) {
-            currPath = new ArrayList<>();
-            double optPathLength = pathCost(minCycleFromCity(cities,city, currPath,0));
-            if (optPathLength < min){
-                min = optPathLength;
-                optPath = minCycleFromCity(cities,city, currPath,0);
-            }
-
-        }
-        return optPath;
+        ArrayList<NodeData> currPath = new ArrayList<>();
+        return minCycleFromCity(cities,(int)(Math.random()*cities.size()), currPath,0);
     }
     //Todo: the issue is that the function greedily select the lowest edge, so he can miss
     // a whole path. when he misses it can sometimes tell us that there isn't exist such cycle.
