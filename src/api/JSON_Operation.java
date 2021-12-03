@@ -17,7 +17,15 @@ import java.util.Iterator;
 
 /**
  * This class supports writing and reading from json files.
- * @apiNote we have used 3 different libraries for writing: complete...
+ * @apiNote we have used 4 different libraries for writing:
+ * @name gson-2.8.2.jar
+ * @version: 2.8.2
+ * @name javax.json-1.1.4.jar
+ * @version: 1.1.4
+ * @name javax.ws.rs-api-2.1.1.jar
+ * @version: 2.1.1
+ * @name json-simple-1.1.1.jar
+ * @version 1.1.1
  */
 public class JSON_Operation {
 
