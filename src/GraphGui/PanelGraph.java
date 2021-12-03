@@ -39,7 +39,8 @@ public class PanelGraph extends JPanel {
     /********************************************************************************************************
     * <paintComponent>
     * paintComponent method draw the all edges and points in the graph.
-    *</paintComponent>
+    * </paintComponent>
+    *
     *********************************************************************************************************/
 
     @Override
@@ -133,7 +134,7 @@ public class PanelGraph extends JPanel {
         double m = -1/m_Segment;
         // y = mx - mx1 + y1
         double k = (1/Math.pow(m,2)) + 1;
-        double c = -2*(((x1/m) + y1)) + Math.pow(y1,2) + Math.pow(x1,2) - Math.pow(length,2);
+        double c = -2*y1*(((x1/m) + y1)) + Math.pow(y1,2) + Math.pow(x1,2) - Math.pow(length,2);
 
         double x1_ans = x1 + ((Math.sqrt((x1*x1*k*k)-(k*c)))/k);
         double x2_ans = -x1_ans;
