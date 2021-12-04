@@ -13,9 +13,6 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
-/*
-   Note: add a logo.icon!!!!!!
-*/
 public class FrameGraph extends JFrame implements ActionListener {
 
     private DirectedWeightedGraph graph, copyGraph;
@@ -147,6 +144,10 @@ public class FrameGraph extends JFrame implements ActionListener {
         aboutMenu.addActionListener(this);
         edgeItem.addActionListener(this);
         vertexItem.addActionListener(this);
+        shortestPathMenu.addActionListener(this);
+        isConnectedMenu.addActionListener(this);
+        tspMenu.addActionListener(this);
+
         /**
          * Keyboard shortcuts:
          */
@@ -270,6 +271,14 @@ public class FrameGraph extends JFrame implements ActionListener {
         /**
          * complete..........
          */
+
+        if(e.getSource() == shortestPathMenu){new Dijkstra(graph,this,panel);}
+
+        if (e.getSource() == isConnectedMenu){}
+
+        if (e.getSource() == tspMenu) {}
+
+
         if (e.getSource() == clearItem) {
             this.dispose();
             new FrameGraph(copyGraph);

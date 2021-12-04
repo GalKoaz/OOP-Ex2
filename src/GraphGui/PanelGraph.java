@@ -36,13 +36,13 @@ public class PanelGraph extends JPanel {
     public Dimension getPreferredSize() {
         return new Dimension(500, 500);
     }
-    
+
     /********************************************************************************************************
-    * <paintComponent>
-    * paintComponent method draw the all edges and points in the graph.
-    * </paintComponent>
-    *
-    *********************************************************************************************************/
+     * <paintComponent>
+     * paintComponent method draw the all edges and points in the graph.
+     * </paintComponent>
+     *
+     *********************************************************************************************************/
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -117,10 +117,10 @@ public class PanelGraph extends JPanel {
     }
 
     /*
-    * StringWeight Method is :
-    *
-    *
-    * */
+     * StringWeight Method is :
+     *
+     *
+     * */
     private void StringWeight(Graphics2D g2d, String weight, GraphPoint to, GraphPoint from, double insets,boolean check) {
 
         Point2D translated = translate(from, insets);
@@ -196,13 +196,13 @@ public class PanelGraph extends JPanel {
 
         g2.dispose();
     }
-    
+
     /********************************************************************************************************
-    * <drawArrowHead>
-    * this function for each line we are add a arrow head to the tip of the point just to "touch" the point,
-    * so we can see the direction for each point.
-    *</drawArrowHead>
-    *********************************************************************************************************/
+     * <drawArrowHead>
+     * this function for each line we are add a arrow head to the tip of the point just to "touch" the point,
+     * so we can see the direction for each point.
+     *</drawArrowHead>
+     *********************************************************************************************************/
 
     private void drawArrowHead(Graphics2D g2, Point2D tip, Point2D tail, Color color) {
         int ArrowSize = 10;
@@ -243,7 +243,6 @@ public class PanelGraph extends JPanel {
     /*
      * the for loop is init all the edges existed in the graph and take each point already exists,
      * make a new arraylist of points and know to the correct edges between them.
-     * TODO: need to make a arrow direction to the line, take it from the last edit in my project
      * */
     public void EdgeInit() {
         edges = new ArrayList<>();
@@ -305,6 +304,3 @@ public class PanelGraph extends JPanel {
         System.out.println(verticle[1][0] + ", "+verticle[1][1]);
     }
 }
-
-
-
