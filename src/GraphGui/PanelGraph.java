@@ -5,7 +5,6 @@ import api.NodeData;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -47,6 +46,7 @@ public class PanelGraph extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
+
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g.create();
@@ -100,6 +100,7 @@ public class PanelGraph extends JPanel {
      *********************************************************************************************************/
 
     private void paintLine(Graphics2D g2d, GraphPoint from, GraphPoint to, double insets, String weight,ArrayList<String> list) {
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         //boolean flag = CheckEdge(to,from);
         boolean flag = CheckerEdgeDraw(list,to.getId()+"-"+from.getId());
         Point2D fromPoint = translate(from, insets);
@@ -124,7 +125,6 @@ public class PanelGraph extends JPanel {
 
         Point2D translated = translate(from, insets);
         Point2D translated2 = translate(to, insets);
-
         double xPos = translated.getX();
         double yPos = translated.getY();
         double xPos2 = translated2.getX();
@@ -132,28 +132,27 @@ public class PanelGraph extends JPanel {
         double m_Segment = (yPos2-yPos)/(xPos2-xPos);
         double x_center = (xPos + xPos2) / 2;
         double y_center = (yPos + (yPos2)) / 2;
-        double[][] points_ver = Verticle(x_center,y_center,m_Segment,14);
+        double[][] points_ver = Verticle(x_center,y_center,m_Segment,11);
         g2d.setPaint(Color.black);
-        if (weight.length() > 14) weight = weight.substring(0, weight.length() - 13)+"["+from.getId()+"-->"+to.getId()+"]";
+        weight =  String.format("%.3f", Float.parseFloat(weight))+"["+from.getId()+"-->"+to.getId()+"]";
         g2d.setPaint(Color.black);
-        Font font = new Font("Cabin", Font.PLAIN, 13);
-        g2d.setFont(new Font("Cabin", Font.PLAIN, 13));
-        double angle = Math.atan(m_Segment);
+        g2d.setFont(new Font("Cabin", Font.PLAIN, 11));
+        //double angle = Math.atan((yPos-yPos2)/(xPos-xPos2));
+        double angle = Math.atan((yPos2-yPos)/(xPos2-xPos));
+        g2d.setColor(Color.black);
         if (check){
-            AffineTransform affineTransform = new AffineTransform();
-            affineTransform.rotate(Math.toRadians(angle), 0, 0);
-            Font rotatedFont = font.deriveFont(affineTransform);
-            g2d.setFont(rotatedFont);
-            g2d.drawString(weight, (float) points_ver[1][0], (float) points_ver[1][1]);
+            drawRotate(g2d,points_ver[1][0], points_ver[1][1],angle,weight);
         }
         else{
-            AffineTransform affineTransform = new AffineTransform();
-            affineTransform.rotate(Math.toRadians(angle), 0, 0);
-            Font rotatedFont = font.deriveFont(affineTransform);
-            g2d.setFont(rotatedFont);
-            g2d.drawString(weight, (float) points_ver[0][0], (float) points_ver[0][1]);
+            drawRotate(g2d,points_ver[0][0], points_ver[0][1],angle,weight);
         }
-
+    }
+    public static void drawRotate(Graphics2D g2d, double x, double y, double angle, String text) {
+        g2d.translate((float)x,(float)y);
+        g2d.rotate(angle);
+        g2d.drawString(text,0,0);
+        g2d.rotate(-angle);
+        g2d.translate(-(float)x,-(float)y);
     }
 
     private static double[][] Verticle(double x1, double y1, double m_Segment, int length){
@@ -185,7 +184,8 @@ public class PanelGraph extends JPanel {
         g2.translate(xPos - offset, yPos - offset);
         g2.setPaint(Color.blue);
         g2.fill(new Ellipse2D.Double(0, 0, offset * 2, offset * 2));
-
+        g2.setPaint(Color.RED);
+        g2.draw(new Ellipse2D.Double(0, 0, offset * 2, offset * 2));
         FontMetrics fm = g2d.getFontMetrics();
         String text = gp.getId();
         double x = xPos - (fm.stringWidth(text) / 2);
