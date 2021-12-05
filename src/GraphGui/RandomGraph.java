@@ -55,7 +55,7 @@ public class RandomGraph extends JFrame implements ActionListener {
             g.addNode(random_vertex_generator(node_id));
         }
 
-        int edgesAmount = num + (int)(Math.random() * (num*2));
+        int edgesAmount = 20 + (int)(Math.random() * 10);
 
         for (int i = 0; i < edgesAmount; i++) {
             EdgeData e = random_edge_generator(num);

@@ -16,7 +16,7 @@ public class PanelGraph extends JPanel {
     private DirectedWeightedGraph graph;
     private java.util.List<GraphPoint> points;
     private List<GraphEdge> edges;
-    private int radius = 10;
+    private int radius = 10; //good for 100 vertices.
     private double Phi = Math.toRadians(40);
     private double virtualScale = 1.0;
     private Graphics2D g2d;
@@ -32,6 +32,9 @@ public class PanelGraph extends JPanel {
         pointInit();
         EdgeInit();
         setMinMaxRange();
+        int numberOfZeros = (int) Math.log10(graph.nodeSize());
+        if (numberOfZeros>2){radius = (int) (radius/Math.pow(2,numberOfZeros-2));}
+
     }
 
     @Override
