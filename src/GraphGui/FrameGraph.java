@@ -33,6 +33,7 @@ public class FrameGraph extends JFrame implements ActionListener {
         this.graph = graph;
         this.panel = new PanelGraph(graph);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit the app
+        centreWindow(this);
         this.add(panel);
         this.pack();
         this.setTitle("Directed Weighted Graph by Gal & Amir"); // title
@@ -297,11 +298,14 @@ public class FrameGraph extends JFrame implements ActionListener {
         }
 
     }
-
-
-
-
-
-
-
+    /**
+     * This method centre the new window opening.
+     * @param frame the frame to set its location.
+     */
+    public static void centreWindow(Window frame) {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 3.2);
+        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 5);
+        frame.setLocation(x, y);
+    }
 }

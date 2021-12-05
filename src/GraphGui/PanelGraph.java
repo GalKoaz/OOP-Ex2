@@ -145,11 +145,12 @@ public class PanelGraph extends JPanel {
         //double angle = Math.atan((yPos-yPos2)/(xPos-xPos2));
         double angle = Math.atan((yPos2-yPos)/(xPos2-xPos));
         g2d.setColor(Color.black);
-        if (check){
-            drawRotate(g2d,points_ver[1][0], points_ver[1][1],angle,weight);
-        }
-        else{
-            drawRotate(g2d,points_ver[0][0], points_ver[0][1],angle,weight);
+        if(graph.nodeSize() < 48) {
+            if (check) {
+                drawRotate(g2d, points_ver[1][0], points_ver[1][1], angle, weight);
+            } else {
+                drawRotate(g2d, points_ver[0][0], points_ver[0][1], angle, weight);
+            }
         }
     }
     public static void drawRotate(Graphics2D g2d, double x, double y, double angle, String text) {

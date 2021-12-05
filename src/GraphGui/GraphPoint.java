@@ -35,7 +35,5 @@ public class GraphPoint {
         this.tag_2 = tag_2;
     }
 
-    public Color getTag_2() {
-        return tag_2;
-    }
+    public Color getTag_2() { return tag_2;}
 }

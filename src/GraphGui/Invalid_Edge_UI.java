@@ -22,7 +22,8 @@ public class Invalid_Edge_UI  extends JFrame implements ActionListener {
         ERROR_MenuBar = Toolkit.getDefaultToolkit().getImage("OOP-Ex2\\src\\GraphGui\\Icons\\ERROR.png");
         this.setIconImage(ERROR_MenuBar);
         label.setIcon(ERROR);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit the app
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        centreWindow(this);
         this.pack();
             this.setTitle("Invalid Edge Error"); // title
         this.setResizable(false); // prevent this to resize
@@ -37,7 +38,16 @@ public class Invalid_Edge_UI  extends JFrame implements ActionListener {
             this.dispose();
         }
     }
-
+    /**
+     * This method centre the new window opening.
+     * @param frame the frame to set its location.
+     */
+    public static void centreWindow(Window frame) {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2.6);
+        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2.6);
+        frame.setLocation(x, y);
+    }
     public static void main(String[] args) {
         new Invalid_Edge_UI();
     }

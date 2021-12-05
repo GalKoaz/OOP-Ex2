@@ -4,6 +4,7 @@ import api.DirectedWeightedGraph;
 import api.EdgeData;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,7 +20,7 @@ public class Edge_UI_remove extends JFrame implements ActionListener {
     public Edge_UI_remove(){
         this.setContentPane(Edge_UI_remove);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit the app
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.pack();
         this.setTitle("Edge Editor"); // title
         this.setResizable(false); // prevent this to resize
@@ -30,7 +31,8 @@ public class Edge_UI_remove extends JFrame implements ActionListener {
         this.setContentPane(Edge_UI_remove);
         this.graph = graph;
         this.frame = frame;
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit the app
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        centreWindow(this);
         this.pack();
         this.setTitle("Edge Editor"); // title
         this.setResizable(false); // prevent this to resize
@@ -60,5 +62,16 @@ public class Edge_UI_remove extends JFrame implements ActionListener {
         else{
             new Invalid_Edge_UI();
         }
+    }
+
+    /**
+     * This method centre the new window opening.
+     * @param frame the frame to set its location.
+     */
+    public static void centreWindow(Window frame) {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2.6);
+        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2.6);
+        frame.setLocation(x, y);
     }
 }

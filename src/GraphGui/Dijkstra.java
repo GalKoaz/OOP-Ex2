@@ -9,7 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class Dijkstra extends JFrame implements ActionListener {
@@ -22,9 +21,9 @@ public class Dijkstra extends JFrame implements ActionListener {
     private DirectedWeightedGraph graph;
     private DirectedWeightedGraphAlgorithms algo;
     private FrameGraph frame;
-    private Timer timer, timer_2;
+    private Timer timer;
     private int delay = 1000;
-    private int cnt = 0, cnt_2 = 0;
+    private int cnt = 0;
     private ArrayList<ArrayList<NodeData>> adjacentVerts;
 
 
@@ -32,7 +31,7 @@ public class Dijkstra extends JFrame implements ActionListener {
         this.setContentPane(Dijkstra);
 
         //this.setPreferredSize(new Dimension(500,500));
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit the app
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // exit the app
         this.pack();
         this.setTitle("Vertex Editor"); // title
         this.setResizable(false); // prevent this to resize
@@ -50,7 +49,8 @@ public class Dijkstra extends JFrame implements ActionListener {
         this.algo = new DirectedWeightedGraphAlgorithmsImpl();
         this.algo.init(graph);
         this.adjacentVerts = new ArrayList<>();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit the app
+        centreWindow(this);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // nothing doing when clicking the exit button.
         this.pack();
         this.setTitle("Vertex Editor"); // title
         this.setResizable(false); // prevent this to resize
@@ -67,53 +67,26 @@ public class Dijkstra extends JFrame implements ActionListener {
         if (e.getSource() == OK) {
             int src = Integer.parseInt(src_node_id.getText());
             int dest = Integer.parseInt(dest_node_id.getText());
+            if (graph.getNode(src) == null || graph.getNode(dest) == null) {
+                this.dispose();
+                new Invalid_Vertex_UI();
+            }
             ArrayList<NodeData> optPath = (ArrayList<NodeData>) algo.shortestPath(src,dest);
             int optPathLentgh = optPath.size();
-            if (graph.getNode(src) == null || graph.getNode(dest) == null) {
-                new Invalid_Vertex_UI();
-            } else {
-                timer = new Timer(delay, new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        cnt++;
-                        if (cnt == optPathLentgh-1){timer.stop();}
-                        drawOptPath(src,dest, cnt, optPath);
-                    }
-                });
-                timer.start();
+            this.dispose();
+            timer = new Timer(delay, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    cnt++;
+                    if (cnt == optPathLentgh-1){timer.stop();}
+                    drawOptPath(src,dest, cnt, optPath);
+                }
+            });
+            timer.start();
             }
         }
 
 
-
-
-
-    }
-
-
-//                timer = new Timer(delay, new ActionListener() {
-//                    @Override
-//                    public void actionPerformed(ActionEvent e) {
-//                        System.out.println("sdsdsdsd");
-//                        if (cnt%2 == 0){
-//                             panel.setPointColor(0,Color.gray);
-//                             panel.repaint();
-//                        }
-//                        if (cnt%2 == 1){
-//                            panel.setPointColor(0,Color.blue);
-//                            panel.repaint();
-//                        }
-//                        cnt++;
-//                    }
-//                });
-
-                        //timer.start();
-
-
-
-    public static void main(String[] args) {
-        new Dijkstra();
-    }
 
 
     public void drawOptPath(int src, int dest, int cnt, ArrayList<NodeData>optPath){
@@ -124,25 +97,38 @@ public class Dijkstra extends JFrame implements ActionListener {
          }
          if (prevNode == src){
              panel.setPointColor(prevNode,Color.green, Color.green);
-             //panel.setPointColor(0,Color.gray);
              panel.setPointColor(curr,Color.lightGray,Color.green);
              panel.setEdgeColor(prevNode,curr,Color.green,Color.green);
 
          }
          else if (curr == dest){
              panel.setPointColor(curr,Color.green,Color.green);
-             //panel.setPointColor(0,Color.gray);
              panel.setPointColor(prevNode,Color.lightGray,Color.green);
-
              panel.setEdgeColor(prevNode,curr,Color.green,Color.green);
          }
          else{
              panel.setPointColor(curr,Color.darkGray,Color.green);
-             //panel.setPointColor(0,Color.gray);
              panel.setPointColor(prevNode,Color.lightGray,Color.green);
              panel.setEdgeColor(prevNode,curr,Color.green,Color.green);
          }
         panel.repaint();
     }
+
+    /**
+     * This method centre the new window opening.
+     * @param frame the frame to set its location.
+     */
+    public static void centreWindow(Window frame) {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2.6);
+        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2.6);
+        frame.setLocation(x, y);
+    }
+
+
+    public static void main(String[] args) {
+        new Dijkstra();
+    }
+
 
 }
