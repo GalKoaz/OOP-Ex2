@@ -6,8 +6,8 @@
 <details open="open">
   <summary>Content</summary>
   <ol>
+    <li><a href="#graph-graphical-user-interface">Graph Graphical user interface</a></li>
     <li><a href="#about-the-project">About The Project</a></li>
-    <li><a href="#graph-graphical-user-interface-(gui)">Graph Graphical user interface (GUI)</a></li>
     <li><a href="#code-details">Code Details</a></li>
     <li><a href="#algorithms">Algorithms</a></li>
     <li><a href="#how-to-run">How  to run</a></li>
@@ -17,6 +17,20 @@
   </ol>
 </details>
 
+<!-- Graphical user -->
+## Graph Graphical user interface
+
+<p align="center">
+<img align="center" src="https://s10.gifyu.com/images/GraphGitGuiGK.gif" />
+</p>
+
+In this project we were asked to display the graph visually,
+
+we chose to represent the graph using Java Swing with a panel that allows uploading a graph using a JSON file.
+
+Saving a graph to a JSON file, adding and deleting a vertex, adding and deleting an Edge, The whole process for the algorithms we implemented. Help button for more information.
+
+----------------
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
@@ -31,21 +45,6 @@ Interface of algorithms on graphs (weighted tuners).
 When the Exercise is checked through three public static functions, place fences in the Ex2.java class - note that you must complete the three steps below - through which your Exercise will be checked. Directed Graph Class - should support uploading json files, please note: We have attached some json files of graphs for you.
 
 "The origins of graph theory are humble, even frivolous :round_pushpin:"
-
----------
-
-## Graph Graphical user interface (GUI)
-
-<p align="center">
-<img align="center" src="https://s10.gifyu.com/images/Untitled1-1.gif" />
-</p>
-
-In this project we were asked to display the graph visually, 
-
-we chose to represent the graph using Java Swing with a panel that allows uploading a graph using a JSON file.
-
-Saving a graph to a JSON file, adding and deleting a vertex, adding and deleting an Edge, The whole process for the algorithms we implemented. Help button for more information.
-
 
 ---------
 
@@ -137,8 +136,14 @@ File-> Project Structure -> Libraries and select the folder with all external li
 <!-- CONTACT -->
 ## Contact <small>[Top▲](#directed-weighted-graph)</small>
 
+
+
  Gal - [here](https://github.com/GalKoaz/)
  
  Amir - [here](https://github.com/amirg00/)
 
 Project Link: [here](https://github.com/GalKoaz/OOP-Ex2)
+
+___
+
+Copyright © _This Project was created on Dec 06, 2021, by [Gal](https://github.com/GalKoaz/)  & [Amir](https://github.com/amirg00/)_.
