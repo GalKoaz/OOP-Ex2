@@ -27,6 +27,8 @@ public class Vertex_UI_remove extends JFrame implements ActionListener {
     }
 
     public Vertex_UI_remove(DirectedWeightedGraph graph, FrameGraph frame) {
+        Image icon = Toolkit.getDefaultToolkit().getImage("OOP-Ex2\\src\\GraphGui\\Icons\\logo.png");
+        this.setIconImage(icon);
         this.setContentPane(remove_vertex);
         this.graph = graph;
         this.frame = frame;

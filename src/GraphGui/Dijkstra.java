@@ -42,6 +42,8 @@ public class Dijkstra extends JFrame implements ActionListener {
     }
 
     public Dijkstra(DirectedWeightedGraph graph, FrameGraph frame, PanelGraph panel) {
+        Image icon = Toolkit.getDefaultToolkit().getImage("OOP-Ex2\\src\\GraphGui\\Icons\\logo.png");
+        this.setIconImage(icon);
         this.setContentPane(Dijkstra);
         this.graph = graph;
         this.frame = frame;

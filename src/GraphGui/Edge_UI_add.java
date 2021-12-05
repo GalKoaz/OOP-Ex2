@@ -31,6 +31,8 @@ public class Edge_UI_add extends JFrame implements ActionListener {
     }
 
     public Edge_UI_add(DirectedWeightedGraph graph, FrameGraph frame){
+        Image icon = Toolkit.getDefaultToolkit().getImage("OOP-Ex2\\src\\GraphGui\\Icons\\logo.png");
+        this.setIconImage(icon);
         this.frame = frame;
         this.setContentPane(Edge_UI_add);
         this.graph = graph;

@@ -30,6 +30,8 @@ public class Vertex_UI_add extends JFrame implements ActionListener {
         Add.addActionListener(this);
     }
     public Vertex_UI_add(DirectedWeightedGraph graph, FrameGraph frame){
+        Image icon = Toolkit.getDefaultToolkit().getImage("OOP-Ex2\\src\\GraphGui\\Icons\\logo.png");
+        this.setIconImage(icon);
         this.setContentPane(VertexUI);
         this.graph = graph;
         this.frame = frame;
