@@ -1,6 +1,6 @@
 # Exercise 2 Object-Oriented Programming
 
-## **_Directed Weighted Graph_**
+## **_Directed Weighted Graph_** 
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
@@ -10,6 +10,7 @@
     <li><a href="#graph-graphical-user-interface-(gui)">Graph Graphical user interface (GUI)</a></li>
     <li><a href="#code-details">Code Details</a></li>
     <li><a href="#algorithms">Algorithms</a></li>
+    <li><a href="#how-to-run">How  to run</a></li>
     <li><a href="#languages-and-tools">Languages and Tools</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -20,7 +21,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Exercise 2 Object-Oriented Programming
 
 This Exercise is dedicated to the design and implementation of data structures and algorithms on graphs (directed and weighted). As usual, it is recommended to start planning the Exercise (without a code) and only after you have a basic plan you should move on to the implementation phase of the code.
 
@@ -34,29 +34,51 @@ When the Exercise is checked through three public static functions, place fences
 
 ---------
 
-## Graph Graphical user interface (GUI) <small><sup>[▲](#directed-weighted-graph)</sup></small>
+## Graph Graphical user interface (GUI)
 In this project we were asked to display the graph visually, 
 
 we chose to represent the graph using Java Swing with a panel that allows uploading a graph using a JSON file.
 
 Saving a graph to a JSON file, adding and deleting a vertex, adding and deleting an Edge, The whole process for the algorithms we implemented. Help button for more information.
 
+<------------>
+
+here  will be the gitGUI!
+
+<------------>
 
 ---------
 
-## Code Details <small><sup>[▲](#directed-weighted-graph)</sup></small>
+<!-- code-details -->
+
+## Code Details
 
 
 Unified Modeling Language (UML) :
 
-<a href="https://github.com/GalKoaz/OOP-Ex2"><img src="https://i.ibb.co/fQ8LM2x/UML.png" alt="UML" border="0"></a>
+Click the image for zoom in.
+
+<p align="center">
+<img align="center" src="https://s10.gifyu.com/images/UML.png" />
+</p>
 
 
-Explanation about the uml classes here !
+As you can see in UML we implement the main Directed Weighted Graph interfaces that with the help of other interfaces and class we can build the whole project.
+The interface is implemented
+DirectedWeightedGraphAlgorithm the EdgeData, NodeData, GeoLocation.
+
+We have built a JSON Operation class which receives a JSON file and initializes the entire graph using the interfaces mentioned above.
+Sends all data to DirectedWeightedGraph, so we can build a graph. In the same class there are options for saving a given graph as a JSON file.
+
+The DirectedWeightedGraphAlgorithms class contains all the algorithms that can be run on the given graph such as DijkstraAlgorithm and DFS, in addition you can find other functions related to solving various problems in directed graphs.
+
+In addition to all the departments and interfaces mentioned above, we have prepared a test folder that checks all the functions that are in the project, from the simplest function to the most complex function and algorithms that appear in the project.
+
+We have prepared a folder for the graphical interface which contains all the departments of the interface we need from the visual graph presentation to the structure and execution of the algorithms within it, the option to delete and add edges and vertices.
 
 ---------
 <!-- algorithms -->
-## Algorithms <small><sup>[▲](#directed-weighted-graph)</sup></small>
+## Algorithms
 
 In this project we used a number of algorithms, we will present the algorithms that were implemented in this project.
 
@@ -70,10 +92,25 @@ The algorithm starts at the root node (selecting some arbitrary node as the root
 
 In addition, we have proposed a solution for a number of issues such as Traveling salesman problem and Shortest path problem which uses the algorithms mentioned above.
 
+
+---------
+<!-- how-to-run -->
+## How to run
+
+In this project we used some external libraries in the JAVA language, in order to make life easier these libraries are located within the project called external libraries.
+
+First, it's important to make sure you clone this project in IntelliJ through Project From Version Control.
+To be sure: File-> New-> Project From Version Control-> Repository URL
+
+Second, in this project we used some external libraries in the JAVA language, in order to make life easier these libraries are located within the project called external libraries.
+In order to update these libraries in this project, we will do the following:
+File-> Project Structure -> Libraries and select the folder with all external libraries.
+
+
 ---------
 
 
-## Languages and Tools <small><sup>[▲](#directed-weighted-graph)</sup></small>
+## Languages and Tools
 
   <div align="center">
   
@@ -88,7 +125,7 @@ In addition, we have proposed a solution for a number of issues such as Travelin
 
 
 <!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements <small><sup>[▲](#directed-weighted-graph)</sup></small>
+## Acknowledgements
 * [Java](www.java.com)
 * [UML](https://en.wikipedia.org/wiki/Unified_Modeling_Language)
 * [Git](https://git-scm.com/)
@@ -99,7 +136,7 @@ In addition, we have proposed a solution for a number of issues such as Travelin
 
 
 <!-- CONTACT -->
-## Contact <small><sup>[▲](#directed-weighted-graph)</sup></small>
+## Contact <small>[Top▲](#directed-weighted-graph)</small>
 
  Gal - [here](https://github.com/GalKoaz/)
  
