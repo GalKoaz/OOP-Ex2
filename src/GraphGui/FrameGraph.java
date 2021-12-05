@@ -19,7 +19,7 @@ public class FrameGraph extends JFrame implements ActionListener {
     private DirectedWeightedGraphAlgorithms copyGraphAtBeginning;
     private PanelGraph panel;
     private JMenuBar menuBar;
-    private JMenuItem saveItem,exitItem, shortestPathMenu, isConnectedMenu, tspMenu, aboutMenu;
+    private JMenuItem saveItem,exitItem, shortestPathMenu, isConnectedMenu, centerMenu ,tspMenu, aboutMenu;
     private JMenu fileMenu, runMenu, editMenu,  helpMenu, loadMenu;
     private ImageIcon loadIcon, saveIcon, exitIcon, gitIcon;
     private Image main_menuBar;
@@ -87,12 +87,15 @@ public class FrameGraph extends JFrame implements ActionListener {
          */
         shortestPathMenu = new JMenuItem("ShortestPath");
         isConnectedMenu = new JMenuItem("IsConnected");
+        centerMenu = new JMenuItem("Center");
         tspMenu = new JMenuItem("TSP");
 
 
         runMenu.add(shortestPathMenu);
         runMenu.add(isConnectedMenu);
+        runMenu.add(centerMenu);
         runMenu.add(tspMenu);
+
 
         aboutMenu = new JMenuItem("About");
         helpMenu.add(aboutMenu);
@@ -147,6 +150,7 @@ public class FrameGraph extends JFrame implements ActionListener {
         vertexItem.addActionListener(this);
         shortestPathMenu.addActionListener(this);
         isConnectedMenu.addActionListener(this);
+        centerMenu.addActionListener(this);
         tspMenu.addActionListener(this);
 
         /**
@@ -273,12 +277,16 @@ public class FrameGraph extends JFrame implements ActionListener {
          * complete..........
          */
 
+        /**
+         * algorithms:
+         */
         if(e.getSource() == shortestPathMenu){new Dijkstra(graph,this,panel);}
 
         if (e.getSource() == isConnectedMenu){}
 
-        if (e.getSource() == tspMenu) {}
+        if (e.getSource() == centerMenu){new Center(graph,this,panel);}
 
+        if (e.getSource() == tspMenu) {}
 
         if (e.getSource() == clearItem) {
             this.dispose();

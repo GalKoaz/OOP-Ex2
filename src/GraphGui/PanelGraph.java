@@ -117,7 +117,7 @@ public class PanelGraph extends JPanel {
         g2d.setStroke(new BasicStroke(stroke));
         g2d.setColor(color);
         g2d.draw(line);
-
+        g2d.setStroke(new BasicStroke(1));
         StringWeight(g2d, weight, to, from, insets, flag);
     }
 
@@ -336,6 +336,7 @@ public class PanelGraph extends JPanel {
         edges.get(cnt).setStroke(4);
         edges.get(cnt).setTag_2(color_2);
         edges.get(cnt).setTag(color);
+
     }
 
     public static void main(String[] args) {
