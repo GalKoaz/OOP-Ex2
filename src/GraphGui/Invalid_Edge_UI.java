@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Invalid_Edge_UI  extends JFrame implements ActionListener {
+public class Invalid_Edge_UI extends JFrame implements ActionListener {
     private ImageIcon ERROR;
     private Image ERROR_MenuBar;
 
@@ -25,7 +25,7 @@ public class Invalid_Edge_UI  extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         centreWindow(this);
         this.pack();
-            this.setTitle("Invalid Edge Error"); // title
+        this.setTitle("Invalid Edge Error"); // title
         this.setResizable(false); // prevent this to resize
         this.setVisible(true);
         close.addActionListener(this);

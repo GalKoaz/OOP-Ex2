@@ -52,7 +52,7 @@ public class Dijkstra extends JFrame implements ActionListener {
         centreWindow(this);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // nothing doing when clicking the exit button.
         this.pack();
-        this.setTitle("Vertex Editor"); // title
+        this.setTitle("Dijkstra's Algorithm - shortest path"); // title
         this.setResizable(false); // prevent this to resize
         this.setVisible(true);
         cancel.addActionListener(this);

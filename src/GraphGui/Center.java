@@ -29,7 +29,7 @@ public class Center extends JFrame implements ActionListener{
         centreWindow(this);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // nothing doing when clicking the exit button.
         this.pack();
-        this.setTitle("Vertex Editor"); // title
+        this.setTitle("Graph centre"); // title
         this.setResizable(false); // prevent this to resize
         this.setVisible(true);
         cancelButton.addActionListener(this);

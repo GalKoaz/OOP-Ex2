@@ -23,7 +23,7 @@ public class FrameGraph extends JFrame implements ActionListener {
     private JMenu fileMenu, runMenu, editMenu,  helpMenu, loadMenu;
     private ImageIcon loadIcon, saveIcon, exitIcon, gitIcon;
     private Image main_menuBar;
-    private JMenuItem loadFile, G1, G2, G3;
+    private JMenuItem loadFile, G1, G2, G3, RandomGraph;
     private JMenu edgeItem, vertexItem;
     private JMenuItem clearItem, addEdgeItem, removeEdgeItem, addVertexItem, removeVertexItem;
     private File jsonFileSelected;
@@ -66,11 +66,13 @@ public class FrameGraph extends JFrame implements ActionListener {
         G1 = new JMenuItem("G1.json");
         G2 = new JMenuItem("G2.json");
         G3 = new JMenuItem("G3.json");
+        RandomGraph = new JMenuItem("Create Random Graph");
         loadFile = new JMenuItem("Select Json File");
 
         loadMenu.add(G1);
         loadMenu.add(G2);
         loadMenu.add(G3);
+        loadMenu.add(RandomGraph);
         loadMenu.add(loadFile);
 
 
@@ -78,6 +80,7 @@ public class FrameGraph extends JFrame implements ActionListener {
         G1.addActionListener(this);
         G2.addActionListener(this);
         G3.addActionListener(this);
+        RandomGraph.addActionListener(this);
         loadFile.addActionListener(this);
 
 
@@ -231,6 +234,9 @@ public class FrameGraph extends JFrame implements ActionListener {
             this.setVisible(false);
             new FrameGraph(g.getGraph());
         }
+
+        if (e.getSource() == RandomGraph){new RandomGraph(graph,this,panel);}
+
 
         if (e.getSource() == loadFile){
             JFileChooser fileChooser = new JFileChooser();
