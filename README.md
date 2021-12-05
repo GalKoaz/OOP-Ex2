@@ -35,17 +35,17 @@ When the Exercise is checked through three public static functions, place fences
 ---------
 
 ## Graph Graphical user interface (GUI)
+
+<p align="center">
+<img align="center" src="https://s10.gifyu.com/images/Untitled1-1.gif" />
+</p>
+
 In this project we were asked to display the graph visually, 
 
 we chose to represent the graph using Java Swing with a panel that allows uploading a graph using a JSON file.
 
 Saving a graph to a JSON file, adding and deleting a vertex, adding and deleting an Edge, The whole process for the algorithms we implemented. Help button for more information.
 
-<------------>
-
-here  will be the gitGUI!
-
-<------------>
 
 ---------
 
@@ -61,7 +61,6 @@ Click the image for zoom in.
 <p align="center">
 <img align="center" src="https://s10.gifyu.com/images/UML.png" />
 </p>
-
 
 As you can see in UML we implement the main Directed Weighted Graph interfaces that with the help of other interfaces and class we can build the whole project.
 The interface is implemented
