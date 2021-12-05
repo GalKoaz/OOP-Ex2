@@ -20,10 +20,11 @@ public class FrameGraph extends JFrame implements ActionListener {
     private PanelGraph panel;
     private JMenuBar menuBar;
     private JMenuItem saveItem,exitItem, shortestPathMenu, isConnectedMenu, centerMenu ,tspMenu, aboutMenu;
-    private JMenu fileMenu, runMenu, editMenu,  helpMenu, loadMenu;
+    private JMenu fileMenu, runMenu, editMenu,  helpMenu, loadMenu, viewMenu;
     private ImageIcon loadIcon, saveIcon, exitIcon, gitIcon;
     private Image main_menuBar;
     private JMenuItem loadFile, G1, G2, G3, RandomGraph;
+    private JMenuItem verticesTableMenu, edgesTableMenu;
     private JMenu edgeItem, vertexItem;
     private JMenuItem clearItem, addEdgeItem, removeEdgeItem, addVertexItem, removeVertexItem;
     private File jsonFileSelected;
@@ -46,6 +47,7 @@ public class FrameGraph extends JFrame implements ActionListener {
         menuBar = new JMenuBar();
         fileMenu = new JMenu("File");
         editMenu = new JMenu("Edit");
+        viewMenu = new JMenu("View");
         runMenu = new JMenu("Run");
         helpMenu = new JMenu("Help");
 
@@ -82,6 +84,15 @@ public class FrameGraph extends JFrame implements ActionListener {
         G3.addActionListener(this);
         RandomGraph.addActionListener(this);
         loadFile.addActionListener(this);
+
+
+        /**
+         * View menus:
+         */
+        verticesTableMenu = new JMenuItem("Vertices Table");
+        edgesTableMenu = new JMenuItem("Edges Table");
+        viewMenu.add(verticesTableMenu);
+        viewMenu.add(edgesTableMenu);
 
 
 
@@ -155,6 +166,8 @@ public class FrameGraph extends JFrame implements ActionListener {
         isConnectedMenu.addActionListener(this);
         centerMenu.addActionListener(this);
         tspMenu.addActionListener(this);
+        verticesTableMenu.addActionListener(this);
+        edgesTableMenu.addActionListener(this);
 
         /**
          * Keyboard shortcuts:
@@ -175,22 +188,13 @@ public class FrameGraph extends JFrame implements ActionListener {
          */
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
+        menuBar.add(viewMenu);
         menuBar.add(runMenu);
         menuBar.add(helpMenu);
 
 
-
-
-
-
-
-
-
         this.setJMenuBar(menuBar);
-
         this.setVisible(true);
-
-
     }
 
     @Override
@@ -280,8 +284,12 @@ public class FrameGraph extends JFrame implements ActionListener {
 
         if (e.getSource() == removeEdgeItem) {new Edge_UI_remove(graph,this);}
         /**
-         * complete..........
+         * Tables for View menu:
          */
+         if (e.getSource() == verticesTableMenu){new VertexTable(graph);}
+
+         if (e.getSource() == edgesTableMenu){new EdgeTable(graph);}
+
 
         /**
          * algorithms:
