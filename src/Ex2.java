@@ -43,6 +43,6 @@ public class Ex2 {
     }
 
     public static void main(String[] args) {
-        runGUI("G3.json");
+        runGUI("G2.json");
     }
 }

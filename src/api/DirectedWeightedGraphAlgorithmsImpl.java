@@ -60,7 +60,7 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      *
      * Graph Center DEFINITION. the graph center is the vertex to have the minimum eccentricity.
      *
-     * In a defined formula: C = min{e(v) | for each v in G(V)}
+     * In a defined formula: C = min{e(v) | for each v ∈ G(V)}
      *
      * @return the center node of the graph.
      */
@@ -87,7 +87,7 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      * Distance DEFINITION. the distance d(v,u) is the shortest path between v and u.
      *
      *
-     * As being said the eccentricity defined as the following: e(v)=max{d(v,u) such that u in V(G) for each u in V(G)}.
+     * As being said the eccentricity defined as the following: e(v) = max{d(v,u) such that u ∈ V(G) for each u ∈ V(G)}.
      *
      * @param v the if of a vertex v.
      * @return the eccentricity of v.

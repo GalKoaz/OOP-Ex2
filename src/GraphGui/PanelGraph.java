@@ -24,6 +24,7 @@ public class PanelGraph extends JPanel {
     private Point2D maxRange;
     private double insets;
 
+
     PanelGraph(DirectedWeightedGraph graph) {
         this.setPreferredSize(new Dimension(1000, 1000));
         this.points = new ArrayList<>();
@@ -57,11 +58,11 @@ public class PanelGraph extends JPanel {
         for (GraphEdge ed : edges) {
             ArrayList<GraphPoint> p = ed.getPoints();
             LineSave.add(""+p.get(0).getId()+"-"+p.get(1).getId());
-            paintLine(g2d, p.get(0), p.get(1), insets, ed.getWeight(),LineSave, ed.getTag());
+            paintLine(g2d, p.get(0), p.get(1), insets, ed.getWeight(),LineSave, ed.getTag(),ed.getStroke(),ed.getTag_2());
         }
 
         for (GraphPoint gp : points) {
-            paintPoint(g2d, gp, insets, gp.getTag());
+            paintPoint(g2d, gp, insets, gp.getTag(), gp.getTag_2());
         }
         g2d.dispose();
     }
@@ -100,20 +101,23 @@ public class PanelGraph extends JPanel {
      * we calculate the angel between two point in the graph and draw line to the tip of the point.
      *********************************************************************************************************/
 
-    private void paintLine(Graphics2D g2d, GraphPoint from, GraphPoint to, double insets, String weight, ArrayList<String> list, Color color) {
+    private void paintLine(Graphics2D g2d, GraphPoint from, GraphPoint to, double insets, String weight, ArrayList<String> list, Color color, int stroke, Color color_2) {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         //boolean flag = CheckEdge(to,from);
         boolean flag = CheckerEdgeDraw(list,to.getId()+"-"+from.getId());
         Point2D fromPoint = translate(from, insets);
         Point2D toPoint = translate(to, insets);
-        g2d.setColor(color);
         double fromp = angleBetween(fromPoint, toPoint);
         double top = angleBetween(toPoint, fromPoint);
         Point2D pointFrom = getPointOnCircle(fromPoint, fromp);
         Point2D pointTo = getPointOnCircle(toPoint, top);
         Line2D line = new Line2D.Double(pointFrom, pointTo);
-        drawArrowHead(g2d, pointTo, pointFrom, Color.RED);
+
+        drawArrowHead(g2d, pointTo, pointFrom, color_2, stroke);
+        g2d.setStroke(new BasicStroke(stroke));
+        g2d.setColor(color);
         g2d.draw(line);
+
         StringWeight(g2d, weight, to, from, insets, flag);
     }
 
@@ -172,7 +176,7 @@ public class PanelGraph extends JPanel {
         return new double[][]{{x1_ans,y1_ans},{x2_ans,y2_ans}};
     }
 
-    void paintPoint(Graphics2D g2d, GraphPoint gp, double insets, Color color) {
+    void paintPoint(Graphics2D g2d, GraphPoint gp, double insets, Color color, Color color_2) {
         Graphics2D g2 = (Graphics2D) g2d.create();
 
         Point2D translated = translate(gp, insets);
@@ -185,7 +189,7 @@ public class PanelGraph extends JPanel {
         g2.translate(xPos - offset, yPos - offset);
         g2.setPaint(color);
         g2.fill(new Ellipse2D.Double(0, 0, offset * 2, offset * 2));
-        g2.setPaint(Color.RED);
+        g2.setPaint(color_2);
         g2.draw(new Ellipse2D.Double(0, 0, offset * 2, offset * 2));
         FontMetrics fm = g2d.getFontMetrics();
         String text = gp.getId();
@@ -205,7 +209,7 @@ public class PanelGraph extends JPanel {
      *</drawArrowHead>
      *********************************************************************************************************/
 
-    private void drawArrowHead(Graphics2D g2, Point2D tip, Point2D tail, Color color) {
+    private void drawArrowHead(Graphics2D g2, Point2D tip, Point2D tail, Color color, int stroke) {
         int ArrowSize = 10;
         g2.setPaint(color);
         double dy = tip.getY() - tail.getY();
@@ -215,6 +219,7 @@ public class PanelGraph extends JPanel {
         for (int j = 0; j < 2; j++) {
             x = (tip.getX() - ArrowSize * Math.cos(rho));
             y = (tip.getY() - ArrowSize * Math.sin(rho));
+            g2.setStroke(new BasicStroke(stroke));
             g2.draw(new Line2D.Double(tip.getX(), tip.getY(), x, y));
             rho = theta - Phi;
         }
@@ -252,9 +257,9 @@ public class PanelGraph extends JPanel {
                 if (i == j) continue;
                 ArrayList<GraphPoint> temp = new ArrayList<>();
                 if (graph.getEdge(i, j) != null) {
-                    temp.add(new GraphPoint(String.valueOf(graph.getNode(graph.getEdge(i, j).getSrc()).getKey()), new Point2D.Double(graph.getNode(graph.getEdge(i, j).getSrc()).getLocation().x(), graph.getNode(graph.getEdge(i, j).getSrc()).getLocation().y()),Color.blue));
-                    temp.add(new GraphPoint(String.valueOf(graph.getNode(graph.getEdge(i, j).getDest()).getKey()), new Point2D.Double(graph.getNode(graph.getEdge(i, j).getDest()).getLocation().x(), graph.getNode(graph.getEdge(i, j).getDest()).getLocation().y()),Color.blue));
-                    edges.add(new GraphEdge(String.valueOf(graph.getEdge(i, j).getWeight()), temp,Color.red));
+                    temp.add(new GraphPoint(String.valueOf(graph.getNode(graph.getEdge(i, j).getSrc()).getKey()), new Point2D.Double(graph.getNode(graph.getEdge(i, j).getSrc()).getLocation().x(), graph.getNode(graph.getEdge(i, j).getSrc()).getLocation().y()),Color.blue, Color.red));
+                    temp.add(new GraphPoint(String.valueOf(graph.getNode(graph.getEdge(i, j).getDest()).getKey()), new Point2D.Double(graph.getNode(graph.getEdge(i, j).getDest()).getLocation().x(), graph.getNode(graph.getEdge(i, j).getDest()).getLocation().y()),Color.blue,Color.red));
+                    edges.add(new GraphEdge(String.valueOf(graph.getEdge(i, j).getWeight()), temp,Color.red, 1, Color.red));
                 }
             }
         }
@@ -271,7 +276,7 @@ public class PanelGraph extends JPanel {
                 String currKey = String.valueOf(graph.getNode(i).getKey());
                 double currPosX = graph.getNode(i).getLocation().x();
                 double currPosY = graph.getNode(i).getLocation().y();
-                points.add(new GraphPoint(currKey, new Point2D.Double(currPosX, currPosY),Color.blue));
+                points.add(new GraphPoint(currKey, new Point2D.Double(currPosX, currPosY),Color.blue, Color.red));
             }
         }
     }
@@ -313,9 +318,25 @@ public class PanelGraph extends JPanel {
         return points;
     }
 
-    public void setPointColor(int pointIndex,Color color){
+    public void setPointColor(int pointIndex,Color color, Color color_2){
+        points.get(pointIndex).setTag_2(color_2);
         points.get(pointIndex).setTag(color);
     }
+
+    public void setEdgeColor(int src, int dest,Color color, Color color_2){
+        int cnt = 0;
+        for(GraphEdge ge: edges){
+            if (Objects.equals(ge.getPoints().get(0).getId(), "" + src)
+                    && Objects.equals(ge.getPoints().get(1).getId(), "" + dest)){
+                break;
+            }
+            cnt++;
+        }
+        edges.get(cnt).setStroke(4);
+        edges.get(cnt).setTag_2(color_2);
+        edges.get(cnt).setTag(color);
+    }
+
     public static void main(String[] args) {
         double[][]verticle = Verticle(2,6,3,2);
 

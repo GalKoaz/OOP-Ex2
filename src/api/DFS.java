@@ -50,6 +50,13 @@ public class DFS {
      */
     public void DFS(int v){ DFS_Visit(v);}
 
+    //  DFS-VISIT(u)
+    //  1  visited[u] ← true     ▹White vertex u has just been discovered.
+    //  2  for each v ∈ Adj[u]  ▹Explore edge(u, v).
+    //  3    curr ← v           ▹Save the current node visited.
+    //  4       do if visited[v] = false
+    //  5                  DFS-VISIT(v)
+    //
     public void DFS_Visit(int u) {
         visited[u] = true;
         for (int v = 0; v < adjacentVerts.get(u).size(); v++) {
