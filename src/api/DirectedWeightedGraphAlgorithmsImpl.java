@@ -126,10 +126,10 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
     @Override
     public List<NodeData> tsp(List<NodeData> cities) {
         ArrayList<NodeData> currPath = new ArrayList<>();
-        return minCycleFromCity(cities,(int)(Math.random()*cities.size()), currPath,0);
+        ArrayList<NodeData> path = minCycleFromCity(cities,(int)(Math.random()*cities.size()), currPath,0);
+        path.add(path.get(0));
+        return path;
     }
-    //Todo: the issue is that the function greedily select the lowest edge, so he can miss
-    // a whole path. when he misses it can sometimes tell us that there isn't exist such cycle.
     /**
      * This method following by recursion the optimal Hamiltonian cycle start in a certain
      * city and of course ends there. The recursion checks which choice is optimal,
@@ -143,7 +143,7 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
     public ArrayList<NodeData> minCycleFromCity(List<NodeData> cities, int city, ArrayList<NodeData> optPath, int cnt){
         int node_id = cities.get(city).getKey();
         optPath.add(graph.getNode(node_id));
-        if (cnt == cities.size()) {
+        if (cnt == cities.size()-1) {
             return optPath;
         }
         double minWeight = Double.MAX_VALUE;

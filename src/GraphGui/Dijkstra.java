@@ -87,11 +87,9 @@ public class Dijkstra extends JFrame implements ActionListener {
         }
 
 
-
-
-    public void drawOptPath(int src, int dest, int cnt, ArrayList<NodeData>optPath){
-         int prevNode = optPath.get(cnt-1).getKey();
-         int curr = optPath.get(cnt).getKey();
+    public void drawOptPath(int src, int dest, int cnt, ArrayList<NodeData>Path){
+         int prevNode = Path.get(cnt-1).getKey();
+         int curr = Path.get(cnt).getKey();
          if (graph.getEdge(curr,prevNode)!=null){
              panel.setEdgeColor(curr,prevNode,Color.green, frame.getBackground());
          }
