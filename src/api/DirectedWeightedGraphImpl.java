@@ -1,6 +1,7 @@
 package api;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -20,7 +21,7 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
 
     private HashMap<Integer, NodeData> Vertices;
     private HashMap<String, EdgeData> Edges;
-    private int MC = 0;
+    private int MC = 0, MC_2 = 0;
 
     /**
      *  This constructor gets a JSON_Operation object, to initialize the graph's properties (edges and vertices),
@@ -32,11 +33,18 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
         json.init_Graph();
         this.Vertices = new HashMap<>();
         this.Edges = new HashMap<>();
-        for (NodeData vertex : json.getInitVertices()) {
-            addNode(vertex);
-        }
+        for (NodeData vertex : json.getInitVertices()) {addNode(vertex);}
+        /**
+         * The function goes over each node and checks for the adjacent nodes that he has an edge with.
+         * For each such edge, the method adds the edge to the adjacent node list.
+         * The main list (adj) is constructed as following: adj = {{n1,n2,...},{n11,n22,...},...}
+         * where adj in a place i, resembles the node with id = i.
+         */
         for (EdgeData edge : json.getInitEdges()) {
-            connect(edge.getSrc(),edge.getDest(),edge.getWeight());
+            int src = edge.getSrc();
+            int dest = edge.getDest();
+            double w = edge.getWeight();
+            connect(src,dest,w);
         }
     }
 
@@ -89,12 +97,20 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
      */
     @Override
     public Iterator<EdgeData> edgeIter(int node_id) {
-        for (int i = 0; i < Vertices.size(); i++) {
-            if (node_id == i) {continue;}
-            removeEdge(node_id,i);
-            removeEdge(i,node_id);
+//        try{
+//            if (MC!=MC_2){
+//                throw new RuntimeException("Graph was changed since the iterator was constructed!");
+//            }
+//        }
+//        catch (RuntimeException e){e.printStackTrace();}
+        ArrayList<EdgeData> neighbours = new ArrayList<>();
+        for (int v = 0; v < Vertices.size(); v++) {
+            EdgeData curr = getEdge(node_id,v);
+            if (node_id == v) {continue;}
+            if (curr!=null){neighbours.add(curr);}
         }
-        return Edges.values().iterator();
+        MC_2 = MC;
+        return neighbours.iterator();
     }
     /**
      *
@@ -128,7 +144,7 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
     }
 
     @Override
-    public EdgeData removeEdge(int src, int dest) { MC++;return Edges.remove("" + src + "-" + dest);}
+    public EdgeData removeEdge(int src, int dest) {MC++;return Edges.remove("" + src + "-" + dest);}
 
     @Override
     public int nodeSize() {

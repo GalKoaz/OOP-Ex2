@@ -7,6 +7,7 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
 
     private DirectedWeightedGraph graph;
     private JSON_Operation json;
+    private ArrayList<Double> e;
 
     @Override
     public void init(DirectedWeightedGraph g) { this.graph = g; }
@@ -44,7 +45,7 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      * @return the optimal path's cost.
      */
     @Override
-    public double shortestPathDist(int src, int dest) { return new DijkstraAlgorithm(src,dest,this.graph).getOptPath();}
+    public double shortestPathDist(int src, int dest) { return new Dijkstra(src,this.graph).findMinDist()[dest];}
     /**
      * This returns the shortestPath as a consecutive nodes: node(src),..., node(dest).
      * The OptimalPath property is set on DijkstraAlgorithm class' constructor, so
@@ -54,7 +55,10 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      * @return the list of shortestPath as a consecutive nodes: {node(src),..., node(dest)}.
      */
     @Override
-    public List<NodeData> shortestPath(int src, int dest) {return new DijkstraAlgorithm(src,dest,this.graph).getOptimalPath();}
+    public List<NodeData> shortestPath(int src, int dest) {
+        //return new DijkstraAlgorithm(src,dest,this.graph).getOptimalPath();
+        return null;
+    }
     /**
      * This method finds the center of the graph.
      *
@@ -66,17 +70,27 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      */
     @Override
     public NodeData center() {
-        if (!isConnected()) {return null;} // As written in the interface, we suppose that the graph is connected in calculations.
+        //if (!isConnected()) {return null;} // As written in the interface, we suppose that the graph is connected in calculations.
+        initEccentricity();
         double min = Double.MAX_VALUE;
         int center = 0;
         for (int v = 0; v < graph.nodeSize(); v++) {
-            if (e(v) < min) {
-                min = e(v);
+            if (e.get(v) < min) {
+                min = e.get(v);
                 center = v;
             }
         }
         return graph.getNode(center);
     }
+
+    /**
+     *
+     */
+    public void initEccentricity(){
+        e = new ArrayList<>();
+        for (int v = 0; v < graph.nodeSize(); v++){e.add(e(v));}
+    }
+
     /**
      *
      * This method computes the eccentricity of a vertex v.
@@ -94,9 +108,11 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      */
     public double e(int v){
         double max = 0;
-        for (int u = 0; u < graph.nodeSize(); u++) {
+        //DijkstraAlgorithm d = new DijkstraAlgorithm();
+        double[] dist = new DijkstraAlgorithm(v,graph).findMinDist();
+        for (int u = 0; u < dist.length; u++) {
             if (u == v) {continue;}
-            double d = shortestPathDist(v, u);
+            double d = dist[u];
             if (d > max) { max = d;}
         }
         return max;

@@ -10,9 +10,12 @@ public class EdgeDataImpl implements EdgeData {
             if (weight >= 0){
                 this.weight = weight;
             }
+            else{
+                throw new Exception("ERROR: Weight got is a negative number");
+            }
         }
         catch (Exception c){
-            System.out.println("ERROR: Weight got is a negative number");
+            c.printStackTrace();
         }
         this.src = src;
         this.dest = dest;
