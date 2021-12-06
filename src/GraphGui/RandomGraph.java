@@ -46,6 +46,7 @@ public class RandomGraph extends JFrame implements ActionListener {
             int num = Integer.parseInt(numOfVertices.getText());
             System.out.println(num);
             createRandomGraph(num);
+            this.dispose();
         }
     }
 

@@ -200,12 +200,7 @@ public class FrameGraph extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == loadMenu ){
-            System.out.println("Sssss");
-        }
-        if (e.getSource() == saveItem){
-            System.out.println("Ssfsfsfsffs");
-        }
+
         if(e.getSource() == exitItem){ System.exit(0);}
 
         if(e.getSource() == aboutMenu) {
@@ -226,6 +221,7 @@ public class FrameGraph extends JFrame implements ActionListener {
             DirectedWeightedGraphAlgorithms g = new DirectedWeightedGraphAlgorithmsImpl();
             g.load(jsonFileSelected.getPath());
             this.dispose();
+
             this.setVisible(false);
             new FrameGraph(g.getGraph());
         }
@@ -247,13 +243,17 @@ public class FrameGraph extends JFrame implements ActionListener {
             FileNameExtensionFilter filter = new FileNameExtensionFilter("json","json");
             fileChooser.setFileFilter(filter);
             int response = fileChooser.showOpenDialog(null); //select json file to open.
-
-            if (response == JFileChooser.APPROVE_OPTION){
-                jsonFileSelected = new File(fileChooser.getSelectedFile().getAbsolutePath());
-                DirectedWeightedGraphAlgorithms g = new DirectedWeightedGraphAlgorithmsImpl();
-                g.load(jsonFileSelected.getAbsolutePath());
-                this.dispose();
-                new FrameGraph(g.getGraph());
+            String filename = fileChooser.getSelectedFile().toString();
+            if (!filename.endsWith(".json")) {
+                JOptionPane.showMessageDialog(null, "You should load a file with a .json extension!");
+            }else {
+                if (response == JFileChooser.APPROVE_OPTION) {
+                    jsonFileSelected = new File(fileChooser.getSelectedFile().getAbsolutePath());
+                    DirectedWeightedGraphAlgorithms g = new DirectedWeightedGraphAlgorithmsImpl();
+                    g.load(jsonFileSelected.getAbsolutePath());
+                    this.dispose();
+                    new FrameGraph(g.getGraph());
+                }
             }
         }
         if (e.getSource() == saveItem) {
@@ -261,7 +261,10 @@ public class FrameGraph extends JFrame implements ActionListener {
             FileNameExtensionFilter filter = new FileNameExtensionFilter("json","json");
             fileChooser.setFileFilter(filter);
             int response = fileChooser.showOpenDialog(null); //select json file to open.
-
+            String filename = fileChooser.getSelectedFile().toString();
+            if (!filename.endsWith(".json")) {
+                JOptionPane.showMessageDialog(null, "You should save the file with a .json extension!");
+            }
             if (response == JFileChooser.APPROVE_OPTION){
                 jsonFileSelected = new File(fileChooser.getSelectedFile().getAbsolutePath());
                 DirectedWeightedGraphAlgorithms g = new DirectedWeightedGraphAlgorithmsImpl();
@@ -269,7 +272,6 @@ public class FrameGraph extends JFrame implements ActionListener {
                 g.save(jsonFileSelected.getAbsolutePath());
 
             }
-
         }
         /**
          * Vertex -> add a vertex, remove vertex
@@ -289,7 +291,6 @@ public class FrameGraph extends JFrame implements ActionListener {
          if (e.getSource() == verticesTableMenu){new VertexTable(graph);}
 
          if (e.getSource() == edgesTableMenu){new EdgeTable(graph);}
-
 
         /**
          * algorithms:
