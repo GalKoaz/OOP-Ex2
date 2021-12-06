@@ -21,7 +21,7 @@
 ## Graph Graphical user interface
 
 <p align="center">
-<img align="center" src="https://s10.gifyu.com/images/Untitled2-2.gif"/>
+<img align="center" src="https://s10.gifyu.com/images/Untitled2-_2_.gif"/>
 </p>
 
 In this project we were asked to display the graph visually,
