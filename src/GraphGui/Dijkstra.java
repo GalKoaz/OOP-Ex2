@@ -24,7 +24,6 @@ public class Dijkstra extends JFrame implements ActionListener {
     private Timer timer;
     private int delay = 1000;
     private int cnt = 0;
-    private ArrayList<ArrayList<NodeData>> adjacentVerts;
 
 
     public Dijkstra() {
@@ -50,7 +49,6 @@ public class Dijkstra extends JFrame implements ActionListener {
         this.panel = panel;
         this.algo = new DirectedWeightedGraphAlgorithmsImpl();
         this.algo.init(graph);
-        this.adjacentVerts = new ArrayList<>();
         centreWindow(this);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // nothing doing when clicking the exit button.
         this.pack();

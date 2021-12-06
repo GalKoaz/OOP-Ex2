@@ -296,11 +296,11 @@ public class FrameGraph extends JFrame implements ActionListener {
          */
         if(e.getSource() == shortestPathMenu){new Dijkstra(graph,this,panel);}
 
-        if (e.getSource() == isConnectedMenu){}
+        if (e.getSource() == isConnectedMenu){new IsConnect(graph,this,panel);}
 
         if (e.getSource() == centerMenu){new Center(graph,this,panel);}
 
-        if (e.getSource() == tspMenu) {}
+        if (e.getSource() == tspMenu) {new TSP(graph,this,panel);}
 
         if (e.getSource() == clearItem) {
             this.dispose();
