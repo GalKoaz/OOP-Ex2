@@ -24,6 +24,13 @@
 <img align="center" src="https://s10.gifyu.com/images/Untitled2-_2_.gif"/>
 </p>
 
+---
+
+<p align="center">
+<img align="center" src="https://s10.gifyu.com/images/Untitled611bff3bc2c46a20e.gif"/>
+</p>
+
+
 In this project we were asked to display the graph visually,
 
 we chose to represent the graph using Java Swing with a panel that allows uploading a graph using a JSON file.
