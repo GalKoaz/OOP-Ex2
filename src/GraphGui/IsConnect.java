@@ -18,7 +18,7 @@ public class IsConnect extends JFrame implements ActionListener {
     private PanelGraph panel;
     private DirectedWeightedGraphAlgorithmsImpl algo;
     private DirectedWeightedGraph graph;
-    private Timer timer, timer_2;
+    private Timer timer;
     private int delay = 10;
     private int cnt = 0;
 
