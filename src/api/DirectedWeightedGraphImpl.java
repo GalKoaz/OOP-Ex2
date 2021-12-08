@@ -51,7 +51,7 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
     }
 
     public DirectedWeightedGraphImpl(HashMap<Integer, NodeData> Vertices,HashMap<Integer,HashMap<Integer, EdgeData>> Edges) {
-        MC = 0; MC_2 = 0; edgeSize = 0; nodeSize = 0;
+        MC = 0; MC_2 = 0; edgeSize = Edges.size(); nodeSize = Vertices.size();
         this.Edges = Edges;
         this.Vertices = Vertices;
     }
@@ -81,6 +81,7 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
 
     @Override
     public EdgeData getEdge(int src, int dest) {
+        if (!isEdge(src,dest)) {return null;}
         return Edges.get(src).get(dest);
     }
 
@@ -148,6 +149,7 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
 //        }
 //        catch (RuntimeException e){e.printStackTrace();}
         MC_2 = MC;
+        if (!Edges.containsKey(node_id)){return null;}
         return Edges.get(node_id).values().iterator();
     }
     /**
@@ -185,12 +187,12 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
 
     @Override
     public EdgeData removeEdge(int src, int dest) {
-        EdgeData removedEdge = Edges.get(src).remove(dest);
-        if (removedEdge != null) {
+        if (isEdge(src, dest)) {
             edgeSize--;
             MC++;
+            return Edges.get(src).remove(dest);
         }
-        return removedEdge;
+        return null;
     }
 
     @Override
@@ -206,6 +208,14 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
     @Override
     public int getMC() {
         return MC;
+    }
+
+    public boolean isEdge(int src, int dest){
+        return  Vertices.containsKey(src) &&
+                Vertices.containsKey(dest) &&
+                Edges.containsKey(src) &&
+                Edges.get(src).containsKey(dest) &&
+                src != dest;
     }
 
     // getters and setters //

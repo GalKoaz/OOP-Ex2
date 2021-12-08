@@ -90,14 +90,13 @@ class DirectedWeightedGraphAlgorithmsImplTest {
 
         List<NodeData> path2 = x.shortestPath(0,31);
         assertEquals(graph3.getNode(0).getInfo(),path2.get(0).getInfo());
-        assertEquals(graph3.getNode(9).getInfo(),path2.get(1).getInfo());
-        assertEquals(graph3.getNode(2).getInfo(),path2.get(2).getInfo());
-        assertEquals(graph3.getNode(3).getInfo(),path2.get(3).getInfo());
-        assertEquals(graph3.getNode(13).getInfo(),path2.get(4).getInfo());
-        assertEquals(graph3.getNode(14).getInfo(),path2.get(5).getInfo());
-        assertEquals(graph3.getNode(29).getInfo(),path2.get(6).getInfo());
-        assertEquals(graph3.getNode(30).getInfo(),path2.get(7).getInfo());
-        assertEquals(graph3.getNode(31).getInfo(),path2.get(8).getInfo());
+        assertEquals(graph3.getNode(2).getInfo(),path2.get(1).getInfo());
+        assertEquals(graph3.getNode(3).getInfo(),path2.get(2).getInfo());
+        assertEquals(graph3.getNode(13).getInfo(),path2.get(3).getInfo());
+        assertEquals(graph3.getNode(14).getInfo(),path2.get(4).getInfo());
+        assertEquals(graph3.getNode(29).getInfo(),path2.get(5).getInfo());
+        assertEquals(graph3.getNode(30).getInfo(),path2.get(6).getInfo());
+        assertEquals(graph3.getNode(31).getInfo(),path2.get(7).getInfo());
     }
 
     @Test
@@ -123,18 +122,18 @@ class DirectedWeightedGraphAlgorithmsImplTest {
     }
 
     @Test
-    void tsp() { // need to fix
+    void tsp() {
          ArrayList<NodeData> tsp = new ArrayList<>();
         tsp.add(graph.getNode(3));
         tsp.add(graph.getNode(8));
         tsp.add(graph.getNode(10));
         tsp.add(graph.getNode(11));
         ArrayList<NodeData> tsp1 = (ArrayList<NodeData>) a.tsp(tsp);
-        assertTrue(tsp1.size() == 0);
+        assertTrue(tsp1.size() > 0);
     }
 
     @Test
-    void minCycleFromCity() { // need to fix the test
+    void minCycleFromCity() {
         ArrayList<NodeData> City;
         ArrayList<NodeData> minCity;
 

@@ -6,9 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 public class RandomGraph extends JFrame implements ActionListener {
     private JButton createButton;
@@ -54,6 +52,7 @@ public class RandomGraph extends JFrame implements ActionListener {
     public void createRandomGraph(int num){
         DirectedWeightedGraph g = new DirectedWeightedGraphImpl(new HashMap<>(), new HashMap<>());
         for (int i = 0; i < num; i++) {
+            System.out.println("node: " + i);
             int node_id = i;
             g.addNode(random_vertex_generator(node_id));
         }
@@ -61,6 +60,7 @@ public class RandomGraph extends JFrame implements ActionListener {
         int edgesAmount = 20*num;
 
         for (int i = 0; i < edgesAmount; i++) {
+            System.out.println("edge: "+i);
             EdgeData e = random_edge_generator(num);
             int src = e.getSrc();
             int dest = e.getDest();
@@ -83,13 +83,28 @@ public class RandomGraph extends JFrame implements ActionListener {
 
 
     public EdgeData random_edge_generator(int num) {
-        int[] srcDest = two_random_distinct_numbers(0, num - 1);
+        //int[] srcDest = two_random_distinct_numbers(0, num - 1);
+        int[] srcDest = two_random_numbers(0,num-1,num-1);
         int src = srcDest[0];
         int dest = srcDest[1];
         int tag = 1 + (int) (Math.random() * 10);
         double weight = Math.random() * 10;
         String info = "Src:" + src + "\n" + "Dest:" + dest + "\n" + "Tag" + tag + "\n" + "Weight:" + weight;
         return new EdgeDataImpl(src, dest, tag, weight, info);
+    }
+
+    public int[] two_random_numbers(int a, int b, int Max){
+        BitSet bs = new BitSet(Max);
+        int cardinality = 0;
+        while(cardinality < 2) {
+            Random rand = new Random();
+            int v = rand.nextInt(Max);
+            if(!bs.get(v)) {
+                bs.set(v);
+                cardinality++;
+            }
+        }
+        return bs.stream().toArray();
     }
 
     public int[] two_random_distinct_numbers(int a, int b) {
@@ -111,7 +126,4 @@ public class RandomGraph extends JFrame implements ActionListener {
         int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2.6);
         frame.setLocation(x, y);
     }
-
-
-
 }

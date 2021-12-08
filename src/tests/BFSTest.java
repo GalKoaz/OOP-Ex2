@@ -73,6 +73,7 @@ class BFSTest {
         //new test:
         g2 = (DirectedWeightedGraphImpl) BFS_2.turnEdgesDirection(g2);
         assertNotNull(g2.getEdge(1,0));
+        System.out.println(g2.getEdge(0,1));
         assertNull(g2.getEdge(0,1));
         //new test:
         g3 = (DirectedWeightedGraphImpl) BFS_3.turnEdgesDirection(g3);

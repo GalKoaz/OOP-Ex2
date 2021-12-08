@@ -40,20 +40,8 @@ public class Ex2 {
     }
 
     public static void main(String[] args) {
-        DirectedWeightedGraphAlgorithms g = new DirectedWeightedGraphAlgorithmsImpl();
-         g.load("100000.json");
-        long start = System.currentTimeMillis();
-        System.out.println(g.isConnected());
-        long time = System.currentTimeMillis()-start;
-        System.out.println("time in sec: "+ time*0.001);
-//         //System.out.println(g.center().getKey());
-
- //       runGUI("G2.json");
-          //runGUI("G2.json");
-          //runGUI("1000Nodes.json");
-//        String path = "data\\";
-//        String file_name = args[0];
-//        runGUI(path+file_name);
-
+        String path = "data\\";
+        String file_name = args[0];
+        runGUI(path+file_name);
     }
 }

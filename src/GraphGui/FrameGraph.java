@@ -140,11 +140,11 @@ public class FrameGraph extends JFrame implements ActionListener {
         /**
          * Adding icons:
          */
-        loadIcon = new ImageIcon("OOP-Ex2\\src\\GraphGui\\Icons\\file_upload_icon.png");
-        saveIcon = new ImageIcon("OOP-Ex2\\src\\GraphGui\\Icons\\file_save_icon.png");
-        exitIcon = new ImageIcon("OOP-Ex2\\src\\GraphGui\\Icons\\file_exit_icon.png");
-        gitIcon = new ImageIcon("OOP-Ex2\\src\\GraphGui\\Icons\\git.png");
-        main_menuBar = Toolkit.getDefaultToolkit().getImage("OOP-Ex2\\src\\GraphGui\\Icons\\logo.png");
+        loadIcon = new ImageIcon("src\\GraphGui\\Icons\\file_upload_icon.png");
+        saveIcon = new ImageIcon("src\\GraphGui\\Icons\\file_save_icon.png");
+        exitIcon = new ImageIcon("src\\GraphGui\\Icons\\file_exit_icon.png");
+        gitIcon = new ImageIcon("src\\GraphGui\\Icons\\git.png");
+        main_menuBar = Toolkit.getDefaultToolkit().getImage("src\\GraphGui\\Icons\\logo.png");
 
         this.setIconImage(main_menuBar);
         loadMenu.setIcon(loadIcon);
@@ -208,7 +208,7 @@ public class FrameGraph extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == G1){
-            jsonFileSelected = new File("OOP-Ex2\\data\\G1.json");
+            jsonFileSelected = new File("data\\G1.json");
             DirectedWeightedGraphAlgorithms g = new DirectedWeightedGraphAlgorithmsImpl();
             g.load(jsonFileSelected.getPath());
             this.dispose();
@@ -217,7 +217,7 @@ public class FrameGraph extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == G2){
-            jsonFileSelected = new File("OOP-Ex2\\data\\G2.json");
+            jsonFileSelected = new File("data\\G2.json");
             DirectedWeightedGraphAlgorithms g = new DirectedWeightedGraphAlgorithmsImpl();
             g.load(jsonFileSelected.getPath());
             this.dispose();
@@ -227,7 +227,7 @@ public class FrameGraph extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == G3) {
-            jsonFileSelected = new File("OOP-Ex2\\data\\G3.json");
+            jsonFileSelected = new File("data\\G3.json");
             DirectedWeightedGraphAlgorithms g = new DirectedWeightedGraphAlgorithmsImpl();
             g.load(jsonFileSelected.getPath());
             this.dispose();

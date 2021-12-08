@@ -1,6 +1,7 @@
 package api;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGraphAlgorithms {
@@ -131,43 +132,33 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      * @return the optimal path.
      */
     @Override
-    public List<NodeData> tsp(List<NodeData> cities) {
-        ArrayList<NodeData> currPath = new ArrayList<>();
-        ArrayList<NodeData> path = minCycleFromCity(cities,(int)(Math.random()*cities.size()), currPath,0);
-        path.add(path.get(0));
-        return path;
-    }
+    public List<NodeData> tsp(List<NodeData> cities) {return minCycleFromCity(cities);}
     /**
      * This method following by recursion the optimal Hamiltonian cycle start in a certain
      * city and of course ends there. The recursion checks which choice is optimal,
      * considering the lightest weighted edge between the city and all other cities.
      * @param cities the list of cities.
-     * @param city the current best city.
-     * @param optPath the current optimal path.
-     * @param cnt a counter used for recursion purposes.
-     * @return the list of the optimal path starts in a city and ends there.
      */
-    public ArrayList<NodeData> minCycleFromCity(List<NodeData> cities, int city, ArrayList<NodeData> optPath, int cnt){
-        int node_id = cities.get(city).getKey();
-        optPath.add(graph.getNode(node_id));
-        if (cnt == cities.size()-1) {
-            return optPath;
-        }
-        double minWeight = Double.MAX_VALUE;
-        int minCity = 0, cityToCheck = 0;
+    public List<NodeData> minCycleFromCity(List<NodeData> cities){
+        Collections.shuffle(cities);
+        List<NodeData> c = new ArrayList<>(cities);
+        if (cities.size() <= 1) return cities;
 
-        while(cityToCheck < cities.size()) {
-            int check_id = cities.get(cityToCheck).getKey();
-            if (city == cityToCheck || graph.getEdge(node_id,check_id) == null
-                     || containsID(optPath,check_id)) {cityToCheck++;continue;}
-            double currWeight = graph.getEdge(node_id,check_id).getWeight();
-            if (currWeight < minWeight) {
-                minWeight = currWeight;
-                minCity = cityToCheck;
-            }
-            cityToCheck++;
+        //first couple initialize:
+        NodeData src = cities.get(0);
+        NodeData dest = cities.get(1);
+        List<NodeData> curr = shortestPath(src.getKey(),dest.getKey());
+        List<NodeData> ans = new ArrayList<>(curr);
+        cities.remove(0); cities.remove(1);
+
+        while(!c.isEmpty()){
+            NodeData currCity = c.remove(0);
+            if (ans.contains(currCity)){continue;}
+            NodeData last = ans.remove(ans.size()-1);
+            curr = shortestPath(last.getKey(),currCity.getKey());
+            ans.addAll(curr);
         }
-        return minCycleFromCity(cities, minCity,optPath, cnt+1);
+        return ans;
     }
     /**
      * The method calculates the path's cost, meaning that it goes over each pair
@@ -176,7 +167,7 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      * @return the path cost - total weight.
      */
     // 2 -> 3 -> 4 [{2,3},{3,4}]
-    public double pathCost(ArrayList<NodeData> path){
+    public double pathCost(List<NodeData> path){
         double totalPathCost = 0;
         for (int i = 0; i < path.size()-1; i++) {
             int currSrc = path.get(i).getKey();

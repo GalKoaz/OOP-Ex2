@@ -63,6 +63,7 @@ public class BFS {
         while(!q.isEmpty()) {
             Integer curr = q.remove();
             Iterator<EdgeData> neighbours = g.edgeIter(curr);
+            if (neighbours == null) {return;}
             while (neighbours.hasNext()) {
                 EdgeData currEdge = neighbours.next();
                 int curr_id = currEdge.getDest();
