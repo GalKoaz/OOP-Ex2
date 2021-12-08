@@ -35,6 +35,7 @@ In addition, we added a help button that links directly to Git.
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#code-details">Code Details</a></li>
     <li><a href="#algorithms">Algorithms</a></li>
+    <li><a href="#performance-analysis">Performance Analysis</a></li>
     <li><a href="#how-to-run">How  to run</a></li>
     <li><a href="#languages-and-tools">Languages and Tools</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
@@ -104,7 +105,32 @@ The algorithm starts at the root node (selecting some arbitrary node as the root
 
 [Traveling salesman problem](https://en.wikipedia.org/wiki/Travelling_salesman_problem) The travelling salesman problem (also called the travelling salesperson problem or TSP) asks the following question: "Given a list of cities and the distances between each pair of cities, what is the shortest possible route that visits each city exactly once and returns to the origin city?" It is an ```NP-hard``` problem in combinatorial optimization, important in theoretical computer science and operations research.
 
+---------
 
+
+<!-- Performance -->
+
+## Performance Analysis
+
+**These analyze were tested on a computer with an Intel i7 processor and 16 GB of RAM WIN10**
+
+* Graph size: 1000, Shortest path Run time ~0.027 seconds, Center ~2.158 seconds, isConnected ~0.007 seconds
+
+* Graph size: 10000, Shortest path Run time ~0.14 seconds, Center ~314.63 seconds, isConnected ~0.153 seconds
+
+* Graph size: 100000, Shortest path ~1.345 seconds, Center timeout, isConnected ~0.946 seconds
+
+* Graph size: 1000000. Shortest path x seconds, Center x seconds, isConnected x seconds.
+
+We were unable to generate a JSON file under the IDE (ERROR: HEAP MEMORY jumped at the time of writing) of a million-sized graph where each vertex has an average of 20 edges.
+
+Despite this, we were able to generate a maximum JSON file without error with 150,000 vertices where the rank of each vertex is 20 on average.
+
+Here are the results on 150,000 vertices:
+
+Graph size: 150000. Shortest path 1.03 seconds, Center timeout, isConnected 1.275 seconds.
+
+- _Note:_ (The Graphs is with an average edge rank of 20 edges per vertex: incoming + outgoing - total 20)
 
 ---------
 <!-- how-to-run -->
@@ -112,9 +138,9 @@ The algorithm starts at the root node (selecting some arbitrary node as the root
 
 _Jar file:_
 
-* _Jar  file name:  Ex2.jar_
+* <big>**<u>_THE JAR MUST BE IN THE PROJECT FOLDER!!_</u>**</big>
 
-_in Jar folder Extract the folder including  the json files_
+* _Jar  file name:  Ex2.jar_
 
 Run Jar file  in commend line:
 
@@ -125,19 +151,20 @@ java -jar Ex2.jar G1.json
 
 In this project we used some external libraries in the JAVA language, in order to make life easier these libraries are located within the project called external libraries.
 
-First, it's important to make sure you clone this project in IntelliJ through Project From Version Control.
+First, it's important to make sure you clone this project in IntelliJ through Terminal.
 To be sure:
 ```
-File -> New -> Project From Version Control -> Repository URL
+git clone https://github.com/GalKoaz/OOP-Ex2.git
 ```
 
 Second, in this project we used some external libraries in the JAVA language, in order to make life easier these libraries are located within the project called external libraries.
 In order to update these libraries in this project, we will do the following:
 ```
-File-> Project Structure -> Libraries and select the folder with all external libraries.
+File -> Project Structure -> Libraries and select the folder with all external libraries.
 ```
 
-_Java SDK Verison:_ ```15```
+_**Java SDK Verison:**_ ```15```<br>
+_**Project language level:**_ ```15 - Text blocks```
 
 _External libraries:_
 * _gson-2.8.2_
@@ -145,18 +172,6 @@ _External libraries:_
 * _javax.ws.rs-api-2.1.1_
 * _json-simple-1.1.1_
 
-<big><u>_**Analysis of the performance of algorithms on graphs:**_</big></u>
-
-<small>(Graphs with an average edge rank of 20 edges per vertex: incoming + outgoing - total 20)</small>
-<br><small>These analyzes were tested on a very basic computer with an Intel i5 processor and 16GB of RAM</small>
-
-* Graph size: 1000, Shortest path Run time ~0.027 seconds, Center ~2.158 seconds, isConnected ~0.007 seconds
-
-* Graph size: 10000, Shortest path Run time ~0.14 seconds, Center ~314.63 seconds, isConnected ~0.153 seconds
-
-* Graph size: 100000, Shortest path ~1.345 seconds, Center timeout, isConnected ~0.946 seconds
-
-* Graph size: 1000000. Shortest path ~9.13 seconds, Center  timeout, isConnected ~4.21 seconds
 ---------
 
 
