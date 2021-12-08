@@ -93,7 +93,7 @@ We have prepared a folder for the graphical interface which contains all the dep
 
 In this project we used a number of algorithms, we will present the algorithms that were implemented in this project.
 
-[Dijkstra's algorithm]((https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)) to find the shortest path between a and b.
+[Dijkstra's algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) to find the shortest path between a and b.
 It picks the unvisited vertex with the lowest distance, calculates the distance through it to each unvisited neighbor, and updates the neighbor's distance if smaller. Mark visited (set to red) when done with neighbors.
 
 [Breadth-first search (BFS)](https://en.wikipedia.org/wiki/Breadth-first_search) is an algorithm for traversing or searching tree or graph data structures.
@@ -134,7 +134,7 @@ Graph size: 150000. Shortest path 1.03 seconds, Center timeout, isConnected 1.27
 
 ---------
 <!-- how-to-run -->
-## How to run
+# How to run
 
 _Jar file:_
 
