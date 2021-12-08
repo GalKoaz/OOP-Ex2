@@ -1,27 +1,12 @@
 # Exercise 2 Object-Oriented Programming
 
-## **_Directed Weighted Graph_** 
-
-<!-- TABLE OF CONTENTS -->
-<details open="open">
-  <summary>Content</summary>
-  <ol>
-    <li><a href="#graph-graphical-user-interface">Graph Graphical user interface</a></li>
-    <li><a href="#about-the-project">About The Project</a></li>
-    <li><a href="#code-details">Code Details</a></li>
-    <li><a href="#algorithms">Algorithms</a></li>
-    <li><a href="#how-to-run">How  to run</a></li>
-    <li><a href="#languages-and-tools">Languages and Tools</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ol>
-</details>
+## **_Directed Weighted Graph_**
 
 <!-- Graphical user -->
-## Graph Graphical user interface
+### Graphical user interface
 
 <p align="center">
-<img align="center" src="https://s10.gifyu.com/images/Untitled2-_2_.gif"/>
+<img align="center" src="https://s10.gifyu.com/images/GalKoaz.gif"/>
 </p>
 
 ---
@@ -36,6 +21,23 @@ In this project we were asked to display the graph visually,
 we chose to represent the graph using Java Swing with a panel that allows uploading a graph using a JSON file.
 
 Saving a graph to a JSON file, adding and deleting a vertex, adding and deleting an Edge, The whole process for the algorithms we implemented. Help button for more information.
+
+----------------
+
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Content</summary>
+  <ol>
+    <li><a href="#graphical-user-interface">Graphical user interface</a></li>
+    <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#code-details">Code Details</a></li>
+    <li><a href="#algorithms">Algorithms</a></li>
+    <li><a href="#how-to-run">How  to run</a></li>
+    <li><a href="#languages-and-tools">Languages and Tools</a></li>
+    <li><a href="#acknowledgements">Acknowledgements</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
 
 ----------------
 
@@ -91,7 +93,7 @@ Dijkstra's algorithm to find the shortest path between a and b.
 
 It picks the unvisited vertex with the lowest distance, calculates the distance through it to each unvisited neighbor, and updates the neighbor's distance if smaller. Mark visited (set to red) when done with neighbors.
 
-Depth-first search (DFS) is an algorithm for traversing or searching tree or graph data structures. 
+Breadth-first search (BFS) is an algorithm for traversing or searching tree or graph data structures. 
 
 The algorithm starts at the root node (selecting some arbitrary node as the root node in the case of a graph) and explores as far as possible along each branch before backtracking.
 
@@ -102,16 +104,45 @@ In addition, we have proposed a solution for a number of issues such as Travelin
 <!-- how-to-run -->
 ## How to run
 
+Run Jar file  in commend line:
+* _Jar  file name:  Ex2.jar_
+```
+java -jar Ex2.jar G1.json
+```
+
+
 In this project we used some external libraries in the JAVA language, in order to make life easier these libraries are located within the project called external libraries.
 
 First, it's important to make sure you clone this project in IntelliJ through Project From Version Control.
-To be sure: File-> New-> Project From Version Control-> Repository URL
+To be sure:
+```
+File -> New -> Project From Version Control -> Repository URL
+```
 
 Second, in this project we used some external libraries in the JAVA language, in order to make life easier these libraries are located within the project called external libraries.
 In order to update these libraries in this project, we will do the following:
+```
 File-> Project Structure -> Libraries and select the folder with all external libraries.
+```
+_External libraries:_
+* _gson-2.8.2_
+* _javax.json-1.1.4_
+* _javax.ws.rs-api-2.1.1_
+* json-simple-1.1.1_
 
 
+<big><u>_Analysis of the performance of algorithms on graphs:_</big></u>
+
+<small>(Graphs with an average edge rank of 20 edges per vertex: incoming + outgoing - total 20)</small>
+<br><small>These analyzes were tested on a very basic computer with an Intel i5 processor and 16GB of RAM</small>
+
+* Graph size: 1000, Shorted path Run time ~1 seconds, Center ~2.1 seconds, isConnected less than ~1 seconds
+
+* Graph size: 10000, Shorted path Run time ~3 seconds, Center ~346 seconds, isConnected less than ~1 seconds
+
+* Graph size: 100000, Shorted path ~600 seconds, Center ~3200 seconds, isConnected ~2.9 seconds
+
+* Graph size: 1000000. Shorted path ~1126 seconds, isConnected ~6240 seconds
 ---------
 
 
@@ -119,9 +150,7 @@ File-> Project Structure -> Libraries and select the folder with all external li
 
   <div align="center">
   
- <code><img height="50" width="50" src="https://icon-library.com/images/java-icon-png/java-icon-png-15.jpg"></code> 
- <code><img height="40" height="40" src="https://jupyter.org/assets/main-logo.svg"/></code>
- <code><img height="40" width="80" src="https://pandas.pydata.org/static/img/pandas_white.svg"/></code>
+ <code><img height="50" width="50" src="https://icon-library.com/images/java-icon-png/java-icon-png-15.jpg"></code>
  <code><img height="40" width="70" src="https://upload.wikimedia.org/wikipedia/commons/d/d5/UML_logo.svg"/></code>
  <code><img height="40" width="40" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/IntelliJ_IDEA_Icon.svg/768px-IntelliJ_IDEA_Icon.svg.png"/></code>
  <code><img height="40" height="40" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/git/git.png"></code>
@@ -135,14 +164,11 @@ File-> Project Structure -> Libraries and select the folder with all external li
 * [UML](https://en.wikipedia.org/wiki/Unified_Modeling_Language)
 * [Git](https://git-scm.com/)
 * [IntelliJ](https://www.jetbrains.com/)
-* [Jupyter](https://jupyter.org/)
-* [Pandas](https://pandas.pydata.org/)
 * [Git-scm](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
 
 <!-- CONTACT -->
 ## Contact <small>[Top▲](#directed-weighted-graph)</small>
-
 
 
  Gal - [here](https://github.com/GalKoaz/)
@@ -153,4 +179,4 @@ Project Link: [here](https://github.com/GalKoaz/OOP-Ex2)
 
 ___
 
-Copyright © _This Project was created on Dec 06, 2021, by [Gal](https://github.com/GalKoaz/)  & [Amir](https://github.com/amirg00/)_.
+Copyright © _This Project was created on Dec 08, 2021, by [Gal](https://github.com/GalKoaz/)  & [Amir](https://github.com/amirg00/)_.
