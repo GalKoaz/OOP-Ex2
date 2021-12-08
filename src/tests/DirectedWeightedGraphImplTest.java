@@ -20,7 +20,7 @@ class DirectedWeightedGraphImplTest {
         int randCapacityVerts = 3 + (int) (Math.random() * 30);
         this.Vertices = new HashMap<>(randCapacityVerts);
         int randCapacityEdges = 1 + (int) (Math.random() * (randCapacityVerts * (randCapacityVerts - 1)));
-        this.Edges = new HashMap<>(randCapacityEdges);
+        //this.Edges = new HashMap<>(randCapacityEdges);
 
         // Generates the edges and vertices by the randoms methods
         for (int i = 0; i < randCapacityVerts; i++) {
@@ -31,7 +31,7 @@ class DirectedWeightedGraphImplTest {
             Edges.put("" + edge.getSrc() + "-" + edge.getDest(), edge);
         }
         // Initializes the random graph
-        randGraph = new DirectedWeightedGraphImpl(Vertices, Edges);
+       // randGraph = new DirectedWeightedGraphImpl(Vertices, Edges);
     }
 
 

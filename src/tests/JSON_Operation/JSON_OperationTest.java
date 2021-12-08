@@ -23,6 +23,7 @@ class JSON_OperationTest {
         this.json_2 = new JSON_Operation("OOP-Ex2\\src\\tests\\JSON_Operation\\G2.json");
         this.json_3 = new JSON_Operation("OOP-Ex2\\src\\tests\\JSON_Operation\\G3.json");
         this.json_writer = new JSON_Operation(path);
+        graph = new DirectedWeightedGraphImpl(new HashMap<>(),new HashMap<>());
         createGraph();
     }
 
@@ -36,14 +37,13 @@ class JSON_OperationTest {
 
         // Generates the edges and vertices by the randoms methods
         for (int i = 0; i < CapacityVerts; i++) {
-            Vertices.put(i, new NodeDataImpl(i, i, "info: " + i, i * 0.89878, new GeoLocationImpl(i * 0.894, i * .2154, i * 1.454)));
+            graph.addNode(new NodeDataImpl(i, i, "info: " + i, i * 0.89878, new GeoLocationImpl(i * 0.894, i * .2154, i * 1.454)));
         }
         for (int i = 0; i < CapacityEdges - 1; i++) {
-            EdgeData edge = new EdgeDataImpl(i, i + 1, i, i * 1.156, "info: " + i);
-            Edges.put("" + edge.getSrc() + "-" + edge.getDest(), edge);
+            EdgeData edge = new EdgeDataImpl(i%CapacityVerts, (i + 1)%CapacityVerts, i, i * 1.156, "info: " + i);
+            graph.connect(edge.getSrc(),edge.getDest(),edge.getWeight());
         }
-        // Initializes the random graph
-        graph = new DirectedWeightedGraphImpl(Vertices, Edges);
+
     }
 
     /**

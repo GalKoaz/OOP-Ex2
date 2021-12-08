@@ -2,6 +2,7 @@ package api;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -20,8 +21,8 @@ import java.util.Iterator;
 public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
 
     private HashMap<Integer, NodeData> Vertices;
-    private HashMap<String, EdgeData> Edges;
-    private int MC = 0, MC_2 = 0;
+    private HashMap<Integer,HashMap<Integer, EdgeData>> Edges;
+    private int MC, MC_2, edgeSize, nodeSize;
 
     /**
      *  This constructor gets a JSON_Operation object, to initialize the graph's properties (edges and vertices),
@@ -31,8 +32,9 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
      */
     public DirectedWeightedGraphImpl(JSON_Operation json) {
         json.init_Graph();
-        this.Vertices = new HashMap<>();
-        this.Edges = new HashMap<>();
+        MC = 0; MC_2 = 0; edgeSize = 0; nodeSize=0;
+        Vertices = new HashMap<>();
+        Edges = new HashMap<>();
         for (NodeData vertex : json.getInitVertices()) {addNode(vertex);}
         /**
          * The function goes over each node and checks for the adjacent nodes that he has an edge with.
@@ -48,19 +50,49 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
         }
     }
 
-    public DirectedWeightedGraphImpl(HashMap<Integer, NodeData> Vertices,HashMap<String, EdgeData> Edges) {
-       this.Edges = Edges;
-       this.Vertices = Vertices;
+    public DirectedWeightedGraphImpl(HashMap<Integer, NodeData> Vertices,HashMap<Integer,HashMap<Integer, EdgeData>> Edges) {
+        MC = 0; MC_2 = 0; edgeSize = 0; nodeSize = 0;
+        this.Edges = Edges;
+        this.Vertices = Vertices;
     }
-
+    /**
+     * This method gets a graph - g and performs a deep copy.
+     * @param g a given directed weighted graph to (deep) copy.
+     * @return the (deep) copy of the graph - g.
+     */
+    public DirectedWeightedGraph deepCopy(DirectedWeightedGraph g) {
+        Iterator<EdgeData> edges = g.edgeIter(); Iterator<NodeData> nodes = g.nodeIter();
+        DirectedWeightedGraphImpl deepCopyGraph = new DirectedWeightedGraphImpl(new HashMap<>(),new HashMap<>());
+        while (nodes.hasNext()){
+            NodeData vertex = nodes.next();
+            NodeData newVertex = new NodeDataImpl(vertex);
+            deepCopyGraph.addNode(newVertex);
+        }
+        while (edges.hasNext()){
+            EdgeData edge = edges.next();
+            deepCopyGraph.connect(edge.getSrc(),edge.getDest(),edge.getWeight());
+        }
+        deepCopyGraph.edgeSize = g.edgeSize();
+        deepCopyGraph.MC = g.getMC();
+        return deepCopyGraph;
+    }
     @Override
     public NodeData getNode(int key) {return Vertices.get(key);}
 
     @Override
-    public EdgeData getEdge(int src, int dest) {return Edges.get("" + src + "-" + dest);}
+    public EdgeData getEdge(int src, int dest) {
+        return Edges.get(src).get(dest);
+    }
 
     @Override
-    public void addNode(NodeData n) {Vertices.put(n.getKey(), n); MC++;}
+    public void addNode(NodeData n) {
+        int node_id = n.getKey();
+        if (Vertices.containsKey(node_id)) {return;}
+        Vertices.put(node_id, n);
+        Edges.put(node_id,new HashMap<>());
+        nodeSize++;
+        MC++;
+    }
 
     /**
      * The method connects an edge between the two vertices as written in the interface.
@@ -72,10 +104,12 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
      */
     @Override
     public void connect(int src, int dest, double w) {
+        if (src == dest) return;
         String info = "Src: "+src+", "+"Dest: "+dest+", "+"Weight: "+w;
         EdgeData connectedEdge = new EdgeDataImpl(src, dest, Color.BLUE.getRGB(), w, info);
         if (getEdge(src,dest) != null){removeEdge(src,dest);}
-        Edges.put("" + src + "-" + dest, connectedEdge);
+        Edges.get(src).put(dest,connectedEdge);
+        edgeSize++;
         MC++;
     }
 
@@ -83,7 +117,17 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
     public Iterator<NodeData> nodeIter() {return Vertices.values().iterator();}
 
     @Override
-    public Iterator<EdgeData> edgeIter() {return Edges.values().iterator();}
+    public Iterator<EdgeData> edgeIter() {
+        ArrayList<EdgeData> edges = new ArrayList<>();
+        for(HashMap<Integer,EdgeData> map: Edges.values()){
+            for (EdgeData e: map.values()){
+                if (e!=null){
+                    edges.add(e);
+                }
+            }
+        }
+        return edges.iterator();
+    }
 
     /**
      * As the method "removeNode", this method removes, allegedly, the vertex.
@@ -103,14 +147,8 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
 //            }
 //        }
 //        catch (RuntimeException e){e.printStackTrace();}
-        ArrayList<EdgeData> neighbours = new ArrayList<>();
-        for (int v = 0; v < Vertices.size(); v++) {
-            EdgeData curr = getEdge(node_id,v);
-            if (node_id == v) {continue;}
-            if (curr!=null){neighbours.add(curr);}
-        }
         MC_2 = MC;
-        return neighbours.iterator();
+        return Edges.get(node_id).values().iterator();
     }
     /**
      *
@@ -134,50 +172,42 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
      */
     @Override
     public NodeData removeNode(int key) {
+        if (!Vertices.containsKey(key)) {return null;}
         for (int i = 0; i < Vertices.size(); i++) {
             if (key == i) {continue;}
             removeEdge(key,i);
             removeEdge(i,key);
         }
+        nodeSize--;
         MC++;
         return Vertices.remove(key);
     }
 
     @Override
-    public EdgeData removeEdge(int src, int dest) {MC++;return Edges.remove("" + src + "-" + dest);}
+    public EdgeData removeEdge(int src, int dest) {
+        EdgeData removedEdge = Edges.get(src).remove(dest);
+        if (removedEdge != null) {
+            edgeSize--;
+            MC++;
+        }
+        return removedEdge;
+    }
 
     @Override
     public int nodeSize() {
-        return Vertices.size();
+        return nodeSize;
     }
 
     @Override
     public int edgeSize() {
-        return Edges.size();
+        return edgeSize;
     }
 
     @Override
     public int getMC() {
         return MC;
     }
-    /**
-     * This method gets a graph - g and performs a deep copy.
-     * @param g a given directed weighted graph to (deep) copy.
-     * @return the (deep) copy of the graph - g.
-     */
-    public DirectedWeightedGraph deepCopy(DirectedWeightedGraph g) {
-        Iterator<EdgeData> edges = g.edgeIter(); Iterator<NodeData> nodes = g.nodeIter();
-        DirectedWeightedGraphImpl deepCopyGraph = new DirectedWeightedGraphImpl(new HashMap<>(),new HashMap<>());
-        while (nodes.hasNext()){
-            NodeData vertex = nodes.next();
-            deepCopyGraph.addNode(vertex);
-        }
-        while (edges.hasNext()){
-            EdgeData edge = edges.next();
-            deepCopyGraph.connect(edge.getSrc(),edge.getDest(),edge.getWeight());
-        }
-        return deepCopyGraph;
-    }
+
     // getters and setters //
     public HashMap<Integer, NodeData> getVertices() {
         return Vertices;
@@ -187,11 +217,11 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
         Vertices = vertices;
     }
 
-    public HashMap<String, EdgeData> getEdges() {
+    public HashMap<Integer,HashMap<Integer, EdgeData>>  getEdges() {
         return Edges;
     }
 
-    public void setEdges(HashMap<String, EdgeData> edges) {
+    public void setEdges(HashMap<Integer,HashMap<Integer, EdgeData>>  edges) {
         Edges = edges;
     }
 }
