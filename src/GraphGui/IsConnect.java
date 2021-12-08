@@ -23,7 +23,7 @@ public class IsConnect extends JFrame implements ActionListener {
     private int cnt = 0;
 
     public IsConnect(DirectedWeightedGraph graph, FrameGraph frame, PanelGraph panel){
-        Image icon = Toolkit.getDefaultToolkit().getImage("OOP-Ex2\\src\\GraphGui\\Icons\\logo.png");
+        Image icon = Toolkit.getDefaultToolkit().getImage("src\\GraphGui\\Icons\\logo.png");
         this.setIconImage(icon);
         this.setContentPane(IsConnected);
         this.graph = graph;

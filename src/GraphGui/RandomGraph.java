@@ -20,7 +20,7 @@ public class RandomGraph extends JFrame implements ActionListener {
     private double EPSILON = .000000001;
 
     public RandomGraph(DirectedWeightedGraph graph, FrameGraph frame, PanelGraph panel) {
-        Image icon = Toolkit.getDefaultToolkit().getImage("OOP-Ex2\\src\\GraphGui\\Icons\\logo.png");
+        Image icon = Toolkit.getDefaultToolkit().getImage("src\\GraphGui\\Icons\\logo.png");
         this.setIconImage(icon);
         this.setContentPane(RandomGraph);
         this.graph = graph;

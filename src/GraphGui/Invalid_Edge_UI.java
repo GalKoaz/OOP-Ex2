@@ -18,8 +18,8 @@ public class Invalid_Edge_UI extends JFrame implements ActionListener {
     public Invalid_Edge_UI(){
 
         this.setContentPane(invalid_edge_pane);
-        ERROR = new ImageIcon("OOP-Ex2\\src\\GraphGui\\Icons\\ERROR.png");
-        ERROR_MenuBar = Toolkit.getDefaultToolkit().getImage("OOP-Ex2\\src\\GraphGui\\Icons\\ERROR.png");
+        ERROR = new ImageIcon("src\\GraphGui\\Icons\\ERROR.png");
+        ERROR_MenuBar = Toolkit.getDefaultToolkit().getImage("src\\GraphGui\\Icons\\ERROR.png");
         this.setIconImage(ERROR_MenuBar);
         label.setIcon(ERROR);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

@@ -20,7 +20,7 @@ public class EdgeTable extends JFrame implements ActionListener {
     private JScrollPane scrollPane;
 
     public EdgeTable(DirectedWeightedGraph graph){
-        Image icon = Toolkit.getDefaultToolkit().getImage("OOP-Ex2\\src\\GraphGui\\Icons\\logo.png");
+        Image icon = Toolkit.getDefaultToolkit().getImage("src\\GraphGui\\Icons\\logo.png");
         this.setIconImage(icon);
         this.setContentPane(panel);
         this.graph = graph;

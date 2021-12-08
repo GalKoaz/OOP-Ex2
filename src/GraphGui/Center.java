@@ -21,7 +21,7 @@ public class Center extends JFrame implements ActionListener{
     private Image icon;
 
     public Center(DirectedWeightedGraph graph, FrameGraph frame, PanelGraph panel) {
-        icon = Toolkit.getDefaultToolkit().getImage("OOP-Ex2\\src\\GraphGui\\Icons\\logo.png");
+        icon = Toolkit.getDefaultToolkit().getImage("src\\GraphGui\\Icons\\logo.png");
         this.setIconImage(icon);
         this.setContentPane(Center);
         this.graph = graph;

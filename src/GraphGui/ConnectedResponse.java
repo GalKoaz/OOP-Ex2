@@ -15,8 +15,8 @@ public class ConnectedResponse extends JFrame implements ActionListener {
 
     public ConnectedResponse(){
         this.setContentPane(ConnectedResponse);
-        icon = new ImageIcon("OOP-Ex2\\src\\GraphGui\\Icons\\green_v.png");
-        icon_MenuBar = Toolkit.getDefaultToolkit().getImage("OOP-Ex2\\src\\GraphGui\\Icons\\ExclamationCircle.png");
+        icon = new ImageIcon("src\\GraphGui\\Icons\\green_v.png");
+        icon_MenuBar = Toolkit.getDefaultToolkit().getImage("src\\GraphGui\\Icons\\ExclamationCircle.png");
         this.setIconImage(icon_MenuBar);
         label.setIcon(icon);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

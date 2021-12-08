@@ -14,8 +14,8 @@ public class Invalid_Vertex_UI extends JFrame implements ActionListener {
 
 
     public Invalid_Vertex_UI(){
-        ERROR = new ImageIcon("OOP-Ex2\\src\\GraphGui\\Icons\\ERROR.png");
-        ERROR_MenuBar = Toolkit.getDefaultToolkit().getImage("OOP-Ex2\\src\\GraphGui\\Icons\\ERROR.png");
+        ERROR = new ImageIcon("src\\GraphGui\\Icons\\ERROR.png");
+        ERROR_MenuBar = Toolkit.getDefaultToolkit().getImage("src\\GraphGui\\Icons\\ERROR.png");
         this.setIconImage(ERROR_MenuBar);
         label.setIcon(ERROR);
         this.setContentPane(invalid_vertex_pane);

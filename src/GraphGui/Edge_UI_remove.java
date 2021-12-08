@@ -28,7 +28,7 @@ public class Edge_UI_remove extends JFrame implements ActionListener {
         Cancel.addActionListener(this);
     }
     public Edge_UI_remove(DirectedWeightedGraph graph, FrameGraph frame){
-        Image icon = Toolkit.getDefaultToolkit().getImage("OOP-Ex2\\src\\GraphGui\\Icons\\logo.png");
+        Image icon = Toolkit.getDefaultToolkit().getImage("src\\GraphGui\\Icons\\logo.png");
         this.setIconImage(icon);
         this.setContentPane(Edge_UI_remove);
         this.graph = graph;
