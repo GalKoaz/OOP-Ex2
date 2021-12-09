@@ -1,6 +1,7 @@
 package GraphGui;
 
 import api.DirectedWeightedGraph;
+import api.EdgeData;
 import api.NodeData;
 
 import javax.swing.*;
@@ -8,13 +9,12 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 
 public class PanelGraph extends JPanel {
     private DirectedWeightedGraph graph;
-    private java.util.List<GraphPoint> points;
+    private HashMap<Integer,GraphPoint> points;
     private List<GraphEdge> edges;
     private int radius = 10; //good for 100 vertices.
     private double Phi = Math.toRadians(40);
@@ -27,7 +27,7 @@ public class PanelGraph extends JPanel {
 
     PanelGraph(DirectedWeightedGraph graph) {
         this.setPreferredSize(new Dimension(1000, 1000));
-        this.points = new ArrayList<>();
+        this.points = new HashMap<>();
         this.graph = graph;
         pointInit();
         EdgeInit();
@@ -64,7 +64,7 @@ public class PanelGraph extends JPanel {
             paintLine(g2d, p.get(0), p.get(1), insets, ed.getWeight(),LineSave, ed.getTag(),ed.getStroke(),ed.getTag_2());
         }
 
-        for (GraphPoint gp : points) {
+        for (GraphPoint gp : points.values()) {
             paintPoint(g2d, gp, insets, gp.getTag(), gp.getTag_2());
         }
         g2d.dispose();
@@ -250,18 +250,15 @@ public class PanelGraph extends JPanel {
      * make a new arraylist of points and know to the correct edges between them.
      * */
     public void EdgeInit() {
-        edges = new ArrayList<>();
-        for (int i = 0; i < graph.nodeSize(); i++) {
-            for (int j = 0; j < graph.nodeSize(); j++) {
-                if (i == j) continue;
-                ArrayList<GraphPoint> temp = new ArrayList<>();
-                if (graph.getEdge(i, j) != null) {
-                    temp.add(new GraphPoint(String.valueOf(graph.getNode(graph.getEdge(i, j).getSrc()).getKey()), new Point2D.Double(graph.getNode(graph.getEdge(i, j).getSrc()).getLocation().x(), graph.getNode(graph.getEdge(i, j).getSrc()).getLocation().y()),Color.blue, Color.red));
-                    temp.add(new GraphPoint(String.valueOf(graph.getNode(graph.getEdge(i, j).getDest()).getKey()), new Point2D.Double(graph.getNode(graph.getEdge(i, j).getDest()).getLocation().x(), graph.getNode(graph.getEdge(i, j).getDest()).getLocation().y()),Color.blue,Color.red));
-                    edges.add(new GraphEdge(String.valueOf(graph.getEdge(i, j).getWeight()), temp,Color.red, 1, Color.red));
-                }
-            }
-        }
+       edges = new ArrayList<>();
+       Iterator<EdgeData> E = graph.edgeIter();
+       while(E.hasNext()){
+          EdgeData curr = E.next();
+          ArrayList<GraphPoint> temp = new ArrayList<>();
+          temp.add(new GraphPoint(String.valueOf(graph.getNode(curr.getSrc()).getKey()), new Point2D.Double(graph.getNode(curr.getSrc()).getLocation().x(), graph.getNode(curr.getSrc()).getLocation().y()),Color.blue, Color.red));
+          temp.add(new GraphPoint(String.valueOf(graph.getNode(curr.getDest()).getKey()), new Point2D.Double(graph.getNode(curr.getDest()).getLocation().x(), graph.getNode(curr.getDest()).getLocation().y()),Color.blue,Color.red));
+          edges.add(new GraphEdge(String.valueOf(curr.getWeight()), temp,Color.red, 1, Color.red));
+       }
     }
 
     /*
@@ -269,13 +266,14 @@ public class PanelGraph extends JPanel {
      * By given a name of the vertex and the positions x,y.
      * */
     public void pointInit() {
-        for (int i = 0; i < graph.nodeSize(); i++) {
-            NodeData curr = graph.getNode(i);
+        Iterator<NodeData> nodes = graph.nodeIter();
+        while (nodes.hasNext()){
+            NodeData curr = nodes.next();
             if (curr != null) {
-                String currKey = String.valueOf(graph.getNode(i).getKey());
-                double currPosX = graph.getNode(i).getLocation().x();
-                double currPosY = graph.getNode(i).getLocation().y();
-                points.add(new GraphPoint(currKey, new Point2D.Double(currPosX, currPosY),Color.blue, Color.red));
+                String currKey = String.valueOf(curr.getKey());
+                double currPosX = curr.getLocation().x();
+                double currPosY = curr.getLocation().y();
+                points.put(curr.getKey(),new GraphPoint(currKey, new Point2D.Double(currPosX, currPosY),Color.blue, Color.red));
             }
         }
     }
@@ -291,7 +289,7 @@ public class PanelGraph extends JPanel {
         double minY = Double.MAX_VALUE;
         double maxY = Double.MIN_VALUE;
 
-        for (GraphPoint gp : points) {
+        for (GraphPoint gp : points.values()) {
             minX = Math.min(minX, gp.getPoint().getX());
             maxX = Math.max(maxX, gp.getPoint().getX());
             minY = Math.min(minY, gp.getPoint().getY());
@@ -313,7 +311,7 @@ public class PanelGraph extends JPanel {
         return edges;
     }
 
-    public List<GraphPoint> getPoints() {
+    public HashMap<Integer,GraphPoint> getPoints() {
         return points;
     }
 

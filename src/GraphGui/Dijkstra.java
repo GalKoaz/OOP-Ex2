@@ -66,7 +66,7 @@ public class Dijkstra extends JFrame implements ActionListener {
                     cnt++;
                     if (cnt == optPathLentgh-1){timer.stop();}
                     drawOptPath(src,dest, cnt, optPath);
-                }
+                 }
             });
             timer.start();
             }

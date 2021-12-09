@@ -14,12 +14,22 @@ public class BFS {
     private Queue<Integer> q;
 
 
+    public enum Tags{
+        VISITED(1),
+        UNVISITED(0);
+
+        private final int value;
+
+        Tags(int value) {this.value = value;}
+    }
 
     public BFS(DirectedWeightedGraphImpl g){
         this.g = g.deepCopy(g);
         q = new ArrayDeque<>();
-        visited = new boolean[g.nodeSize()];
+        setTags(Tags.UNVISITED.value);
     }
+
+
     /**
      * The method does a BFS twice:
      * the first BFS is starting from zero, this will tell us that we can reach from zero to each one of the other nodes.
@@ -30,15 +40,18 @@ public class BFS {
      * @return if the graph is connected by definition.
      */
     public boolean isConnected(){
-        BFS(0);
-        for (int visit = 0; visit < visited.length; visit++) {
-            if (!visited[visit]){ return false;}
+        NodeData v = g.nodeIter().next();
+        BFS(v);
+        Iterator<NodeData> nodes = g.nodeIter();
+        while (nodes.hasNext()){
+            if (nodes.next().getTag() == Tags.UNVISITED.value){return false;}
         }
-        visited = new boolean[g.nodeSize()];
+        setTags(Tags.UNVISITED.value);
         g = turnEdgesDirection((DirectedWeightedGraphImpl) g);
-        BFS(0);
-        for (int visit = 0; visit < visited.length; visit++) {
-            if (!visited[visit]){ return false;}
+        BFS(v);
+        Iterator<NodeData> invertedNodes = g.nodeIter();
+        while (invertedNodes.hasNext()){
+            if (invertedNodes.next().getTag() == Tags.UNVISITED.value){return false;}
         }
         return true;
     }
@@ -57,9 +70,9 @@ public class BFS {
     // 9                  visited[u] ← true
     // 10                  Q.enqueue(w)
      */
-    public void BFS(int root){
-        visited[root] = true;
-        q.add(root);
+    public void BFS(NodeData root){
+        root.setTag(Tags.VISITED.value);
+        q.add(root.getKey());
         while(!q.isEmpty()) {
             Integer curr = q.remove();
             Iterator<EdgeData> neighbours = g.edgeIter(curr);
@@ -67,8 +80,9 @@ public class BFS {
             while (neighbours.hasNext()) {
                 EdgeData currEdge = neighbours.next();
                 int curr_id = currEdge.getDest();
-                if (!visited[curr_id]){
-                    visited[curr_id] = true;
+                NodeData currN = g.getNode(curr_id);
+                if (currN.getTag() == Tags.UNVISITED.value){
+                    currN.setTag(Tags.VISITED.value);
                     q.add(curr_id);
                 }
             }
@@ -97,5 +111,13 @@ public class BFS {
             }
         }
         return new DirectedWeightedGraphImpl(g.getVertices(),turnedEdges);
+    }
+    /**
+     * This method sets the tags.
+     * @param value a given value
+     */
+    public void setTags(int value){
+        Iterator<NodeData> nodes = g.nodeIter();
+        while(nodes.hasNext()){nodes.next().setTag(value);}
     }
 }

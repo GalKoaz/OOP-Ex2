@@ -9,10 +9,12 @@ class NodeCompare implements Comparable<NodeCompare> {
 
     private NodeData vertex;
     private NodeCompare parent;
+    private int tag;
 
-    public NodeCompare(NodeData v) {
+    public NodeCompare(NodeData v, int tag) {
         this.vertex = v;
         this.parent = null;
+        this.tag = tag;
     }
 
     public NodeData getVertex() {

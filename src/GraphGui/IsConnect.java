@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class IsConnect extends JFrame implements ActionListener {
     private JButton showButton;
@@ -46,10 +47,13 @@ public class IsConnect extends JFrame implements ActionListener {
      * with modulo of the updated path.
      */
     public void findOptimal(){
-
+        ArrayList<Integer> nodes = new ArrayList<>();
+        Iterator<NodeData> n = graph.nodeIter();
+        while(n.hasNext()){nodes.add(n.next().getKey());}
         timer = new Timer(delay, new ActionListener() {
+
             int src = 0, dest = 0;
-            ArrayList<NodeData> optPath = (ArrayList<NodeData>) algo.shortestPath(0, 1);
+            ArrayList<NodeData> optPath = (ArrayList<NodeData>) algo.shortestPath(nodes.get(0), nodes.get(1));
             int optPathLentgh = optPath.size();
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -59,7 +63,7 @@ public class IsConnect extends JFrame implements ActionListener {
                 } else {
                     if (cnt % (optPathLentgh - 1) == 0 && cnt!=0) {
                         if (dest == graph.nodeSize()){src++;dest=0;}
-                        optPath = (ArrayList<NodeData>) algo.shortestPath(src, dest);
+                        optPath = (ArrayList<NodeData>) algo.shortestPath(nodes.get(src), nodes.get(dest));
                         optPathLentgh = optPath.size();
                         cnt=0;
                         dest++;

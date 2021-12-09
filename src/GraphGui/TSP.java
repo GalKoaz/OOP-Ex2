@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class TSP extends JFrame implements ActionListener {
     private JButton showButton;
@@ -47,14 +48,28 @@ public class TSP extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == cancelButton){this.dispose();}
         if (e.getSource() == showButton){
-            int src = 0;
-            int dest = graph.nodeSize()-1;
-            if (graph.getNode(src) == null || graph.getNode(dest) == null) {
+
+            ArrayList<NodeData> cities = new ArrayList<>();
+            Iterator<NodeData> nodes = graph.nodeIter();
+            int s = 0;
+            int d = 0;
+            int m = 1;
+
+            while(nodes.hasNext()){
+                NodeData curr = nodes.next();
+                if (m == 1) {s = curr.getKey();}
+                cities.add(curr);
+                if (m == graph.nodeSize()) {d = curr.getKey();}
+                m++;
+            }
+
+            if (graph.getNode(s) == null || graph.getNode(d) == null) {
                 this.dispose();
                 new Invalid_Vertex_UI();
             }
-            ArrayList<NodeData> cities = new ArrayList<>();
-            for (int v = src; v <= dest; v++){ cities.add(graph.getNode(v));}
+            int src = s;
+            int dest = d;
+
             ArrayList<NodeData> Path = (ArrayList<NodeData>) algo.tsp(cities);
             int optPathLentgh = Path.size();
             this.dispose();

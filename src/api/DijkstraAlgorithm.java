@@ -2,6 +2,7 @@ package api;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 
@@ -23,24 +24,34 @@ import java.util.Iterator;
 public class DijkstraAlgorithm {
 
     private DirectedWeightedGraph g;
-    private double[] dist;
+    private HashMap<Integer,Double> dist;
+    private HashMap<Integer, Integer> parent;
     private FibonacciHeap<Integer> dists;
-    private int[] parent;
     private int src;
-    private boolean[] visited;
+    private final Double INF = Double.MAX_VALUE;
 
     public DijkstraAlgorithm(int src, DirectedWeightedGraph g) {
         // Properties initialization //
         this.src = src;
         this.g = g;
         this.dists = new FibonacciHeap<>();
-        this.dist = new double[g.nodeSize()];
-        this.parent = new int[g.nodeSize()];
-        this.visited = new boolean[g.nodeSize()];
-
+        this.dist = new HashMap<>();
+        this.parent = new HashMap<>();
         // Updates source vertex related properties
-        dist[src] = 0;
+        setTags(Tags.UNVISITED.value);
+        dist.put(src,0.0);
+        dists.enqueue(src,0.0);
     }
+    public enum Tags{
+        VISITED(1),
+        UNVISITED(0);
+
+        private final int value;
+
+
+        Tags(int value) {this.value = value;}
+    }
+
     /**
      * The method here visits all vertices to find the optimal path's cost, and return it.
      * The method starts with the source vertex, if it is the destination vertex, then it saves the pointer,
@@ -52,32 +63,33 @@ public class DijkstraAlgorithm {
      *
      * @return the optimal path's cost from src to dest.
      */
-    public double[] findMinDist() {
+    public HashMap<Integer, Double> findMinDist() {
         Iterator<NodeData> nodes = g.nodeIter();
         while (nodes.hasNext()){
             NodeData curr = nodes.next();
             int curr_id = curr.getKey();
-            if (curr.getKey() != src){
-                dist[curr_id] = Double.MAX_VALUE;
-                parent[curr_id] = -1;
+            if (curr.getKey() != src) {
+                dist.put(curr_id, INF);
+                dists.enqueue(curr_id, INF);
             }
-            this.dists.enqueue(curr_id,dist[curr_id]);
-
+            parent.put(curr_id,-1);
         }
 
         while (!dists.isEmpty()){
             int check = dists.dequeueMin().getValue();
-            visited[check] = true;
+            NodeData Check = g.getNode(check);
+            Check.setTag(Tags.VISITED.value);
 
             Iterator<EdgeData> neighbours = g.edgeIter(check);
             while (neighbours.hasNext()){
                 EdgeData curr = neighbours.next();
                 int curr_id = curr.getDest();
-                if (!visited[curr_id]) {
-                    double newDist = dist[check] + curr.getWeight();
-                    if (newDist < dist[curr_id]) {
-                        dist[curr_id] = newDist;
-                        parent[curr_id] = check;
+                NodeData currN = g.getNode(curr_id);
+                if (currN.getTag()!=Tags.VISITED.value) {
+                    double newDist = dist.get(check) + curr.getWeight();
+                    if (newDist < dist.get(curr_id)) {
+                        dist.put(curr_id,newDist);
+                        parent.put(curr_id,check);
                         dists.enqueue(curr_id, newDist);
                     }
                 }
@@ -101,11 +113,20 @@ public class DijkstraAlgorithm {
         while(curr_parent!=src){
             System.out.println(curr_parent);
             path.add(0,g.getNode(curr_parent));
-            curr_parent = parent[curr_parent];
+            curr_parent = parent.get(curr_parent);
         }
         System.out.println(src);
         path.add(0,g.getNode(src));
         return path;
+    }
+
+    /**
+     * This method sets the tags.
+     * @param value a given value
+     */
+    public void setTags(int value){
+        Iterator<NodeData> nodes = g.nodeIter();
+        while(nodes.hasNext()){nodes.next().setTag(value);}
     }
     /**
      * Prints all paths from src to a specific dest vertex.
@@ -115,7 +136,7 @@ public class DijkstraAlgorithm {
      */
     public void printDijkstraOptimalPath(int[] parent, int src, int dest){
         System.out.println("Dijkstra Algorithm: (With src-dest path)");
-        System.out.print(" " + src + " --> " +  dest + ": distance = " + dist[dest] + "  Path : ");
+        System.out.print(" " + src + " --> " +  dest + ": distance = " + dist.get(dest) + "  Path : ");
         printOptimalPathUtil(parent, dest);
         System.out.println();
     }
@@ -126,8 +147,8 @@ public class DijkstraAlgorithm {
      */
     public void printDijkstraAllPaths(int[] parent, int src){
         System.out.println("Dijkstra Algorithm: (With src-dests paths)");
-        for (int dest = 0; dest < dist.length; dest++) {
-            System.out.print(" " + src + " --> " + dest + ": distance = " + dist[dest] + "  Path : ");
+        for (int dest = 0; dest < dist.size(); dest++) {
+            System.out.print(" " + src + " --> " + dest + ": distance = " + dist.get(dest) + "  Path : ");
             printOptimalPathUtil(parent, dest);
             System.out.println();
         }

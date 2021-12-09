@@ -138,13 +138,13 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
      */
     @Override
     public Iterator<EdgeData> edgeIter(int node_id) {
-//        try{
-//            if (MC!=MC_2){
-//                throw new RuntimeException("Graph was changed since the iterator was constructed!");
-//            }
-//        }
-//        catch (RuntimeException e){e.printStackTrace();}
         MC_2 = MC;
+        try{
+            if (MC!=MC_2){
+                throw new RuntimeException("Graph was changed since the iterator was constructed!");
+            }
+        }
+        catch (RuntimeException e){e.printStackTrace();}
         if (!Edges.containsKey(node_id)){return null;}
         return Edges.get(node_id).values().iterator();
     }
@@ -171,10 +171,12 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
     @Override
     public NodeData removeNode(int key) {
         if (!Vertices.containsKey(key)) {return null;}
-        for (int i = 0; i < Vertices.size(); i++) {
-            if (key == i) {continue;}
-            removeEdge(key,i);
-            removeEdge(i,key);
+        Iterator<NodeData> nodes = nodeIter();
+        while(nodes.hasNext()){
+            int curr = nodes.next().getKey();
+            if (key == curr) {continue;}
+            removeEdge(key,curr);
+            removeEdge(curr,key);
         }
         nodeSize--;
         MC++;

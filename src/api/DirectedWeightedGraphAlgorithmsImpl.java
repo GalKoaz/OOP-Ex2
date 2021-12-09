@@ -1,8 +1,6 @@
 package api;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGraphAlgorithms {
 
@@ -45,7 +43,7 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      * @return the optimal path's cost.
      */
     @Override
-    public double shortestPathDist(int src, int dest) { return new DijkstraAlgorithm(src,this.graph).findMinDist()[dest];}
+    public double shortestPathDist(int src, int dest) { return new DijkstraAlgorithm(src,this.graph).findMinDist().get(dest);}
     /**
      * This returns the shortestPath as a consecutive nodes: node(src),..., node(dest).
      * The OptimalPath property is set on DijkstraAlgorithm class' constructor, so
@@ -74,7 +72,9 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         //if (!isConnected()) {return null;} // As written in the interface, we suppose that the graph is connected in calculations.
         double min = Double.MAX_VALUE;
         int center = 0;
-        for (int v = 0; v < graph.nodeSize(); v++) {
+        Iterator<NodeData> nodes = graph.nodeIter();
+        while(nodes.hasNext()){
+            int v = nodes.next().getKey();
             double e = e(v);
             if (e < min) {
                 min = e;
@@ -100,12 +100,8 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      */
     public double e(int v){
         double max = 0;
-        double[] dist = new DijkstraAlgorithm(v,graph).findMinDist();
-        for (int u = 0; u < dist.length; u++) {
-            if (u == v) {continue;}
-            double d = dist[u];
-            if (d > max) { max = d;}
-        }
+        HashMap<Integer,Double> dist = new DijkstraAlgorithm(v,graph).findMinDist();
+        for(Double d : dist.values()){if (d > max) { max = d;}}
         return max;
     }
     /**
