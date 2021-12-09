@@ -124,11 +124,7 @@ public class PanelGraph extends JPanel {
         StringWeight(g2d, weight, to, from, insets, flag);
     }
 
-    /*
-     * StringWeight Method is :
-     *
-     *
-     * */
+
     private void StringWeight(Graphics2D g2d, String weight, GraphPoint to, GraphPoint from, double insets,boolean check) {
 
         Point2D translated = translate(from, insets);
@@ -145,7 +141,6 @@ public class PanelGraph extends JPanel {
         weight =  String.format("%.3f", Float.parseFloat(weight))+"["+from.getId()+"-->"+to.getId()+"]";
         g2d.setPaint(Color.black);
         g2d.setFont(new Font("Cabin", Font.PLAIN, 11));
-        //double angle = Math.atan((yPos-yPos2)/(xPos-xPos2));
         double angle = Math.atan((yPos2-yPos)/(xPos2-xPos));
         g2d.setColor(Color.black);
         if(graph.nodeSize() < 48) {

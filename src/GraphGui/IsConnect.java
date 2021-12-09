@@ -41,7 +41,10 @@ public class IsConnect extends JFrame implements ActionListener {
         showButton.addActionListener(this);
     }
 
-
+    /**
+     * The method wisely uses the timer, to represent more than one path,
+     * with modulo of the updated path.
+     */
     public void findOptimal(){
 
         timer = new Timer(delay, new ActionListener() {

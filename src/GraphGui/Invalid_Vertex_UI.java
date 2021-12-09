@@ -44,7 +44,4 @@ public class Invalid_Vertex_UI extends JFrame implements ActionListener {
         int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2.6);
         frame.setLocation(x, y);
     }
-    public static void main(String[] args) {
-        new Invalid_Vertex_UI();
-    }
 }

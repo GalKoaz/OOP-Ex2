@@ -26,20 +26,6 @@ public class Dijkstra extends JFrame implements ActionListener {
     private int cnt = 0;
 
 
-    public Dijkstra() {
-        this.setContentPane(Dijkstra);
-
-        //this.setPreferredSize(new Dimension(500,500));
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // exit the app
-        this.pack();
-        this.setTitle("Vertex Editor"); // title
-        this.setResizable(false); // prevent this to resize
-        this.setVisible(true);
-        this.timer = new Timer(10, null);
-        cancel.addActionListener(this);
-        OK.addActionListener(this);
-    }
-
     public Dijkstra(DirectedWeightedGraph graph, FrameGraph frame, PanelGraph panel) {
         Image icon = Toolkit.getDefaultToolkit().getImage("src\\GraphGui\\Icons\\logo.png");
         this.setIconImage(icon);
@@ -122,11 +108,4 @@ public class Dijkstra extends JFrame implements ActionListener {
         int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2.6);
         frame.setLocation(x, y);
     }
-
-
-    public static void main(String[] args) {
-        new Dijkstra();
-    }
-
-
 }

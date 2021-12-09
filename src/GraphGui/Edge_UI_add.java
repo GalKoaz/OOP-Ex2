@@ -18,17 +18,7 @@ public class Edge_UI_add extends JFrame implements ActionListener {
     private DirectedWeightedGraph graph;
     private FrameGraph frame;
 
-    public Edge_UI_add(){
-        this.setContentPane(Edge_UI_add);
-        //this.setPreferredSize(new Dimension(500,500));
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.pack();
-        this.setTitle("Edge Editor"); // title
-        this.setResizable(false); // prevent this to resize
-        this.setVisible(true);
-        Cancel.addActionListener(this);
-        Add.addActionListener(this);
-    }
+
 
     public Edge_UI_add(DirectedWeightedGraph graph, FrameGraph frame){
         Image icon = Toolkit.getDefaultToolkit().getImage("src\\GraphGui\\Icons\\logo.png");
@@ -51,13 +41,7 @@ public class Edge_UI_add extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == Cancel){dispose();}
-
       if (e.getSource() == Add){addEdge();}
-
-
-    }
-    public static void main(String[] args) {
-        new Edge_UI_add();
     }
 
 

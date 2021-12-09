@@ -42,7 +42,4 @@ public class NotConncetedResponse extends JFrame implements ActionListener {
         if (e.getSource() == closeButton){this.dispose();}
     }
 
-    public static void main(String[] args) {
-        new NotConncetedResponse();
-    }
 }

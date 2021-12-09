@@ -43,8 +43,4 @@ public class ConnectedResponse extends JFrame implements ActionListener {
             this.dispose();
         }
     }
-
-    public static void main(String[] args) {
-        new ConnectedResponse();
-    }
 }

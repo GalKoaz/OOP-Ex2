@@ -19,16 +19,7 @@ public class Vertex_UI_add extends JFrame implements ActionListener {
     private DirectedWeightedGraph graph;
     private FrameGraph frame;
 
-    public Vertex_UI_add(){
-        this.setContentPane(VertexUI);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit the app
-        this.pack();
-        this.setTitle("Vertex Editor"); // title
-        this.setResizable(false); // prevent this to resize
-        this.setVisible(true);
-        Cancel.addActionListener(this);
-        Add.addActionListener(this);
-    }
+
     public Vertex_UI_add(DirectedWeightedGraph graph, FrameGraph frame){
         Image icon = Toolkit.getDefaultToolkit().getImage("src\\GraphGui\\Icons\\logo.png");
         this.setIconImage(icon);
@@ -74,7 +65,5 @@ public class Vertex_UI_add extends JFrame implements ActionListener {
         int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2.6);
         int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2.6);
         frame.setLocation(x, y);
-    }
-    public static void main(String[] args) {new Vertex_UI_add();
     }
 }

@@ -16,15 +16,6 @@ public class Vertex_UI_remove extends JFrame implements ActionListener {
     private DirectedWeightedGraph graph;
     private FrameGraph frame;
 
-    public Vertex_UI_remove() {
-        this.setContentPane(remove_vertex);
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.pack();
-        this.setTitle("Vertex Editor"); // title
-        this.setResizable(false); // prevent this to resize
-        this.setVisible(true);
-        Add.addActionListener(this);
-    }
 
     public Vertex_UI_remove(DirectedWeightedGraph graph, FrameGraph frame) {
         Image icon = Toolkit.getDefaultToolkit().getImage("src\\GraphGui\\Icons\\logo.png");
@@ -76,5 +67,4 @@ public class Vertex_UI_remove extends JFrame implements ActionListener {
         int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2.6);
         frame.setLocation(x, y);
     }
-    public static void main(String[] args) {new Vertex_UI_remove();}
 }

@@ -2,7 +2,6 @@ package api;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -11,10 +10,7 @@ import java.util.Iterator;
  * Brief explanation of our implementation: we have taken a hashmap to support as the collection to have the graph's properties,
  * because it is considered the best time complexity for collection's operations with keys (O(1) for the standard operations).
  * In order to know where exactly a certain edge from src to dest located in the hashmap,
- * we generate the key = "src - dest".
- * E.g: given an edge from 0 to 1, then the key for this edge would be the following string "0-1".
- * This method prevent keys collisions as the key for the edge (1 -> 10) and the edge(11->0)
- * could be identical if they don't have "-", but if the do then: "1-10" and "11-0" aren't identical.
+ * we use map of maps where each location of the map is a vertex's neighbours.
  * Additionally, the vertices are ordered with keys by their id.
  */
 
@@ -210,6 +206,12 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
         return MC;
     }
 
+    /**
+     * The method checks if there is an edge between the source vertex to the destination vertex.
+     * @param src source vertex index.
+     * @param dest destination vertex index.
+     * @return if there is an edge from src to dest.
+     */
     public boolean isEdge(int src, int dest){
         return  Vertices.containsKey(src) &&
                 Vertices.containsKey(dest) &&

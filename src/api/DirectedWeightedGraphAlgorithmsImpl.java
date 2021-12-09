@@ -127,16 +127,26 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      * in terms of time complexity which is O(n * 2^n). Therefore, for this project
      * we prefer the greedy approach.
      *
-     *
+     * @apiNote according to the requirements, we actually want to find the least
+     * cost path which goes over the cities.
      * @param cities the cities to go over.
      * @return the optimal path.
      */
     @Override
     public List<NodeData> tsp(List<NodeData> cities) {return minCycleFromCity(cities);}
     /**
-     * This method following by recursion the optimal Hamiltonian cycle start in a certain
-     * city and of course ends there. The recursion checks which choice is optimal,
-     * considering the lightest weighted edge between the city and all other cities.
+     *
+     * The idea: this method takes the cities, and randomly shuffles the list of the cities to have random order.
+     * Then, it takes out the first couple of nodes, finds the shortest path
+     * between each pair, but we are wisely checking if a new node to be checked
+     * is already in the list, if so it skips on him. This wisely step in the algorithm
+     * prevent redundant passing over the same paths.
+     *
+     * Time complexity. in terms of time complexity, the algorithm checks each
+     * ordered pairs, but actually it passes every city only once and apply Dijkstra's algorithm.
+     * Let us mark the cities as c then it takes O(c * (|E|+|V|log|V|))
+     * since our Dijkstra's algorithm runs in O(|E|+|V|log|V|) with the Fibonacci heap implementation.
+     *
      * @param cities the list of cities.
      */
     public List<NodeData> minCycleFromCity(List<NodeData> cities){
@@ -166,7 +176,6 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
      * @param path a given path - list of vertices.
      * @return the path cost - total weight.
      */
-    // 2 -> 3 -> 4 [{2,3},{3,4}]
     public double pathCost(List<NodeData> path){
         double totalPathCost = 0;
         for (int i = 0; i < path.size()-1; i++) {

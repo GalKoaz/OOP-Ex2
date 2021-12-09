@@ -43,8 +43,4 @@ public class TSPResponse extends JFrame implements ActionListener {
             this.dispose();
         }
     }
-
-    public static void main(String[] args) {
-        new ConnectedResponse();
-    }
 }

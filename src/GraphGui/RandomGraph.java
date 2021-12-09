@@ -93,6 +93,13 @@ public class RandomGraph extends JFrame implements ActionListener {
         return new EdgeDataImpl(src, dest, tag, weight, info);
     }
 
+    /**
+     * This method creates two unique/distinct random numbers in range: [0,max]
+     * The advantage of it, is that the data structure can find the two distinct random numbers
+     * very fast for large range.
+     * @param Max the maximum number of the range.
+     * @return two distinct random numbers of the range.
+     */
     public int[] two_random_numbers(int a, int b, int Max){
         BitSet bs = new BitSet(Max);
         int cardinality = 0;

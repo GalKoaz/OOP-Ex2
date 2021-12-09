@@ -17,16 +17,7 @@ public class Edge_UI_remove extends JFrame implements ActionListener {
     private DirectedWeightedGraph graph;
     private FrameGraph frame;
 
-    public Edge_UI_remove(){
-        this.setContentPane(Edge_UI_remove);
 
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.pack();
-        this.setTitle("Edge Editor"); // title
-        this.setResizable(false); // prevent this to resize
-        this.setVisible(true);
-        Cancel.addActionListener(this);
-    }
     public Edge_UI_remove(DirectedWeightedGraph graph, FrameGraph frame){
         Image icon = Toolkit.getDefaultToolkit().getImage("src\\GraphGui\\Icons\\logo.png");
         this.setIconImage(icon);
@@ -48,9 +39,6 @@ public class Edge_UI_remove extends JFrame implements ActionListener {
         if (e.getSource() == remove){remove();}
     }
 
-    public static void main(String[] args) {
-        new Edge_UI_remove();
-    }
     public void remove() {
         int src = Integer.parseInt(src_vertex_id.getText());
         int dest = Integer.parseInt(dest_vertex_id.getText());
