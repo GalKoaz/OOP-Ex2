@@ -334,11 +334,4 @@ public class PanelGraph extends JPanel {
         edges.get(cnt).setTag(color);
 
     }
-
-    public static void main(String[] args) {
-        double[][]verticle = Verticle(2,6,3,2);
-
-        System.out.println(verticle[0][0] + ", "+verticle[0][1]);
-        System.out.println(verticle[1][0] + ", "+verticle[1][1]);
-    }
 }

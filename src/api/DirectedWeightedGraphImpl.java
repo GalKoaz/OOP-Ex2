@@ -18,7 +18,7 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
 
     private HashMap<Integer, NodeData> Vertices;
     private HashMap<Integer,HashMap<Integer, EdgeData>> Edges;
-    private int MC, MC_2, edgeSize, nodeSize;
+    private int MC, edgeSize, nodeSize;
 
     /**
      *  This constructor gets a JSON_Operation object, to initialize the graph's properties (edges and vertices),
@@ -28,7 +28,7 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
      */
     public DirectedWeightedGraphImpl(JSON_Operation json) {
         json.init_Graph();
-        MC = 0; MC_2 = 0; edgeSize = 0; nodeSize=0;
+        MC = 0; edgeSize = 0; nodeSize=0;
         Vertices = new HashMap<>();
         Edges = new HashMap<>();
         for (NodeData vertex : json.getInitVertices()) {addNode(vertex);}
@@ -47,7 +47,7 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
     }
 
     public DirectedWeightedGraphImpl(HashMap<Integer, NodeData> Vertices,HashMap<Integer,HashMap<Integer, EdgeData>> Edges) {
-        MC = 0; MC_2 = 0; edgeSize = Edges.size(); nodeSize = Vertices.size();
+        MC = 0; edgeSize = Edges.size(); nodeSize = Vertices.size();
         this.Edges = Edges;
         this.Vertices = Vertices;
     }
@@ -111,7 +111,7 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
     }
 
     @Override
-    public Iterator<NodeData> nodeIter() {return Vertices.values().iterator();}
+    public Iterator<NodeData> nodeIter() {return new Iterator_Operation<>(Vertices.values().iterator(),MC);}
 
     @Override
     public Iterator<EdgeData> edgeIter() {
@@ -123,7 +123,7 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
                 }
             }
         }
-        return edges.iterator();
+        return new Iterator_Operation<>(edges.iterator(),MC);
     }
 
     /**
@@ -138,16 +138,11 @@ public class DirectedWeightedGraphImpl implements DirectedWeightedGraph {
      */
     @Override
     public Iterator<EdgeData> edgeIter(int node_id) {
-        MC_2 = MC;
-        try{
-            if (MC!=MC_2){
-                throw new RuntimeException("Graph was changed since the iterator was constructed!");
-            }
-        }
-        catch (RuntimeException e){e.printStackTrace();}
         if (!Edges.containsKey(node_id)){return null;}
-        return Edges.get(node_id).values().iterator();
+        return new Iterator_Operation<>(Edges.get(node_id).values().iterator(),MC);
     }
+
+
     /**
      *
      * The method goes over all vertices and checks which vertex has an edge with the given node.
